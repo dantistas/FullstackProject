@@ -1,0 +1,30 @@
+[
+    {
+        "service": "Taxation",
+        "description": "Our objective is to work closely with you in order for you to pay minimum tax required by law. We will help you to plan your budget so you can carry out your matters in tax efficient way."
+    },
+    {
+        "service": "Self – assessments",
+        "description": "We can complete your tax returns ensuring they meet all compliance requirements. We can provide advice on most aspects of personal taxation."
+    },
+    {
+        "service": "VAT",
+        "description": "We can advice and complete your VAT returns by also helping you to understand complex area of VAT providing our efficient and cost-effective VAT service."
+    },
+    {
+        "service": "Business start-up",
+        "description": "We can help you to decide which business structure is most suitable for you by completing any registration procedures with Companies House and HM Revenue & Customs."
+    },
+    {
+        "service": "Bookkeeping",
+        "description": "We will be on top of your bookkeeping, VAT, payroll and other accounting requirements also helping with most aspects of your company administration and compliance"
+    },
+    {
+        "service": "CIS",
+        "description": "As most of our clients come from construction industry background we have strong knowledge of it. We do help with all essential CIS registrations and submissions needed for your business to operate."
+    },
+    {
+        "service": "Consultation",
+        "description": "Our goal is to get to know your business better so we can offer the best advice. We offer wide variety of consultation in most accountancy matters: bookkeeping, VAT, payroll, CIS, directors self-assessments"
+    }
+]
