@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
+import { Fab } from '@material-ui/core';
+import ChatOutlinedIcon from '@material-ui/icons/ChatOutlined';
 import Service from './components/Service'
 import Home from './components/Home'
 import Contact from './components/Contact'
+import ContactUsForm from './components/ContactUsForm'
 import bg from './bg.jpg'
 import mastislogo from './mastislogo.png'
 import './App.css'                      //<<<---- dabar gali keisti css xD
@@ -11,6 +14,7 @@ import {
   Switch, Route, Link, useHistory , //<--- kadangi usehistory neveike, permesi router i index.js!!!
 } from "react-router-dom"
 import axios from 'axios'
+
 
 
 const App = () => {
@@ -23,7 +27,7 @@ const App = () => {
 
   let history = useHistory();
 
-  console.log(history)
+  console.log("history",history)
 
   const toggleVisibility = () => {
     setVisible(!visible)
@@ -31,7 +35,7 @@ const App = () => {
 
   useEffect(()=>{
    
-    axios.get("/api/services").then((res)=>{
+    axios.get("http://localhost:3001/api/services").then((res)=>{     //<<<----- paskui pakeisti i api/services tik!
          setServicesDB(res.data)
        })
 
@@ -69,7 +73,7 @@ const App = () => {
                         <a className="navbar-link" aria-haspopup="true" aria-controls="dropdown-menu4">Services</a>
                       </div>
                       <div className="dropdown-menu" id="dropdown-menu4" role="menu" style={{"backgroundColor":"grey"}}>
-                        {servicesDB.map((service)=>{return <Link role="button" to={`/services/${service.service.split(" ").join("")}`} onClick={()=>{setSubject(service.service); document.querySelector("#navbar-links").classList.toggle('is-active')}} class="navbar-item">{service.service}</Link>})}
+                        {servicesDB.map((service)=>{return <Link role="button" to={`/services/${service.service.split(" ").join("")}`} onClick={()=>{setSubject(service.service); document.querySelector("#navbar-links").classList.toggle('is-active')}} key={service.service} class="navbar-item">{service.service}</Link>})}
                       </div>
                     </div>
                   </div>
@@ -77,7 +81,7 @@ const App = () => {
                   {/* <Link class="navbar-item" to="/calculator">Calculator</Link> */}
                 </div>
                 <div class="navbar-end">
-                  <Link role="button" dissabled class="navbar-item" to="/contact" onClick={()=>{document.querySelector("#navbar-links").classList.toggle('is-active')}} >Contact</Link>
+                  <Link role="button" dissabled class="navbar-item" to="/contact" onClick={()=>{document.querySelector("#navbar-links").classList.toggle('is-active')}} >Contact us</Link>
                 </div>
               </div>
             </nav>
@@ -98,14 +102,20 @@ const App = () => {
                 <Contact inform={inform} subject={subject}/>
               </Route>
               <Route path="/">
-                <Home/>
+                <Home Link={Link}/>
               </Route>
             </Switch>
+            <ContactUsForm showWhenVisible={showWhenVisible} toggleVisibility={toggleVisibility}/>
+            <button onClick={()=>{console.log(visible)}}>button</button>
+            <a href="mailto:info@mastis.co.uk"><strong>info@mastis.co.uk</strong></a>
+            <a href="tel:+447450225137"><strong>+447450 225 137</strong></a>
           </div>
         </div>
-        <div class="hero-foot">
-          <p> footer</p>
-        </div>
+      </div>
+      <div id="contact-us-fab">
+          <Fab aria-label="contact-us">
+              <ChatOutlinedIcon onClick={()=>{console.log("WTF"); toggleVisibility()}}/>
+          </Fab>
       </div>
     </Router>
   )

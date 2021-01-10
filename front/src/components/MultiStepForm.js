@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import Contact from './Contact'
 
 
 
@@ -8,7 +9,7 @@ const MultiStepForm = (props) => {
     const [email, setEmail] = useState("")
     const [phonenumber, setPhonenumber] = useState("")
     const [error, setError] = useState("")
-    
+    const [type, setType] = useState(null)
 
 
 
@@ -45,6 +46,11 @@ const MultiStepForm = (props) => {
         }, 3000);
     }
 
+    const handleSelectFieldChange = (event) => {
+        setType(event.target.value)
+        console.log(event.target.value)
+
+    }
         return (
             <div className="container px-6">  
                 <p className="subtile">Step {props.formPage} out of 3</p>
@@ -55,6 +61,17 @@ const MultiStepForm = (props) => {
                     {props.formPage === 3 ? [<input className="input" placeholder="Phone number" type='number' value={phonenumber} onChange={({ target }) => setPhonenumber(target.value)}></input>, <button className="button is-success" onClick={ ()=>{name && email && phonenumber ?  submit()  : annouceError("Field is either missing or Phone-number format is not valid")}}>Send</button> ]: null}
                     {props.formPage > 1 ? <button className="button is-danger" onClick={()=>{props.setFormPage(props.formPage-1)}}>Back</button> : null}
                 </div>
+                <div className="select">
+                    <select onChange={handleSelectFieldChange}>
+                        <option disabled selected>Select a reason you are contacting</option>
+                        <option value="General queries">Other queries</option>
+                        <option value="New company establish">New company establish</option>
+                        <option value="Company matters">Company matters</option>
+                        <option value="Self employed">Self employed</option>
+                    </select>
+                    {type ? <Contact type={type}/> : null}
+                </div>
+                <button onClick={()=>{console.log(type)}}>press me </button>
             </div>
 
           ) 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
+import { Formik, Field, Form } from 'formik';
 import axios from 'axios'
-
 
 
 const Contact = (props) => {
@@ -43,10 +43,19 @@ const Contact = (props) => {
         }   
       }
 
+      const onSubmit = (values) => {
+        console.log("onsubmit: ",values)
+      }
 
 
-        return (
-            <div class="container" style={{"width": "80%"}}>
+        return ( 
+            <div className="columns" style={{"width": "80%"}}>
+                <div className="column px-6">
+                    <a style={{"color":"silver"}}  href="mailto:info@mastis.co.uk"><strong>Email: info@mastis.co.uk</strong></a>
+                </div>
+                <div className="column px-6">
+                    <a style={{"color":"silver"}} href="tel:+447450225137"><strong>Telephone: +447450 225 137</strong></a>
+                </div>
                 <form onSubmit={submit} >
                     <div class="field">
                         <input
@@ -80,7 +89,7 @@ const Contact = (props) => {
                             class="textarea"
                             value={body}
                             onChange={({ target }) => setBody(target.value)}
-                            placeholder="Body"
+                            placeholder="Message"
                             required
                         />
                     </div>
@@ -88,7 +97,93 @@ const Contact = (props) => {
                         <button class="button is-primary" type='submit' style={{"width": "100%"}}>Send!</button>
                     </div>
                 </form>
-         
+                <h2>formikas</h2>
+                <Formik 
+                    initialValues={{
+                        type:"",
+
+                        name:"",
+                        email:"",
+                        telephone:"",
+                        address:"",
+                        UTRnumber:"",
+                        dateOfBirth:"",
+                        NINnumber: "",
+                        message:"",
+                        upload:"",
+                        
+                        companyName:"",
+                        companyNumber: "",
+                        email2:"",
+                        telephone2:"",
+                        VATregistrationNumber:"",
+                        utrnr2:"",
+                        message2:"",
+                        upload2:"",
+
+                        preferedCompanyName: "",
+                        alternativeName: "",
+                        companyType:"",
+                        natureOfbusiness:"",
+                        email3:"",
+                        telephone3:"",
+                        companyAdress:"",
+                        postcode:"",
+                        numberOfShares:"",
+                        valueOFShares:"",
+                        numberOFshareholders:"",
+                        shareholderPosition: "dropdown",
+                        numberofSharesHolding:"",
+                        nameOfShareholder:"",
+                        surnameOfShareholder:"",
+                        dateOfBirthOfShareholder:"",
+                        nationalInsuranceOfShareholder:"",
+                        utrNumberOFShareholder:"",
+                        nationalityOfShareholder:"",
+                        emailOfShareholder:"",
+                        phonenumberOfShareholder:"",
+                        adressOfShareholder:"",
+                        postcodeOFShareholderr:"",
+                        hometownOfShareholder:"",
+                        mothersMaidenNameOfshareholder:"",
+                        fathersNameOFShareholder:"",
+                        uploadIDFOTO: "",
+                        checkbox:"confimation that details are correct",
+
+                        nameOtherQueries:"",
+                        emailOtherqueries:"",
+                        telephoneOTherqueries:"",
+                        messageOtherQueries:"",
+                        uploadOtherqueries:""
+
+
+                }}
+                onSubmit={onSubmit}
+                validate={values => {
+                    // cia eis validationas
+                }}
+                >
+                {({ isValid, dirty, setFieldValue, setFieldTouched, values, errors})=>{ 
+                    return (
+                        <Form>
+                            <div>
+                                <Field as="select" name="type">
+                                    <option defaultChecked disabled value="null">Select an entry type</option>
+                                    <option value={1}>1</option>
+                                    <option value={2}>2</option>
+                                    <option value={3}>3</option>
+                                </Field>
+                            </div>
+
+                            <Field key="name" placeholder="Name" name="name"/>
+                            <Field key="email" placeholder="E-mail" name="email"/>
+                            <button type="button" onClick={()=>{console.log(values)}}>check values</button>
+                            <button type="submit">submit</button>
+                        </Form>
+                    )
+                }
+            }        
+                </Formik>         
             </div>
           ) 
 }

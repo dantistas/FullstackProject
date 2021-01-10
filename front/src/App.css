@@ -61,3 +61,12 @@
   }
 }
 
+
+#contact-us-fab {
+  height: 249px;
+  width: 50px;
+  position: fixed;
+  right: 20px;
+  bottom: -150px;
+  z-index: 1;
+}

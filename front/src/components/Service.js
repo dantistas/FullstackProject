@@ -30,7 +30,7 @@ const Service = (props) => {
                 </div>
             </div>
             <div class="container">
-              <h1 class="title">{service.service}</h1>
+              <h1 class="title py-6">{service.service}</h1>
               <h3 class="subtitle">{service.description}</h3>
               <h3 class="subtitle">If you wish to start this procedure please fill in this simple 3 step <strong><a role="button" style={{"color": "lime"}} onClick={()=>{props.toggleVisibility()}} >form</a></strong>, you will receive an email with further instructions after.</h3>
             </div>
