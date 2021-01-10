@@ -40,7 +40,7 @@ const ContactUsForm = (props) => {
                                 <option value="Self employed">Self employed</option>
                             </select>
                         </div>
-                        {type === "Other queries" ? <OtherQueries handleSubmit={handleSubmit}/> : null}
+                        {type === "Other queries" ? <OtherQueries type={type} handleSubmit={handleSubmit}/> : null}
                         {/* {type   ?   
                                     <Formik 
                                         initialValues={{

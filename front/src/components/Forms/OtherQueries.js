@@ -39,7 +39,7 @@ return(
         <div>
             <Formik 
                     initialValues={{
-                                    type:"type",
+                                    type: props.type,
                                     name:"",
                                     email:"",
                                     telephone:"",
@@ -82,7 +82,7 @@ return(
                                                 {errors.message && touched.message ? <div style={{"color":"red"}}><p>{errors.message}</p></div> : null}
                                             </div>
                                             <button type="button" onClick={()=>{console.log(values)}}>values.type</button>
-                                            <button type="submit" disabled={isValid}>submit</button>
+                                            <button type="submit" disabled={!isValid}>submit</button>
                                     </Form>
                                     )
                                 }
