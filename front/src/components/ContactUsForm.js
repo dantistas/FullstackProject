@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { Formik, Field, Form } from 'formik';
+import { useForm } from "react-hook-form";
 import OtherQueries from './Forms/OtherQueries'
+import SelfEmployed from './Forms/SelfEmployed'
 
 
 
@@ -9,6 +11,7 @@ import OtherQueries from './Forms/OtherQueries'
 const ContactUsForm = (props) => {
     const [type, setType] = useState(null)
     const [formPage, setFormPage] = useState(1)
+    const [uploadedFile, setUploadedFile] = useState(null)
 
     const handleSelectFieldChange = (event) => {
         setType(event.target.value)
@@ -16,8 +19,19 @@ const ContactUsForm = (props) => {
     }
 
     const handleSubmit = (values) => {
-        console.log("submit: ",values)
-      }
+
+        console.log("fronte: ",values)
+        let formData = new FormData()
+        Object.keys(values).forEach((value) => {formData.append(value, values[value])})
+        if(uploadedFile !== null){
+            formData.append('file', uploadedFile)
+        }
+
+        axios.post('http://localhost:3001/swx', formData).then((response) => {console.log(response)})
+
+        // axios.post('http://localhost:3001/swx', formData).then((response) => {console.log(response)})
+    
+    }
 
 
     return (
@@ -27,10 +41,10 @@ const ContactUsForm = (props) => {
                 <div className="container px-5">
                   <p className="title">Contact us</p>
                 </div>
-                <div className="container py-2 px-6">
-                  <div className="modal-content" style={{"overflow":"hidden"}}>
-                    <div className="columns is-vcentered is-centered">
-                      <div className="column is-centered py-6">
+                <div className="container py-6 px-6">
+                  <div className="modal-content" >  
+                    <div className="columns is-vcentered is-centered py-3" style={{"paddingTop":"10px" , "width":"300px"}}>
+                      <div className="column is-centered" style={{ "height": "500px"}}>
                         <div className="select" style={{"paddingBottom": "5px"}}>
                             <select style={{"width":"260px"}} onChange={handleSelectFieldChange}>
                                 <option disabled selected>Reason for contacting us</option>
@@ -40,7 +54,9 @@ const ContactUsForm = (props) => {
                                 <option value="Self employed">Self employed</option>
                             </select>
                         </div>
-                        {type === "Other queries" ? <OtherQueries type={type} handleSubmit={handleSubmit}/> : null}
+                        <button onClick={()=>{console.log(uploadedFile)}}>state</button>
+                        {type === "Other queries" ? <OtherQueries setUploadedFile={setUploadedFile}  type={type} handleSubmit={handleSubmit}/> : null}
+                        {type === "Self employed" ? <SelfEmployed type={type} handleSubmit={handleSubmit}/> : null}
                         {/* {type   ?   
                                     <Formik 
                                         initialValues={{

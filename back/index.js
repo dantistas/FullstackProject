@@ -1,4 +1,5 @@
 const  express = require('express');
+const fileUpload = require('express-fileupload');
 const  cors = require('cors');
 require('dotenv').config();
 const nodemailer = require("nodemailer");
@@ -6,6 +7,7 @@ const servicesDB =require('./data/services.json');
 
 const app = express();
 
+app.use(fileUpload());
 app.use(cors());
 app.use(express.static('build')); // build <<----
 app.use(express.json());
@@ -20,15 +22,23 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const messageToEmail = (elements) => {
-  const{subject, name, email,phonenumber, body} = elements 
-  return {
+const messageToEmail = (elements, file) => {
+
+  const{type, name, email, telephone, message} = elements
+
+  const emailPattern = {
     from: process.env.EMAIL, // sender address/ company name
     to: "testastestauskas@yandex.com", // list of receivers
-    subject: `Message from: ${email}, Subject: ${subject}`, // Subject line
-    html: `<b>name: ${name}</b><br/><b> Phone: ${phonenumber}</b><br/><b> E-mail: ${email}</b><br/><p>${body}<p/>`, // html body
+    subject: `Message from: ${email}, Subject: ${type}`, // Subject line
+    html: `<b>name: ${name}</b><br/><b> Phone: ${telephone}</b><br/><b> E-mail: ${email}</b><br/><p>${message}<p/>`, // html body
     replyTo: email // reply to option
   }
+
+  if(file){
+    emailPattern.attachments = [{fileName: file.name, path: `${__dirname}/uploads/${file.name}`}]
+  }
+
+  return emailPattern
 }
 
 const messageToClient = (elements) => {
@@ -47,12 +57,21 @@ app.get('/api/services', (req,res)=>{
 
 
 app.post('/swx', async (req, res)  => {
-  const message = messageToEmail(req.body)
+  console.log("req.body: ", req.body)
+  console.log("req.files: ", req.files)
+  let file 
+
+  if(req.files){
+    file = req.files.file
+    file.mv(`${__dirname}/uploads/${file.name}`)
+  }
+
+  const message = messageToEmail(req.body, file)
   const toClient = messageToClient(req.body)
 
   await transporter.sendMail(message,(err)=>{
     if(err){
-      res.json({Error:err})
+      res.json({Error:err})      // kazka sugalvoti su siuo erroru, kad nesiustu useriui
     }else{
       res.json(`Thank you ${req.body.name}, your message was succesfuly sent!`)
     }
@@ -66,6 +85,3 @@ app.listen(port, () => {
 
 
 
-// 1) forma vardas surname -> email -> phonenumber -> authentification// save info i database -> atsiusti klientuj instrukcijas priklausomai nuo subject// vsio baigtas kriukis sito sudo
-// 2) padaryti contact form componenta
-//3) perdeti services i db , vienas komponentas bus servisu is api duos butent toki kokio reike apollo graphql

@@ -44,7 +44,10 @@ const Contact = (props) => {
       }
 
       const onSubmit = (values) => {
-        console.log("onsubmit: ",values)
+        axios.post('http://localhost:3001/swx', values)
+        .then(function(res) {
+            window.alert(res.data)
+        })
       }
 
 
