@@ -5,7 +5,7 @@ import {TextField, TextArea, FileUpload} from './FormField'
 
 
 
-const SelfEmployed = (props) => {
+const CompanyMAtters = (props) => {
 
     const validateEmail = (value) => {
         let errorMessage;
@@ -40,16 +40,12 @@ return(
             <Formik 
                     initialValues={{
                                     type: props.type,
-                                    name:"",
-                                    surname:"",
+                                    companyName:"",
+                                    companyNumber:"",
                                     email:"",
                                     telephone:"",
-                                    address:"",
-                                    postcode:"",
-                                    dateOfBirth:"",
-                                    UTRnumber:"",
-                                    NINnumber: "",
-                                    file:"",
+                                    VATNumber:"",
+                                    UTRNumber:"",
                                     message:""
                                 }}
                     onSubmit={props.handleSubmit}
@@ -58,13 +54,10 @@ return(
                                 return(
                                     <Form style={{"paddingTop":"10px" , "width":"260px"}}>
                                             <div className="field">
-                                                <Field placeholder="Name" name="name" validate={validateField} component={TextField}/>
+                                                <Field placeholder="Company Name" name="companyName" validate={validateField} component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <Field placeholder="Surname" name="surname" validate={validateField} component={TextField}/>
-                                            </div>
-                                            <div className="field">
-                                                <Field placeholder="Date of Birth DD/MM/YYYY" name="dateOfBirth" validate={validateField} component={TextField}/>
+                                                <Field placeholder="Company Number" name="companyNumber" component={TextField}/>
                                             </div>
                                             <div className="field">
                                                 <Field placeholder="E-mail" name="email" validate={validateEmail} component={TextField}/>
@@ -73,29 +66,20 @@ return(
                                                 <Field placeholder="Telephone" name="telephone" validate={validatePhoneNumber} component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <Field placeholder="Address" name="address" component={TextField}/>
+                                                <Field placeholder="VAT registration number" name="VATNumber" component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <Field placeholder="Postcode" name="postcode" component={TextField}/>
+                                                <Field placeholder="UTR number" name="UTRNumber" component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <Field placeholder="UTR number" name="UTRnumber" component={TextField}/>
-                                            </div>
-                                            <div className="field">
-                                                <Field placeholder="National insurance number" name="NINnumber" component={TextField}/>
-                                            </div>
-                                            <div className="field">
-                                                <span>Picture of ID :</span>
                                                 <FileUpload  setUploadedFile={props.setUploadedFile}/>
                                             </div>
                                             <div >
-                                                <Field placeholder="Message" name="message" validate={validateField} component={TextArea}/>
+                                                <Field  placeholder="Message" name="message" validate={validateField} component={TextArea}/>
                                             </div>
                                             <div style={{"paddingTop":"10px" , "width":"260px"}}>
-                                                <button className="button is-success" type="submit" disabled={!dirty ||!isValid}>submit</button>
-                                                <button type="button" onClick={()=>{console.log(values)}}>values</button>
+                                                <button className="button is-success" type="submit" disabled={!dirty || !isValid}>submit</button>
                                             </div>
-        
                                     </Form>
                                     )
                                 }
@@ -105,4 +89,4 @@ return(
     )
 }
 
-export default SelfEmployed
+export default CompanyMAtters

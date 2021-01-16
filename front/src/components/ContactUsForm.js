@@ -4,6 +4,8 @@ import { Formik, Field, Form } from 'formik';
 import { useForm } from "react-hook-form";
 import OtherQueries from './Forms/OtherQueries'
 import SelfEmployed from './Forms/SelfEmployed'
+import CompanyMAtters from './Forms/CompanyMatters'
+import NewCompanyEstablish from './Forms/NewCompanyEstablish'
 
 
 
@@ -41,10 +43,10 @@ const ContactUsForm = (props) => {
                 <div className="container px-5">
                   <p className="title">Contact us</p>
                 </div>
-                <div className="container py-6 px-6">
-                  <div className="modal-content" >  
+                    {/* {<div className="container py-4 px-6"} >*/}
+                  <div className="modal-content py-4 px-6" >  
                     <div className="columns is-vcentered is-centered py-3" style={{"paddingTop":"10px" , "width":"300px"}}>
-                      <div className="column is-centered" style={{ "height": "500px"}}>
+                      <div className="column is-centered" >
                         <div className="select" style={{"paddingBottom": "5px"}}>
                             <select style={{"width":"260px"}} onChange={handleSelectFieldChange}>
                                 <option disabled selected>Reason for contacting us</option>
@@ -55,8 +57,10 @@ const ContactUsForm = (props) => {
                             </select>
                         </div>
                         <button onClick={()=>{console.log(uploadedFile)}}>state</button>
-                        {type === "Other queries" ? <OtherQueries setUploadedFile={setUploadedFile}  type={type} handleSubmit={handleSubmit}/> : null}
-                        {type === "Self employed" ? <SelfEmployed type={type} handleSubmit={handleSubmit}/> : null}
+                        {type === "Other queries" ? <OtherQueries type={type} handleSubmit={handleSubmit} setUploadedFile={setUploadedFile}/> : null}
+                        {type === "Self employed" ? <SelfEmployed type={type} handleSubmit={handleSubmit} setUploadedFile={setUploadedFile}/> : null}
+                        {type === "Company matters" ? <CompanyMAtters type={type} handleSubmit={handleSubmit} setUploadedFile={setUploadedFile}/> : null}
+                        {type === "New company establish" ? <NewCompanyEstablish type={type} handleSubmit={handleSubmit} setUploadedFile={setUploadedFile}/> : null}
                         {/* {type   ?   
                                     <Formik 
                                         initialValues={{
@@ -156,7 +160,7 @@ const ContactUsForm = (props) => {
                     </div>
                     <button onClick={()=>{props.toggleVisibility()}} className="modal-close is-large" aria-label="close"></button>
                   </div>
-                </div>
+                {/* {</div>} */}
             </div>
       </div>
     )

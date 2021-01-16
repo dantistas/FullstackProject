@@ -23,7 +23,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const messageToEmail = (elements, file) => {
-
+  console.log(elements, file)
   const{type, name, email, telephone, message} = elements
 
   const emailPattern = {
@@ -69,13 +69,13 @@ app.post('/swx', async (req, res)  => {
   const message = messageToEmail(req.body, file)
   const toClient = messageToClient(req.body)
 
-  await transporter.sendMail(message,(err)=>{
-    if(err){
-      res.json({Error:err})      // kazka sugalvoti su siuo erroru, kad nesiustu useriui
-    }else{
-      res.json(`Thank you ${req.body.name}, your message was succesfuly sent!`)
-    }
-  });
+  // await transporter.sendMail(message,(err)=>{
+  //   if(err){
+  //     res.json({Error:err})      // kazka sugalvoti su siuo erroru, kad nesiustu useriui
+  //   }else{
+  //     res.json(`Thank you ${req.body.name}, your message was succesfuly sent!`)
+  //   }
+  // });
 
 });
 
