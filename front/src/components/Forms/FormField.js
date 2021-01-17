@@ -36,8 +36,7 @@ export const FileUpload = (props) => {
 }
 
 
-export const SelectField = ({name, label, options}) =>{
-
+export const SelectField = ({field, name, label, options}) =>{
     return (
         <div className="select">
             <Field as="select" name={name} style={{"width":"260px"}}>
