@@ -35,14 +35,33 @@ export const FileUpload = (props) => {
     )
 }
 
+export const IDupload = (props) => {
+    console.log(props.values)
+    return (
+        <div>
+            <input className="input" onChange={(e)=>{
+                if(props.values.file === false){
+                    props.values.file = true
+                    props.setUploadedFile([...props.uploadedFile, e.target.files[0]])
+                    console.log("uploaded: ", props.uploadedFile)  // padaryti kad surastu pagal varda.
+                }else if(props.values.file === true){
+                    const files = [...props.uploadedFile]
+                    files.splice(props.index,1)
+                    props.setUploadedFile([...files, e.target.files[0]])
+                }
+                }} name="file" type="file"></input>
+        </div>
+    )
+}
 
-export const SelectField = ({field, name, label, options}) =>{
+
+export const SelectField = ({validate, name, label, options}) =>{
     return (
         <div className="select">
-            <Field as="select" name={name} style={{"width":"260px"}}>
+            <Field as="select" name={name} style={{"width":"260px"}} validate={validate}>
                 {options.map(option => (
                     <option key={option.value} value={option.value}>
-                    {option.label || option.value}
+                    {option.label}
                     </option>
                 ))}
             </Field>

@@ -86,7 +86,7 @@ return(
                                             </div>
                                             <div className="field">
                                                 <span>Picture of ID :</span>
-                                                <FileUpload  setUploadedFile={props.setUploadedFile}/>
+                                                <FileUpload  setUploadedFile={props.setUploadedFile} />
                                             </div>
                                             <div >
                                                 <Field placeholder="Message" name="message" validate={validateField} component={TextArea}/>

@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import Contact from './Contact'
+import OtherQueries from './Forms/OtherQueries'
+import SelfEmployed from './Forms/SelfEmployed'
+import CompanyMAtters from './Forms/CompanyMatters'
+import NewCompanyEstablish from './Forms/NewCompanyEstablish'
 
 
 
@@ -61,6 +65,7 @@ const MultiStepForm = (props) => {
                     {props.formPage === 3 ? [<input className="input" placeholder="Phone number" type='number' value={phonenumber} onChange={({ target }) => setPhonenumber(target.value)}></input>, <button className="button is-success" onClick={ ()=>{name && email && phonenumber ?  submit()  : annouceError("Field is either missing or Phone-number format is not valid")}}>Send</button> ]: null}
                     {props.formPage > 1 ? <button className="button is-danger" onClick={()=>{props.setFormPage(props.formPage-1)}}>Back</button> : null}
                 </div>
+                <OtherQueries></OtherQueries>
                 <div className="select">
                     <select onChange={handleSelectFieldChange}>
                         <option disabled selected>Select a reason you are contacting</option>

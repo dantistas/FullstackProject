@@ -13,7 +13,7 @@ import NewCompanyEstablish from './Forms/NewCompanyEstablish'
 const ContactUsForm = (props) => {
     const [type, setType] = useState(null)
     const [formPage, setFormPage] = useState(1)
-    const [uploadedFile, setUploadedFile] = useState(null)
+    const [uploadedFile, setUploadedFile] = useState([])
 
     const handleSelectFieldChange = (event) => {
         setType(event.target.value)
@@ -35,6 +35,10 @@ const ContactUsForm = (props) => {
     
     }
 
+    const krc ={
+            "padding": "10px",
+            "width" : "375px"
+    }
 
     return (
         <div>
@@ -44,10 +48,10 @@ const ContactUsForm = (props) => {
                   <p className="title">Contact us</p>
                 </div>
                     {/* {<div className="container py-4 px-6"} >*/}
-                  <div className="modal-content py-4 px-6" >  
+                  <div className="modal-content py-4 px-6" style={krc}>  
                     <div className="columns is-vcentered is-centered py-3" style={{"paddingTop":"10px" , "width":"300px"}}>
-                      <div className="column is-centered" >
-                        <div className="select" style={{"paddingBottom": "5px"}}>
+                      <div className="column is-centered" style={krc}>
+                        <div className="select" style={{"paddingBottom": "5px"}} >
                             <select style={{"width":"260px"}} onChange={handleSelectFieldChange}>
                                 <option disabled selected>Reason for contacting us</option>
                                 <option value="Other queries">Other queries</option>
@@ -60,7 +64,7 @@ const ContactUsForm = (props) => {
                         {type === "Other queries" ? <OtherQueries type={type} handleSubmit={handleSubmit} setUploadedFile={setUploadedFile}/> : null}
                         {type === "Self employed" ? <SelfEmployed type={type} handleSubmit={handleSubmit} setUploadedFile={setUploadedFile}/> : null}
                         {type === "Company matters" ? <CompanyMAtters type={type} handleSubmit={handleSubmit} setUploadedFile={setUploadedFile}/> : null}
-                        {type === "New company establish" ? <NewCompanyEstablish type={type} handleSubmit={handleSubmit} setUploadedFile={setUploadedFile}/> : null}
+                        {type === "New company establish" ? <NewCompanyEstablish type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile} /> : null}
                         {/* {type   ?   
                                     <Formik 
                                         initialValues={{
@@ -157,6 +161,7 @@ const ContactUsForm = (props) => {
                                     </Formik> 
                                 : null} */}
                       </div>
+                      
                     </div>
                     <button onClick={()=>{props.toggleVisibility()}} className="modal-close is-large" aria-label="close"></button>
                   </div>
