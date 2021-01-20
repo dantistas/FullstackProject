@@ -61,7 +61,7 @@ return(
                                                 <Field placeholder="Telephone" name="telephone" validate={validatePhoneNumber} component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <FileUpload  setUploadedFile={props.setUploadedFile}/>
+                                                <FileUpload values={values} uploadedFile={props.uploadedFile} setUploadedFile={props.setUploadedFile}/>
                                             </div>
                                             <div >
                                                 <Field  placeholder="Message" name="message" validate={validateField} component={TextArea}/>

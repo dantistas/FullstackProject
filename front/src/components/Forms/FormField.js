@@ -27,27 +27,18 @@ export const TextArea = ({field, label, placeholder}) => {
 }
 
 
+
 export const FileUpload = (props) => {
     return (
         <div>
-            <input className="input" onChange={(e=>props.setUploadedFile(e.target.files[0]))} name="file" type="file"></input>
-        </div>
-    )
-}
-
-export const IDupload = (props) => {
-    console.log(props.values)
-    return (
-        <div>
             <input className="input" onChange={(e)=>{
-                if(props.values.file === false){
-                    props.values.file = true
+                if(!props.values.file){
                     props.setUploadedFile([...props.uploadedFile, e.target.files[0]])
-                    console.log("uploaded: ", props.uploadedFile)  // padaryti kad surastu pagal varda.
-                }else if(props.values.file === true){
-                    const files = [...props.uploadedFile]
-                    files.splice(props.index,1)
+                    props.values.file = e.target.files[0].name
+                }else if(props.values.file){
+                    const files = props.uploadedFile.filter(file=>file.name !== props.values.file)
                     props.setUploadedFile([...files, e.target.files[0]])
+                    props.values.file = e.target.files[0].name
                 }
                 }} name="file" type="file"></input>
         </div>

@@ -46,7 +46,8 @@ return(
                                     telephone:"",
                                     VATNumber:"",
                                     UTRNumber:"",
-                                    message:""
+                                    message:"",
+                                    file:""
                                 }}
                     onSubmit={props.handleSubmit}
                             >
@@ -72,7 +73,7 @@ return(
                                                 <Field placeholder="UTR number" name="UTRNumber" component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <FileUpload  setUploadedFile={props.setUploadedFile}/>
+                                                <FileUpload values={values} uploadedFile={props.uploadedFile} setUploadedFile={props.setUploadedFile}/>
                                             </div>
                                             <div >
                                                 <Field  placeholder="Message" name="message" validate={validateField} component={TextArea}/>

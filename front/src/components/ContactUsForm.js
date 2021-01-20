@@ -17,7 +17,7 @@ const ContactUsForm = (props) => {
 
     const handleSelectFieldChange = (event) => {
         setType(event.target.value)
-        console.log(event.target.value)
+        setUploadedFile([])
     }
 
     const handleSubmit = (values) => {
@@ -39,6 +39,12 @@ const ContactUsForm = (props) => {
             "padding": "10px",
             "width" : "375px"
     }
+    const scrollToTop = () => {
+        window.scrollTo({    //issiaiskint kaip veike sitas scroll apas 
+          top: 0,
+          behavior: "smooth"
+        });
+      }
 
     return (
         <div>
@@ -48,7 +54,7 @@ const ContactUsForm = (props) => {
                   <p className="title">Contact us</p>
                 </div>
                     {/* {<div className="container py-4 px-6"} >*/}
-                  <div className="modal-content py-4 px-6" style={krc}>  
+                  <div className="modal-content py-4 px-6" style={krc} >  
                     <div className="columns is-vcentered is-centered py-3" style={{"paddingTop":"10px" , "width":"300px"}}>
                       <div className="column is-centered" style={krc}>
                         <div className="select" style={{"paddingBottom": "5px"}} >
@@ -61,10 +67,10 @@ const ContactUsForm = (props) => {
                             </select>
                         </div>
                         <button onClick={()=>{console.log(uploadedFile)}}>state</button>
-                        {type === "Other queries" ? <OtherQueries type={type} handleSubmit={handleSubmit} setUploadedFile={setUploadedFile}/> : null}
-                        {type === "Self employed" ? <SelfEmployed type={type} handleSubmit={handleSubmit} setUploadedFile={setUploadedFile}/> : null}
-                        {type === "Company matters" ? <CompanyMAtters type={type} handleSubmit={handleSubmit} setUploadedFile={setUploadedFile}/> : null}
-                        {type === "New company establish" ? <NewCompanyEstablish type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile} /> : null}
+                        {type === "Other queries" ? <OtherQueries type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile}/> : null}
+                        {type === "Self employed" ? <SelfEmployed type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile}/> : null}
+                        {type === "Company matters" ? <CompanyMAtters type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile}/> : null}
+                        {type === "New company establish" ? <NewCompanyEstablish scrollToTop={scrollToTop} type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile} /> : null}
                         {/* {type   ?   
                                     <Formik 
                                         initialValues={{

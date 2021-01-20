@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import { Formik, Field, Form, FieldArray } from 'formik';
-import {TextField, TextArea, FileUpload, SelectField, NumberField, IDupload} from './FormField'
+import {TextField, TextArea, FileUpload, SelectField, NumberField} from './FormField'
 
 
 
@@ -118,7 +118,7 @@ const NewCompanyEstablish = (props) => {
         }
         values.shareHolders.splice(0, values.shareHolders.length)
         for(let i=1;i<=values.numberOfShareHolders;i++){
-            values.shareHolders.push({shareholder:i,position:"",numberOfShares:"",name:"",surname:"",dateOfBirth:"",NINnumber:"",UTRnumber:"",nationality:"",email:"",phonenumber:"",address:"",postcode:"",homeTown:"",mothersMaidenName:"",fathersName:"", file:false })
+            values.shareHolders.push({shareholder:i,position:"",numberOfShares:"",name:"",surname:"",dateOfBirth:"",NINnumber:"",UTRnumber:"",nationality:"",email:"",phonenumber:"",address:"",postcode:"",homeTown:"",mothersMaidenName:"",fathersName:"", file:"" })
         }
         setPage(page+1)
         setShares(values.numberOfShares)
@@ -148,6 +148,7 @@ return(
                     onSubmit={props.handleSubmit}
                             >
                             {({ isValid, dirty, setFieldValue, setFieldTouched, values, errors, touched})=>{
+                                const firstPartValidation = values.numberOfShareHolders > 3 || values.numberOfShareHolders < 1 || !values.preferredCompanyName || !values.alternativeCompanyName || !values.typeOfCompany || !values.natureOfBusiness || !values.email || !values.telephone || !values.companyAdress || !values.companyPostcode || !values.numberOfShares || !values.valueOfAllShares || !values.numberOfShareHolders
                                 return(
                                     <Form style={{"paddingTop":"10px" , "width":"260px"}}>
                                         { page === 0  ? [<div className="field">
@@ -186,15 +187,19 @@ return(
                                             <div className="field">
                                                 <Field placeholder="Number of Share Holders" name="numberOfShareHolders" component={NumberField} min={1} max={3} validate={validateNumberOfShareHolders}/>
                                             </div>,
-                                            <div>
-                                                <button disabled={values.numberOfShareHolders > 3 || values.numberOfShareHolders < 1 }  type="button" onClick={()=>{createShareholders(values)}}>Next</button>
-                                                <button type="button" onClick={()=>{console.log(errors)}}>errors</button>
+                                            <div className="buttons">
+                                                <button className="button is-success" disabled={values.numberOfShareHolders > 3 || values.numberOfShareHolders < 1 || firstPartValidation}  type="button" onClick={()=>{createShareholders(values)}}>Next</button>
+                                                <div>
+                                                   {firstPartValidation ? <p style={{"color": "red"}}>All fields are required!</p> : null} 
+                                                </div>
                                             </div>
                                             ] 
                                         : null }
                                         {page > 0 ? 
                                         <div>
-                                            {values.shareHolders.map((shareholder, index)=>{return(
+                                            {values.shareHolders.map((shareholder, index)=>{
+                                            const shareholderInfoValidation = !shareholder.position || !shareholder.numberOfShares || !shareholder.name || !shareholder.surname || !shareholder.dateOfBirth || !shareholder.nationality || !shareholder.email || !shareholder.phonenumber || !shareholder.address || !shareholder.postcode || !shareholder.homeTown || !shareholder.mothersMaidenName || !shareholder.fathersName
+                                            return(
                                              <div>
                                                  { page === shareholder.shareholder ? 
                                                  [<h3 className="subtitle is-4">Shareholder {shareholder.shareholder} of {values.shareHolders.length}</h3>,
@@ -232,7 +237,7 @@ return(
                                                     <Field placeholder="National insurance number" name={`shareHolders[${index}].NINnumber`} component={TextField}/>
                                                  </div>,
                                                  <div className="field">
-                                                    <Field placeholder="UTR number" name={`shareHolders[${index}].UTRnumber`} validate={validateDOB} component={TextField}/>
+                                                    <Field placeholder="UTR number" name={`shareHolders[${index}].UTRnumber`} component={TextField}/>
                                                  </div>,
                                                  <div className="field">
                                                     <Field placeholder="Nationality" name={`shareHolders[${index}].nationality`} validate={validateField} component={TextField}/>
@@ -248,12 +253,17 @@ return(
                                                  </div>,
                                                  <div className="field">
                                                      <label>Copy of ID: </label>
-                                                    <IDupload index={index} values={values.shareHolders[index]} uploadedFile={props.uploadedFile} setUploadedFile={props.setUploadedFile}/>
+                                                    <FileUpload values={values.shareHolders[index]} uploadedFile={props.uploadedFile} setUploadedFile={props.setUploadedFile}/>
                                                  </div>,
-                                        
-                                                 <button type="button" onClick={()=>{setPage(page+1)}}>Next</button>,
-                                                 <button type="button" onClick={()=>{setPage(page-1)}}>Back</button>,
-                                                 <button type="button" onClick={()=>{console.log(errors.shareHolders[index].position)}}>errors</button>]
+                                                 <div className="buttons">
+                                                    <button type="button" onClick={()=>{props.scrollToTop()}}>to the top</button>
+                                                    <button type="button" onClick={()=>{console.log(shareholderInfoValidation)}}>check 2 validation</button>
+                                                    <button type="button" className="button is-success" disabled={shareholderInfoValidation} onClick={()=>{setPage(page+1)}}>Next</button>
+                                                    <button type="button" className="button is-danger is-inverted" onClick={()=>{setPage(page-1)}}>Back</button>
+                                                    <div>
+                                                        {shareholderInfoValidation ? <p style={{"color": "red"}}>Please check the fields!</p> : null} 
+                                                    </div>
+                                                 </div>]
                                                   : null }
                                              </div>
                                             )})}
@@ -267,17 +277,14 @@ return(
                                                                                     <Field type="checkbox" name="confirmed" checked={values.confirmed}/> I confirm that all information provided is correct 
                                                                                 </label>,
                                                                                 <div className="buttons" >
+                                                                                    <button className="button is-success" type="submit" disabled={!dirty || !isValid || values.confirmed === false}>Submit</button>
                                                                                     <button  type="button" className="button is-success is-inverted" onClick={()=>{setPage(page-1)}}>Back</button>
-                                                                                    <button className="button is-success" type="submit" disabled={!dirty || !isValid}>Submit</button>
+                                                                                    <div>
+                                                                                        {values.confirmed === false ? <p style={{"color": "red"}}>Please confirm!</p> : null} 
+                                                                                    </div>
                                                                                 </div>
                                                                                 
                                                                                 ] : null }
-                                        
-                                            <div className="field">
-                                                <FileUpload  setUploadedFile={props.setUploadedFile}/>
-                                            </div>
-                                            
-
                                             <div style={{"paddingTop":"10px" , "width":"260px"}}>
                                                 <button type="button" onClick={()=>{console.log(values)}}>values</button>
                                                 <button type="button" onClick={()=>{console.log(page)}}>state/page</button>
