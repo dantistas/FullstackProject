@@ -98,6 +98,11 @@ const NewCompanyEstablish = (props) => {
         return errorMessage
     }
 
+    const validationDummy = (value) => {
+        console.log(value)
+        return null
+    }
+
     
     const typeOfCompanyOptions = [
         { value: null, label: "Type of the company"},
@@ -122,7 +127,20 @@ const NewCompanyEstablish = (props) => {
         }
         setPage(page+1)
         setShares(values.numberOfShares)
+        props.scrollToTop()
     }
+
+    const nextPage = () => {
+        setPage(page+1)
+        props.scrollToTop()
+    }
+
+    const previousPage = () => {
+        setPage(page-1)
+        props.scrollToTop()
+    }
+
+    
 
 return(
         <div>
@@ -148,7 +166,7 @@ return(
                     onSubmit={props.handleSubmit}
                             >
                             {({ isValid, dirty, setFieldValue, setFieldTouched, values, errors, touched})=>{
-                                const firstPartValidation = values.numberOfShareHolders > 3 || values.numberOfShareHolders < 1 || !values.preferredCompanyName || !values.alternativeCompanyName || !values.typeOfCompany || !values.natureOfBusiness || !values.email || !values.telephone || !values.companyAdress || !values.companyPostcode || !values.numberOfShares || !values.valueOfAllShares || !values.numberOfShareHolders
+                                const firstPartValidation = values.numberOfShareHolders > 3 || values.numberOfShareHolders < 1 || errors.alternativeCompanyName || errors.companyAdress || errors.companyPostcode || errors.email || errors.natureOfBusiness || errors.numberOfShareHolders || errors.numberOfShares || errors.preferredCompanyName || errors.telephone || errors.typeOfCompany || errors.valueOfAllShares
                                 return(
                                     <Form style={{"paddingTop":"10px" , "width":"260px"}}>
                                         { page === 0  ? [<div className="field">
@@ -190,7 +208,7 @@ return(
                                             <div className="buttons">
                                                 <button className="button is-success" disabled={values.numberOfShareHolders > 3 || values.numberOfShareHolders < 1 || firstPartValidation}  type="button" onClick={()=>{createShareholders(values)}}>Next</button>
                                                 <div>
-                                                   {firstPartValidation ? <p style={{"color": "red"}}>All fields are required!</p> : null} 
+                                                   {firstPartValidation ? <p style={{"color": "red"}}>please check the fields!</p> : null} 
                                                 </div>
                                             </div>
                                             ] 
@@ -256,10 +274,12 @@ return(
                                                     <FileUpload values={values.shareHolders[index]} uploadedFile={props.uploadedFile} setUploadedFile={props.setUploadedFile}/>
                                                  </div>,
                                                  <div className="buttons">
-                                                    <button type="button" onClick={()=>{props.scrollToTop()}}>to the top</button>
+                                                    <button type="button" onClick={()=>{console.log(shareholder)}}>shareholder info</button>
                                                     <button type="button" onClick={()=>{console.log(shareholderInfoValidation)}}>check 2 validation</button>
-                                                    <button type="button" className="button is-success" disabled={shareholderInfoValidation} onClick={()=>{setPage(page+1)}}>Next</button>
-                                                    <button type="button" className="button is-danger is-inverted" onClick={()=>{setPage(page-1)}}>Back</button>
+                                                    <button type="button" className="button is-success" disabled={shareholderInfoValidation} onClick={nextPage}>Next</button>
+                                                    <button type="button" className="button is-danger is-inverted" onClick={previousPage}>Back</button>
+                                
+                                                    <button type="button" onClick={()=>{console.log(isValid )}}>valid</button>
                                                     <div>
                                                         {shareholderInfoValidation ? <p style={{"color": "red"}}>Please check the fields!</p> : null} 
                                                     </div>
@@ -271,24 +291,36 @@ return(
                                         {page === values.shareHolders.length + 1 ?
                                                                                 [
                                                                                 <div >
-                                                                                    <Field  placeholder="Aditional informnation" name="message" component={TextArea}/>
+                                                                                    <Field  placeholder="Aditional informnation" name="message" component={TextArea} validate={validationDummy}/>
                                                                                 </div>,
                                                                                 <label className="checkbox">
-                                                                                    <Field type="checkbox" name="confirmed" checked={values.confirmed}/> I confirm that all information provided is correct 
+                                                                                    <Field type="checkbox" name="confirmed" checked={values.confirmed} validate={validationDummy}/> I confirm that all information provided is correct 
                                                                                 </label>,
                                                                                 <div className="buttons" >
                                                                                     <button className="button is-success" type="submit" disabled={!dirty || !isValid || values.confirmed === false}>Submit</button>
                                                                                     <button  type="button" className="button is-success is-inverted" onClick={()=>{setPage(page-1)}}>Back</button>
+                                                                                    <button type="button" onClick={()=>{console.log(isValid)}}>valid</button>
                                                                                     <div>
-                                                                                        {values.confirmed === false ? <p style={{"color": "red"}}>Please confirm!</p> : null} 
+                                                                                        {values.confirmed === false ? <p style={{"color": "red"}}>Please confirm!</p> : !isValid ?  <p style={{"color":"red"}}>Check the fields please:</p> : null}
+                                                                                        {errors.shareHolders ? errors.shareHolders.map((error, index)=>{
+                                                                                            console.log(error, index)
+                                                                                                return(
+                                                                                                        <p style={{"color":"red"}}>Shareholder {index}: {Object.keys(error).map(function(key){
+                                                                                                            return (
+                                                                                                                <p style={{"color":"red"}}>{key.substring(0, 1).toUpperCase() + key.substring(1).replace(/([A-Z])/g, ' $1').trim()}: {error[key]}</p>
+                                                                                                            )
+                                                                                                        })}</p>
+                                                                                                )
+                                                                                            }
+                                                                                        ) : null }  
                                                                                     </div>
                                                                                 </div>
                                                                                 
                                                                                 ] : null }
                                             <div style={{"paddingTop":"10px" , "width":"260px"}}>
+                                            <button type="button" onClick={()=>{console.log(errors.shareHolders)}}>errorai</button>
                                                 <button type="button" onClick={()=>{console.log(values)}}>values</button>
                                                 <button type="button" onClick={()=>{console.log(page)}}>state/page</button>
-                                                <button type="button" onClick={()=>{console.log(shares)}}>state/shares</button>
                                                 <button className="button is-success" type="submit" disabled={!dirty || !isValid}>submit</button>
                                             </div>
                                     </Form>
@@ -303,8 +335,6 @@ return(
 export default NewCompanyEstablish
 
 
-//padaryti kad kiekvienam shareholderiui padarytu fieldus atitinkamai i initial values! galbut net tas field array nera reikalingas siou atveju
-// tada padaryti kad kiekviena karta pakeitus number of shareholders tik tiek ju array ir butu nei daugiau nei maziau
-// padaryti error kad rodytu pries type of company
+
 // padaryti po submit kad ismestu nauje modal su res.json
-//perdaryti kad modalas butu app.js ir tada i ten ikelti contact us forma. karocia padaryti kad butu centre tas sudas nes jau zajibalka 
+// perdaryti su yup validation scheme arba padaryti kad next negalima butu spaust kol nera erroru

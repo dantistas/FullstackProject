@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import axios from 'axios'
 import { Formik, Field, Form } from 'formik';
 import { useForm } from "react-hook-form";
@@ -39,12 +39,12 @@ const ContactUsForm = (props) => {
             "padding": "10px",
             "width" : "375px"
     }
+
+
+    const topRef = React.useRef(null);
     const scrollToTop = () => {
-        window.scrollTo({    //issiaiskint kaip veike sitas scroll apas 
-          top: 0,
-          behavior: "smooth"
-        });
-      }
+        topRef.current.scrollIntoView();
+    };
 
     return (
         <div>
@@ -54,8 +54,8 @@ const ContactUsForm = (props) => {
                   <p className="title">Contact us</p>
                 </div>
                     {/* {<div className="container py-4 px-6"} >*/}
-                  <div className="modal-content py-4 px-6" style={krc} >  
-                    <div className="columns is-vcentered is-centered py-3" style={{"paddingTop":"10px" , "width":"300px"}}>
+                  <div className="modal-content py-4 px-6" style={krc} > 
+                    <div ref={topRef} className="columns is-vcentered is-centered py-3" style={{"paddingTop":"10px" , "width":"300px"}}>
                       <div className="column is-centered" style={krc}>
                         <div className="select" style={{"paddingBottom": "5px"}} >
                             <select style={{"width":"260px"}} onChange={handleSelectFieldChange}>
