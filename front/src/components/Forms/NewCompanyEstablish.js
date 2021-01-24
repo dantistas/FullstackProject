@@ -98,11 +98,6 @@ const NewCompanyEstablish = (props) => {
         return errorMessage
     }
 
-    const validationDummy = (value) => {
-        console.log(value)
-        return null
-    }
-
     
     const typeOfCompanyOptions = [
         { value: null, label: "Type of the company"},
@@ -208,7 +203,7 @@ return(
                                             <div className="buttons">
                                                 <button className="button is-success" disabled={values.numberOfShareHolders > 3 || values.numberOfShareHolders < 1 || firstPartValidation}  type="button" onClick={()=>{createShareholders(values)}}>Next</button>
                                                 <div>
-                                                   {firstPartValidation ? <p style={{"color": "red"}}>please check the fields!</p> : null} 
+                                                   {firstPartValidation ? <p style={{"color": "red"}}>Please check the fields!</p> : null} 
                                                 </div>
                                             </div>
                                             ] 
@@ -216,113 +211,89 @@ return(
                                         {page > 0 ? 
                                         <div>
                                             {values.shareHolders.map((shareholder, index)=>{
-                                            const shareholderInfoValidation = !shareholder.position || !shareholder.numberOfShares || !shareholder.name || !shareholder.surname || !shareholder.dateOfBirth || !shareholder.nationality || !shareholder.email || !shareholder.phonenumber || !shareholder.address || !shareholder.postcode || !shareholder.homeTown || !shareholder.mothersMaidenName || !shareholder.fathersName
-                                            return(
-                                             <div>
-                                                 { page === shareholder.shareholder ? 
-                                                 [<h3 className="subtitle is-4">Shareholder {shareholder.shareholder} of {values.shareHolders.length}</h3>,
-                                                 <div className="field"> 
-                                                    <SelectField label="Position" name={`shareHolders[${index}].position`} options={positionOfShareholderOptions} validate={validateSelectField} />
-                                                    <div style={{color:'red'}}>
-                                                        {!errors.shareHolders ? null : !errors.shareHolders[index] ? null : errors.shareHolders[index].position ? <p>{errors.shareHolders[index].position}</p> : null }
-                                                    </div>
-                                                 </div>,
-                                                 <div className="field">
-                                                    <Field placeholder="Number of shares holding e.g. 100" name={`shareHolders[${index}].numberOfShares`} validate={validateSharesPerShareholder} component={TextField}/>
-                                                 </div>,
-                                                 <div className="field">
-                                                    <Field placeholder="Name" name={`shareHolders[${index}].name`} validate={validateField} component={TextField}/>
-                                                 </div>,
-                                                 <div className="field">
-                                                    <Field placeholder="Surname" name={`shareHolders[${index}].surname`} validate={validateField} component={TextField}/>
-                                                 </div>,
-                                                 <div className="field">
-                                                    <Field placeholder="Date of Birth DD/MM/YYYY" name={`shareHolders[${index}].dateOfBirth`} validate={validateDOB} component={TextField}/>
-                                                 </div>,
-                                                 <div className="field">
-                                                    <Field placeholder="E-mail" name={`shareHolders[${index}].email`} validate={validateEmail} component={TextField}/>
-                                                 </div>,
-                                                 <div className="field">
-                                                    <Field placeholder="Phonenumber" name={`shareHolders[${index}].phonenumber`} validate={validatePhoneNumber} component={TextField}/>
-                                                 </div>,
-                                                 <div className="field">
-                                                    <Field placeholder="Address" name={`shareHolders[${index}].address`} validate={validateField} component={TextField}/>
-                                                 </div>,
-                                                 <div className="field">
-                                                    <Field placeholder="Postcode" name={`shareHolders[${index}].postcode`} validate={validateField} component={TextField}/>
-                                                 </div>,
-                                                 <div className="field">
-                                                    <Field placeholder="National insurance number" name={`shareHolders[${index}].NINnumber`} component={TextField}/>
-                                                 </div>,
-                                                 <div className="field">
-                                                    <Field placeholder="UTR number" name={`shareHolders[${index}].UTRnumber`} component={TextField}/>
-                                                 </div>,
-                                                 <div className="field">
-                                                    <Field placeholder="Nationality" name={`shareHolders[${index}].nationality`} validate={validateField} component={TextField}/>
-                                                 </div>,
-                                                 <div className="field">
-                                                    <Field placeholder="Home town" name={`shareHolders[${index}].homeTown`} validate={validateField} component={TextField}/>
-                                                 </div>,
-                                                 <div className="field">
-                                                    <Field placeholder="Mothers maiden name" name={`shareHolders[${index}].mothersMaidenName`} validate={validateField} component={TextField}/>
-                                                 </div>,
-                                                 <div className="field">
-                                                    <Field placeholder="Fathers name" name={`shareHolders[${index}].fathersName`} validate={validateField} component={TextField}/>
-                                                 </div>,
-                                                 <div className="field">
-                                                     <label>Copy of ID: </label>
-                                                    <FileUpload values={values.shareHolders[index]} uploadedFile={props.uploadedFile} setUploadedFile={props.setUploadedFile}/>
-                                                 </div>,
-                                                 <div className="buttons">
-                                                    <button type="button" onClick={()=>{console.log(shareholder)}}>shareholder info</button>
-                                                    <button type="button" onClick={()=>{console.log(shareholderInfoValidation)}}>check 2 validation</button>
-                                                    <button type="button" className="button is-success" disabled={shareholderInfoValidation} onClick={nextPage}>Next</button>
-                                                    <button type="button" className="button is-danger is-inverted" onClick={previousPage}>Back</button>
-                                
-                                                    <button type="button" onClick={()=>{console.log(isValid )}}>valid</button>
-                                                    <div>
-                                                        {shareholderInfoValidation ? <p style={{"color": "red"}}>Please check the fields!</p> : null} 
-                                                    </div>
-                                                 </div>]
-                                                  : null }
-                                             </div>
-                                            )})}
-                                        </div>  : null}
+                                                const shareholderInfoValidation = !errors.shareHolders ? false : !errors.shareHolders[index] ? false  : errors.shareHolders[index].position || errors.shareHolders[index].numberOfShares || errors.shareHolders[index].name || errors.shareHolders[index].surname || errors.shareHolders[index].dateOfBirth || errors.shareHolders[index].nationality || errors.shareHolders[index].email || errors.shareHolders[index].phonenumber || errors.shareHolders[index].address || errors.shareHolders[index].postcode || errors.shareHolders[index].homeTown || errors.shareHolders[index].mothersMaidenName || errors.shareHolders[index].fathersName ?  true :  false
+                                                return(
+                                                <div>
+                                                    { page === shareholder.shareholder ? 
+                                                    [<h3 className="subtitle is-4">Shareholder {shareholder.shareholder} of {values.shareHolders.length}</h3>,
+                                                    <div className="field"> 
+                                                        <SelectField label="Position" name={`shareHolders[${index}].position`} options={positionOfShareholderOptions} validate={validateSelectField} />
+                                                        <div style={{color:'red'}}>
+                                                            {!errors.shareHolders ? null : !errors.shareHolders[index] ? null : errors.shareHolders[index].position ? <p>{errors.shareHolders[index].position}</p> : null }
+                                                        </div>
+                                                    </div>,
+                                                    <div className="field">
+                                                        <Field placeholder="Number of shares holding e.g. 100" name={`shareHolders[${index}].numberOfShares`} validate={validateSharesPerShareholder} component={TextField}/>
+                                                    </div>,
+                                                    <div className="field">
+                                                        <Field placeholder="Name" name={`shareHolders[${index}].name`} validate={validateField} component={TextField}/>
+                                                    </div>,
+                                                    <div className="field">
+                                                        <Field placeholder="Surname" name={`shareHolders[${index}].surname`} validate={validateField} component={TextField}/>
+                                                    </div>,
+                                                    <div className="field">
+                                                        <Field placeholder="Date of Birth DD/MM/YYYY" name={`shareHolders[${index}].dateOfBirth`} validate={validateDOB} component={TextField}/>
+                                                    </div>,
+                                                    <div className="field">
+                                                        <Field placeholder="E-mail" name={`shareHolders[${index}].email`} validate={validateEmail} component={TextField}/>
+                                                    </div>,
+                                                    <div className="field">
+                                                        <Field placeholder="Phonenumber" name={`shareHolders[${index}].phonenumber`} validate={validatePhoneNumber} component={TextField}/>
+                                                    </div>,
+                                                    <div className="field">
+                                                        <Field placeholder="Address" name={`shareHolders[${index}].address`} validate={validateField} component={TextField}/>
+                                                    </div>,
+                                                    <div className="field">
+                                                        <Field placeholder="Postcode" name={`shareHolders[${index}].postcode`} validate={validateField} component={TextField}/>
+                                                    </div>,
+                                                    <div className="field">
+                                                        <Field placeholder="National insurance number" name={`shareHolders[${index}].NINnumber`} component={TextField}/>
+                                                    </div>,
+                                                    <div className="field">
+                                                        <Field placeholder="UTR number" name={`shareHolders[${index}].UTRnumber`} component={TextField}/>
+                                                    </div>,
+                                                    <div className="field">
+                                                        <Field placeholder="Nationality" name={`shareHolders[${index}].nationality`} validate={validateField} component={TextField}/>
+                                                    </div>,
+                                                    <div className="field">
+                                                        <Field placeholder="Home town" name={`shareHolders[${index}].homeTown`} validate={validateField} component={TextField}/>
+                                                    </div>,
+                                                    <div className="field">
+                                                        <Field placeholder="Mothers maiden name" name={`shareHolders[${index}].mothersMaidenName`} validate={validateField} component={TextField}/>
+                                                    </div>,
+                                                    <div className="field">
+                                                        <Field placeholder="Fathers name" name={`shareHolders[${index}].fathersName`} validate={validateField} component={TextField}/>
+                                                    </div>,
+                                                    <div className="field">
+                                                        <label>Copy of ID: </label>
+                                                        <FileUpload values={values.shareHolders[index]} uploadedFile={props.uploadedFile} setUploadedFile={props.setUploadedFile}/>
+                                                    </div>,
+                                                    <div className="buttons">
+                                                        <button type="button" className="button is-success" disabled={!shareholder.position || shareholderInfoValidation} onClick={nextPage}>Next</button>
+                                                        <button type="button" className="button is-danger is-inverted" onClick={previousPage}>Back</button>
+                                                        <div>
+                                                            {shareholderInfoValidation ? <p style={{"color": "red"}}>Please check the fields!</p> : null} 
+                                                        </div>
+                                                    </div>]
+                                                    : null }
+                                                </div>
+                                                )})}
+                                            </div>  : null}
                                         {page === values.shareHolders.length + 1 ?
                                                                                 [
                                                                                 <div >
-                                                                                    <Field  placeholder="Aditional informnation" name="message" component={TextArea} validate={validationDummy}/>
+                                                                                    <Field  placeholder="Aditional informnation" name="message" component={TextArea}/>
                                                                                 </div>,
-                                                                                <label className="checkbox">
-                                                                                    <Field type="checkbox" name="confirmed" checked={values.confirmed} validate={validationDummy}/> I confirm that all information provided is correct 
+                                                                                <label className="checkbox" style={{"color":`${values.confirmed === false ? "red" : "white"}`}}>
+                                                                                    <Field type="checkbox" name="confirmed" checked={values.confirmed}/> I confirm that all information provided is correct 
                                                                                 </label>,
                                                                                 <div className="buttons" >
                                                                                     <button className="button is-success" type="submit" disabled={!dirty || !isValid || values.confirmed === false}>Submit</button>
                                                                                     <button  type="button" className="button is-success is-inverted" onClick={()=>{setPage(page-1)}}>Back</button>
                                                                                     <button type="button" onClick={()=>{console.log(isValid)}}>valid</button>
-                                                                                    <div>
-                                                                                        {values.confirmed === false ? <p style={{"color": "red"}}>Please confirm!</p> : !isValid ?  <p style={{"color":"red"}}>Check the fields please:</p> : null}
-                                                                                        {errors.shareHolders ? errors.shareHolders.map((error, index)=>{
-                                                                                            console.log(error, index)
-                                                                                                return(
-                                                                                                        <p style={{"color":"red"}}>Shareholder {index}: {Object.keys(error).map(function(key){
-                                                                                                            return (
-                                                                                                                <p style={{"color":"red"}}>{key.substring(0, 1).toUpperCase() + key.substring(1).replace(/([A-Z])/g, ' $1').trim()}: {error[key]}</p>
-                                                                                                            )
-                                                                                                        })}</p>
-                                                                                                )
-                                                                                            }
-                                                                                        ) : null }  
-                                                                                    </div>
                                                                                 </div>
                                                                                 
                                                                                 ] : null }
-                                            <div style={{"paddingTop":"10px" , "width":"260px"}}>
-                                            <button type="button" onClick={()=>{console.log(errors.shareHolders)}}>errorai</button>
-                                                <button type="button" onClick={()=>{console.log(values)}}>values</button>
-                                                <button type="button" onClick={()=>{console.log(page)}}>state/page</button>
-                                                <button className="button is-success" type="submit" disabled={!dirty || !isValid}>submit</button>
-                                            </div>
                                     </Form>
                                     )
                                 }
@@ -337,4 +308,3 @@ export default NewCompanyEstablish
 
 
 // padaryti po submit kad ismestu nauje modal su res.json
-// perdaryti su yup validation scheme arba padaryti kad next negalima butu spaust kol nera erroru

@@ -61,21 +61,21 @@ app.post('/swx', async (req, res)  => {
   console.log("req.files: ", req.files)
   let file 
 
-  if(req.files){
-    file = req.files.file
-    file.mv(`${__dirname}/uploads/${file.name}`)
-  }
+  // if(req.files){
+  //   file = req.files.file
+  //   file.mv(`${__dirname}/uploads/${file.name}`)
+  // }
 
-  const message = messageToEmail(req.body, file)
-  const toClient = messageToClient(req.body)
+  // const message = messageToEmail(req.body, file)
+  // const toClient = messageToClient(req.body)
 
-  await transporter.sendMail(message,(err)=>{
-    if(err){
-      res.json({Error:err})      // kazka sugalvoti su siuo erroru, kad nesiustu useriui
-    }else{
-      res.json(`Thank you ${req.body.name}, your message was succesfuly sent!`)
-    }
-  });
+  // await transporter.sendMail(message,(err)=>{
+  //   if(err){
+  //     res.json({Error:err})      // kazka sugalvoti su siuo erroru, kad nesiustu useriui
+  //   }else{
+  //     res.json(`Thank you ${req.body.name}, your message was succesfuly sent!`)
+  //   }
+  // });
 
 });
 
@@ -85,3 +85,5 @@ app.listen(port, () => {
 
 
 
+
+// req.body shareholderiouse rodo object object. patvarkyti ten biski failai veike puikeusei.
