@@ -24,16 +24,19 @@ const ContactUsForm = (props) => {
 
         console.log("fronte: ",values)
         let formData = new FormData()
-        Object.keys(values).forEach((value) => {formData.append(value, values[value])})
+        Object.keys(values).forEach((value) => {if(value === "shareHolders"){
+            values[value].forEach((shareholder)=>{formData.append(value, Object.keys(shareholder).map((key)=>(`${key}: ${shareholder[key]} `)))})
+        }else{
+            formData.append(value, values[value])
+        }
+    })
         if(uploadedFile !== null){
             for(let i = 0; i< uploadedFile.length ; i ++){
                 formData.append('file', uploadedFile[i])
             }  
         }
-
-        console.log(formData)
-
-        axios.post('http://localhost:3001/swx', formData).then((response) => {console.log(response)})
+        
+        axios.post('http://localhost:3001/swx', formData).then((response) => {console.log("res: ",response.data)})
 
         // axios.post('http://localhost:3001/swx', formData).then((response) => {console.log(response)})
     

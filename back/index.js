@@ -76,7 +76,7 @@ app.post('/swx', async (req, res)  => {
   //     res.json(`Thank you ${req.body.name}, your message was succesfuly sent!`)
   //   }
   // });
-
+  res.json(req.body)
 });
 
 app.listen(port, () => {
