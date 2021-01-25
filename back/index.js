@@ -60,7 +60,8 @@ app.post('/swx', async (req, res)  => {
   console.log("req.body: ", req.body)
   console.log("req.files: ", req.files)
   let file 
-
+  const shareholders = JSON.parse(req.body.shareHolders[0])
+  console.log(shareholders.name) // <<<------ krc stringify suveike  sitas kaip ir padarytas jau
   // if(req.files){
   //   file = req.files.file
   //   file.mv(`${__dirname}/uploads/${file.name}`)

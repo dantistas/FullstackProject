@@ -25,7 +25,7 @@ const ContactUsForm = (props) => {
         console.log("fronte: ",values)
         let formData = new FormData()
         Object.keys(values).forEach((value) => {if(value === "shareHolders"){
-            values[value].forEach((shareholder)=>{formData.append(value, Object.keys(shareholder).map((key)=>(`${key}: ${shareholder[key]} `)))})
+            values[value].forEach((shareholder)=>{formData.append(value, JSON.stringify(shareholder))}) //<<---- cia grynai kaip JSON.stringify
         }else{
             formData.append(value, values[value])
         }
