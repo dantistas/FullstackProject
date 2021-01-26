@@ -27,8 +27,6 @@ const App = () => {
 
   let history = useHistory();
 
-  console.log("history",history)
-
   const toggleVisibility = () => {
     setVisible(!visible)
   }
@@ -106,15 +104,12 @@ const App = () => {
               </Route>
             </Switch>
             <ContactUsForm showWhenVisible={showWhenVisible} toggleVisibility={toggleVisibility}/>
-            <button onClick={()=>{console.log(visible)}}>button</button>
-            <a href="mailto:info@mastis.co.uk"><strong>info@mastis.co.uk</strong></a>
-            <a href="tel:+447450225137"><strong>+447450 225 137</strong></a>
           </div>
         </div>
       </div>
       <div id="contact-us-fab">
           <Fab aria-label="contact-us">
-              <ChatOutlinedIcon onClick={()=>{console.log("WTF"); toggleVisibility()}}/>
+              <ChatOutlinedIcon onClick={()=>{toggleVisibility()}}/>
           </Fab>
       </div>
     </Router>

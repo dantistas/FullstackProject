@@ -24,7 +24,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const messageToCompany = (values, files) => {
-  // console.log(values)
+  console.log("???",files)
   // const{type, name, email, telephone, message} = values
   // Object.keys(values).forEach((key)=>{console.log(key, values[key])})
 
@@ -37,12 +37,12 @@ const messageToCompany = (values, files) => {
     
   }
 
-  if(files && files.length > 0){
+  if(files && files.length > 1){
     emailPattern.attachments = []
     for(let i =0 ; i<files.length ; i++){
       emailPattern.attachments.push({fileName: files[i].name, path: `${__dirname}/uploads/${files[i].name}`})
     }
-  }else if (files){
+  }else if (files.length === 1){
     emailPattern.attachments = []
     emailPattern.attachments.push({fileName: files[0].name, path: `${__dirname}/uploads/${files[0].name}`})
   }
@@ -83,12 +83,13 @@ app.post('/swx', async (req, res)  => {
 
   await transporter.sendMail(toCompany,(err)=>{
     if(err){
-      res.json({Error:err})      // kazka sugalvoti su siuo erroru, kad nesiustu useriui
+      console.log(err)
+      res.json({error:"Something went wrong, please try again later or call us +447450 225 137"})      // kazka sugalvoti su siuo erroru, kad nesiustu useriui
     }else{
-      res.json(`Thank you ${req.body.name}, your message was succesfuly sent!`)
+      res.json({successful:`Thank you, we have successfuly received your message!`})
     }
   });
-  res.json(JSON.parse(req.body.values))
+  // res.json(JSON.parse(req.body.values))
 });
 
 app.listen(port, () => {
@@ -97,5 +98,3 @@ app.listen(port, () => {
 
 
 
-
-// req.body shareholderiouse rodo object object. patvarkyti ten biski failai veike puikeusei.
