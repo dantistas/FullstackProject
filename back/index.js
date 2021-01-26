@@ -4,6 +4,7 @@ const  cors = require('cors');
 require('dotenv').config();
 const nodemailer = require("nodemailer");
 const servicesDB =require('./data/services.json');
+const { json } = require('express');
 
 const app = express();
 
@@ -22,20 +23,28 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const messageToEmail = (elements, file) => {
-  console.log(elements, file)
-  const{type, name, email, telephone, message} = elements
+const messageToCompany = (values, files) => {
+  // console.log(values)
+  // const{type, name, email, telephone, message} = values
+  // Object.keys(values).forEach((key)=>{console.log(key, values[key])})
 
   const emailPattern = {
     from: process.env.EMAIL, // sender address/ company name
     to: "testastestauskas@yandex.com", // list of receivers
-    subject: `Message from: ${email}, Subject: ${type}`, // Subject line
-    html: `<b>name: ${name}</b><br/><b> Phone: ${telephone}</b><br/><b> E-mail: ${email}</b><br/><p>${message}<p/>`, // html body
-    replyTo: email // reply to option
+    subject: `Message from: ${values.email}, Subject: ${values.type}`, // Subject line
+    html: `<b>name: ${values.name}</b><br/><b> Phone: ${values.telephone}</b><br/><b> E-mail: ${values.email}</b><br/><p>${values.message}<p/><br/><p>${JSON.stringify(values, undefined,2)}</p>`, // html body
+    replyTo: values.email // reply to option
+    
   }
 
-  if(file){
-    emailPattern.attachments = [{fileName: file.name, path: `${__dirname}/uploads/${file.name}`}]
+  if(files && files.length > 0){
+    emailPattern.attachments = []
+    for(let i =0 ; i<files.length ; i++){
+      emailPattern.attachments.push({fileName: files[i].name, path: `${__dirname}/uploads/${files[i].name}`})
+    }
+  }else if (files){
+    emailPattern.attachments = []
+    emailPattern.attachments.push({fileName: files[0].name, path: `${__dirname}/uploads/${files[0].name}`})
   }
 
   return emailPattern
@@ -57,27 +66,29 @@ app.get('/api/services', (req,res)=>{
 
 
 app.post('/swx', async (req, res)  => {
-  console.log("req.body: ", req.body)
-  console.log("req.files: ", req.files)
-  let file 
-  const shareholders = JSON.parse(req.body.shareHolders[0])
-  console.log(shareholders.name) // <<<------ krc stringify suveike  sitas kaip ir padarytas jau
-  // if(req.files){
-  //   file = req.files.file
-  //   file.mv(`${__dirname}/uploads/${file.name}`)
-  // }
+  const values = JSON.parse(req.body.values)
+  let files = []
 
-  // const message = messageToEmail(req.body, file)
+  if(req.files && req.files.file.length > 0){
+    for(let i = 0; i< req.files.file.length; i++){
+      files.push(req.files.file[i])                              
+      files[i].mv(`${__dirname}/uploads/${files[i].name}`)
+    }
+  } else if (req.files){
+    files.push(req.files.file)
+    files[0].mv(`${__dirname}/uploads/${files[0].name}`)
+  }
+  const toCompany = messageToCompany(values, files)
   // const toClient = messageToClient(req.body)
 
-  // await transporter.sendMail(message,(err)=>{
-  //   if(err){
-  //     res.json({Error:err})      // kazka sugalvoti su siuo erroru, kad nesiustu useriui
-  //   }else{
-  //     res.json(`Thank you ${req.body.name}, your message was succesfuly sent!`)
-  //   }
-  // });
-  res.json(req.body)
+  await transporter.sendMail(toCompany,(err)=>{
+    if(err){
+      res.json({Error:err})      // kazka sugalvoti su siuo erroru, kad nesiustu useriui
+    }else{
+      res.json(`Thank you ${req.body.name}, your message was succesfuly sent!`)
+    }
+  });
+  res.json(JSON.parse(req.body.values))
 });
 
 app.listen(port, () => {

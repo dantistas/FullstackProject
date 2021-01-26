@@ -24,12 +24,7 @@ const ContactUsForm = (props) => {
 
         console.log("fronte: ",values)
         let formData = new FormData()
-        Object.keys(values).forEach((value) => {if(value === "shareHolders"){
-            values[value].forEach((shareholder)=>{formData.append(value, JSON.stringify(shareholder))}) //<<---- cia grynai kaip JSON.stringify
-        }else{
-            formData.append(value, values[value])
-        }
-    })
+        formData.append("values", JSON.stringify(values) )
         if(uploadedFile !== null){
             for(let i = 0; i< uploadedFile.length ; i ++){
                 formData.append('file', uploadedFile[i])
