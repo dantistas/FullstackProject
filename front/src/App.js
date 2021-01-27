@@ -33,7 +33,7 @@ const App = () => {
 
   useEffect(()=>{
    
-    axios.get("/api/services").then((res)=>{     //<<<----- paskui pakeisti i api/services tik!
+    axios.get("http://localhost:3001/api/services").then((res)=>{     //<<<----- paskui pakeisti i api/services tik!
          setServicesDB(res.data)
        })
 

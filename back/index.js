@@ -18,8 +18,11 @@ const port = process.env.PORT || 3001 ;
 const transporter = nodemailer.createTransport({
   service: "Gmail",
   auth: {
+    type:"OAuth2",
     user: process.env.EMAIL, // sender address/ company name
-    pass: process.env.PASS,
+    refreshToken: process.env.EMAIL_REFRESH_TOKEN,
+    clientId: process.env.EMAIL_CLIENT_ID,
+    clientSecret: process.env.EMAIL_CLIENT_SECRET
   },
 });
 
