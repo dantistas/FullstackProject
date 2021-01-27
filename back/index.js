@@ -24,7 +24,6 @@ const transporter = nodemailer.createTransport({
 });
 
 const messageToCompany = (values, files) => {
-  console.log("???",files)
   // const{type, name, email, telephone, message} = values
   // Object.keys(values).forEach((key)=>{console.log(key, values[key])})
 
@@ -95,6 +94,3 @@ app.post('/swx', async (req, res)  => {
 app.listen(port, () => {
   console.log(`Example app listening at ${port}`)
 });
-
-
-

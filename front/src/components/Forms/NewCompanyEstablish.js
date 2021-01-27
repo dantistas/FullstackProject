@@ -290,7 +290,6 @@ return(
                                                                                 <div className="buttons" >
                                                                                     <button className="button is-success" type="submit" disabled={!dirty || !isValid || values.confirmed === false}>Submit</button>
                                                                                     <button  type="button" className="button is-success is-inverted" onClick={()=>{setPage(page-1)}}>Back</button>
-                                                                                    <button type="button" onClick={()=>{console.log(isValid)}}>valid</button>
                                                                                 </div>
                                                                                 
                                                                                 ] : null }

@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
-import { Formik, Field, Form } from 'formik';
 import axios from 'axios'
-
+import OtherQueries from './Forms/OtherQueries'
+import CallIcon from '@material-ui/icons/Call';
+import EmailIcon from '@material-ui/icons/Email';
+import ChatIcon from '@material-ui/icons/Chat';
+import { Fab } from '@material-ui/core';
 
 const Contact = (props) => {
     const [name, setName] = useState('')
@@ -51,143 +54,41 @@ const Contact = (props) => {
       }
 
 
-        return ( 
-            <div className="columns" style={{"width": "80%"}}>
-                <div className="column px-6">
-                    <a style={{"color":"silver"}}  href="mailto:info@mastis.co.uk"><strong>Email: info@mastis.co.uk</strong></a>
-                </div>
-                <div className="column px-6">
-                    <a style={{"color":"silver"}} href="tel:+447450225137"><strong>Telephone: +447450 225 137</strong></a>
-                </div>
-                <form onSubmit={submit} >
-                    <div class="field">
-                        <input
-                            class="input"
-                            value={name}
-                            onChange={({ target }) => setName(target.value)}
-                            placeholder="Name"
-                            required
-                        />
-                    </div>
-                    <div class="field">
-                        <input
-                            class="input"
-                            value={email}
-                            onChange={({ target }) => setEmail(target.value)}
-                            placeholder="E-mail"
-                            required
-                        />
-                    </div>
-                    <div class="field">
-                        <input
-                            class="input"
-                            value={phonenumber}
-                            onChange={({ target }) => setPhonenumber(target.value)}
-                            placeholder="Phonenumber"
-                            required
-                        />
-                    </div>
-                    <div class="field">
-                        <input
-                            class="textarea"
-                            value={body}
-                            onChange={({ target }) => setBody(target.value)}
-                            placeholder="Message"
-                            required
-                        />
-                    </div>
-                    <div class="field is-grouped is-grouped-centered">
-                        <button class="button is-primary" type='submit' style={{"width": "100%"}}>Send!</button>
-                    </div>
-                </form>
-                <h2>formikas</h2>
-                <Formik 
-                    initialValues={{
-                        type:"",
-
-                        name:"",
-                        email:"",
-                        telephone:"",
-                        address:"",
-                        UTRnumber:"",
-                        dateOfBirth:"",
-                        NINnumber: "",
-                        message:"",
-                        upload:"",
-                        
-                        companyName:"",
-                        companyNumber: "",
-                        email2:"",
-                        telephone2:"",
-                        VATregistrationNumber:"",
-                        utrnr2:"",
-                        message2:"",
-                        upload2:"",
-
-                        preferedCompanyName: "",
-                        alternativeName: "",
-                        companyType:"",
-                        natureOfbusiness:"",
-                        email3:"",
-                        telephone3:"",
-                        companyAdress:"",
-                        postcode:"",
-                        numberOfShares:"",
-                        valueOFShares:"",
-                        numberOFshareholders:"",
-                        shareholderPosition: "dropdown",
-                        numberofSharesHolding:"",
-                        nameOfShareholder:"",
-                        surnameOfShareholder:"",
-                        dateOfBirthOfShareholder:"",
-                        nationalInsuranceOfShareholder:"",
-                        utrNumberOFShareholder:"",
-                        nationalityOfShareholder:"",
-                        emailOfShareholder:"",
-                        phonenumberOfShareholder:"",
-                        adressOfShareholder:"",
-                        postcodeOFShareholderr:"",
-                        hometownOfShareholder:"",
-                        mothersMaidenNameOfshareholder:"",
-                        fathersNameOFShareholder:"",
-                        uploadIDFOTO: "",
-                        checkbox:"confimation that details are correct",
-
-                        nameOtherQueries:"",
-                        emailOtherqueries:"",
-                        telephoneOTherqueries:"",
-                        messageOtherQueries:"",
-                        uploadOtherqueries:""
-
-
-                }}
-                onSubmit={onSubmit}
-                validate={values => {
-                    // cia eis validationas
-                }}
-                >
-                {({ isValid, dirty, setFieldValue, setFieldTouched, values, errors})=>{ 
-                    return (
-                        <Form>
-                            <div>
-                                <Field as="select" name="type">
-                                    <option defaultChecked disabled value="null">Select an entry type</option>
-                                    <option value={1}>1</option>
-                                    <option value={2}>2</option>
-                                    <option value={3}>3</option>
-                                </Field>
+        return (
+            <div className="block">
+                <div className="columns " style={{"width": "100%"}}>
+                    <div className="column px-6">
+                        <a href="mailto:info@mastis.co.uk">
+                            <div className="notification"style={{"opacity":"0.9"}}>
+                                <Fab>
+                                    <EmailIcon color="primary" fontSize="large"/>
+                                </Fab>
+                                <strong style={{"color":"black"}}>info@mastis.co.uk</strong>
                             </div>
-
-                            <Field key="name" placeholder="Name" name="name"/>
-                            <Field key="email" placeholder="E-mail" name="email"/>
-                            <button type="button" onClick={()=>{console.log(values)}}>check values</button>
-                            <button type="submit">submit</button>
-                        </Form>
-                    )
-                }
-            }        
-                </Formik>         
-            </div>
+                        </a>
+                    </div>
+                    <div className="column px-6">
+                        <a href="tel:+447450225137">
+                            <div className="notification" style={{"opacity":"0.9"}}>
+                                    <Fab>
+                                        <CallIcon color="primary" fontSize="large"/>
+                                    </Fab>
+                                    <strong style={{"color":"black","top":"1000"}}>+447450225137</strong>
+                            </div>
+                        </a>
+                    </div>
+                    <div className="column px-6">
+                        <a type="button" onClick={()=>{props.toggleVisibility()}}>
+                            <div className="notification" style={{"opacity":"0.9"}}>
+                                <Fab>
+                                    <ChatIcon color="primary" fontSize="large" onClick={()=>{props.toggleVisibility()}}/>
+                                </Fab>
+                                <strong style={{"color":"black"}}>Contact us form</strong>               
+                            </div>
+                        </a>  
+                    </div>
+                </div>
+            </div> 
           ) 
 }
 

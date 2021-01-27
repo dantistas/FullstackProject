@@ -10,7 +10,7 @@ import mastislogo from './mastislogo.png'
 import './App.css'                      //<<<---- dabar gali keisti css xD
 import 'bulma/css/bulma.css'
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,   //<<----- BrowserRouter pakeistas i HashRouter
   Switch, Route, Link, useHistory , //<--- kadangi usehistory neveike, permesi router i index.js!!!
 } from "react-router-dom"
 import axios from 'axios'
@@ -33,7 +33,7 @@ const App = () => {
 
   useEffect(()=>{
    
-    axios.get("http://localhost:3001/api/services").then((res)=>{     //<<<----- paskui pakeisti i api/services tik!
+    axios.get("/api/services").then((res)=>{     //<<<----- paskui pakeisti i api/services tik!
          setServicesDB(res.data)
        })
 
@@ -97,9 +97,9 @@ const App = () => {
                 <Service servicesDB={servicesDB} setVisible={setVisible} visible={visible} showWhenVisible={showWhenVisible} toggleVisibility={toggleVisibility}/>
               </Route>
               <Route path="/contact">
-                <Contact inform={inform} subject={subject}/>
+                <Contact toggleVisibility={toggleVisibility} inform={inform} subject={subject}/>
               </Route>
-              <Route path="/">
+              <Route path="/" exact>
                 <Home Link={Link}/>
               </Route>
             </Switch>
@@ -124,3 +124,6 @@ export default App
 //todo
 // pakeisti fokes tieks kiekvienu service// todo
 // irasyti dotenv
+
+
+//padaryti kad kiekvienas requestas siustu i backende

@@ -93,7 +93,6 @@ return(
                                             </div>
                                             <div style={{"paddingTop":"10px" , "width":"260px"}}>
                                                 <button className="button is-success" type="submit" disabled={!dirty ||!isValid}>submit</button>
-                                                <button type="button" onClick={()=>{console.log(values)}}>values</button>
                                             </div>
         
                                     </Form>
