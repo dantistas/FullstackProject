@@ -52,19 +52,19 @@ return(
                                 return(
                                     <Form style={{"paddingTop":"10px" , "width":"260px"}}>
                                             <div className="field">
-                                                <Field placeholder="Name" name="name" validate={validateField} component={TextField}/>
+                                                <Field label="Name:" placeholder="John" name="name" validate={validateField} component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <Field placeholder="E-mail" name="email" validate={validateEmail} component={TextField}/>
+                                                <Field label="Email:" placeholder="example@domain.com" name="email" validate={validateEmail} component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <Field placeholder="Telephone" name="telephone" validate={validatePhoneNumber} component={TextField}/>
+                                                <Field label="Telephone:" placeholder="+44..." name="telephone" validate={validatePhoneNumber} component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <FileUpload values={values} uploadedFile={props.uploadedFile} setUploadedFile={props.setUploadedFile}/>
+                                                <FileUpload label="File:" values={values} uploadedFile={props.uploadedFile} setUploadedFile={props.setUploadedFile}/>
                                             </div>
                                             <div >
-                                                <Field  placeholder="Message" name="message" validate={validateField} component={TextArea}/>
+                                                <Field label="Message:" placeholder="Your message..." name="message" validate={validateField} component={TextArea}/>
                                             </div>
                                             <div style={{"paddingTop":"10px" , "width":"260px"}}>
                                                 <button className="button is-success" type="submit" disabled={!dirty || !isValid}>submit</button>

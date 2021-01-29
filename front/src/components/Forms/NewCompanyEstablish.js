@@ -165,10 +165,10 @@ return(
                                 return(
                                     <Form style={{"paddingTop":"10px" , "width":"260px"}}>
                                         { page === 0  ? [<div className="field">
-                                                <Field placeholder="Preferred company name" name="preferredCompanyName" validate={validateField} component={TextField}/>
+                                                <Field label="Company name:" placeholder="Preferred company name" name="preferredCompanyName" validate={validateField} component={TextField}/>
                                             </div>,
                                             <div className="field">
-                                                <Field placeholder="Alternative company name" name="alternativeCompanyName" validate={validateField} component={TextField}/>
+                                                <Field label="Alternative company name:" placeholder="Alternative company name" name="alternativeCompanyName" validate={validateField} component={TextField}/>
                                             </div>,
                                             <div className="field">
                                                 <SelectField label="Entry type" name="typeOfCompany" options={typeOfCompanyOptions} validate={validateSelectField}/>
@@ -177,28 +177,28 @@ return(
                                                 </div>
                                             </div>,
                                             <div className="field">
-                                                <Field placeholder="Nature of business" name="natureOfBusiness" validate={validateField} component={TextField}/>
+                                                <Field label="Nature of business:" placeholder="Purpose of the business" name="natureOfBusiness" validate={validateField} component={TextField}/>
                                             </div>,
                                             <div className="field">
-                                                <Field placeholder="E-mail" name="email" validate={validateEmail} component={TextField}/>
+                                                <Field label="Email:" placeholder="example@domain.com" name="email" validate={validateEmail} component={TextField}/>
                                             </div>,
                                             <div className="field">
-                                                <Field placeholder="Telephone" name="telephone" validate={validatePhoneNumber} component={TextField}/>
+                                                <Field label="Telephone:" placeholder="+44..." name="telephone" validate={validatePhoneNumber} component={TextField}/>
                                             </div>,
                                             <div className="field">
-                                                <Field placeholder="Company address" name="companyAdress" validate={validateField} component={TextField}/>
+                                                <Field label="Company Address:" placeholder="Street name and house number" name="companyAdress" validate={validateField} component={TextField}/>
                                             </div>,
                                             <div className="field">
-                                                <Field placeholder="Company postcode" name="companyPostcode" validate={validateField} component={TextField}/>
+                                                <Field label="Postcode:" placeholder="Company postcode" name="companyPostcode" validate={validateField} component={TextField}/>
                                             </div>,
                                             <div className="field">
-                                                <Field placeholder="Number of shares e.g. 100" name="numberOfShares" validate={validateNumberField} component={TextField}/>
+                                                <Field label="Number of shares:" placeholder="E.g. 100" name="numberOfShares" validate={validateNumberField} component={TextField}/>
                                             </div>,
                                             <div className="field">
-                                                <Field placeholder="Value of shares" name="valueOfAllShares" validate={validateNumberField} component={TextField}/>
+                                                <Field label="Value of shares:" placeholder="E.g. 1000£" name="valueOfAllShares" validate={validateNumberField} component={TextField}/>
                                             </div>,
                                             <div className="field">
-                                                <Field placeholder="Number of Share Holders" name="numberOfShareHolders" component={NumberField} min={1} max={3} validate={validateNumberOfShareHolders}/>
+                                                <Field label="Number of Share Holders:" placeholder="Max 3" name="numberOfShareHolders" component={NumberField} min={1} max={3} validate={validateNumberOfShareHolders}/>
                                             </div>,
                                             <div className="buttons">
                                                 <button className="button is-success" disabled={values.numberOfShareHolders > 3 || values.numberOfShareHolders < 1 || firstPartValidation}  type="button" onClick={()=>{createShareholders(values)}}>Next</button>
@@ -223,46 +223,46 @@ return(
                                                         </div>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field placeholder="Number of shares holding e.g. 100" name={`shareHolders[${index}].numberOfShares`} validate={validateSharesPerShareholder} component={TextField}/>
+                                                        <Field label="Number of shares holding:" placeholder="E.g. 100" name={`shareHolders[${index}].numberOfShares`} validate={validateSharesPerShareholder} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field placeholder="Name" name={`shareHolders[${index}].name`} validate={validateField} component={TextField}/>
+                                                        <Field label="Name:" placeholder="John" name={`shareHolders[${index}].name`} validate={validateField} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field placeholder="Surname" name={`shareHolders[${index}].surname`} validate={validateField} component={TextField}/>
+                                                        <Field label="Surname:" placeholder="Smith" name={`shareHolders[${index}].surname`} validate={validateField} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field placeholder="Date of Birth DD/MM/YYYY" name={`shareHolders[${index}].dateOfBirth`} validate={validateDOB} component={TextField}/>
+                                                        <Field label="Date of Birth:" placeholder="DD/MM/YYYY" name={`shareHolders[${index}].dateOfBirth`} validate={validateDOB} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field placeholder="E-mail" name={`shareHolders[${index}].email`} validate={validateEmail} component={TextField}/>
+                                                        <Field label="Email:" placeholder="example@domain.com" name={`shareHolders[${index}].email`} validate={validateEmail} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field placeholder="Phonenumber" name={`shareHolders[${index}].phonenumber`} validate={validatePhoneNumber} component={TextField}/>
+                                                        <Field label="Telephone:" placeholder="+44..." name={`shareHolders[${index}].phonenumber`} validate={validatePhoneNumber} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field placeholder="Address" name={`shareHolders[${index}].address`} validate={validateField} component={TextField}/>
+                                                        <Field label="Address:" placeholder="Street name and house number" name={`shareHolders[${index}].address`} validate={validateField} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field placeholder="Postcode" name={`shareHolders[${index}].postcode`} validate={validateField} component={TextField}/>
+                                                        <Field label="Postcode:" placeholder="Postcode" name={`shareHolders[${index}].postcode`} validate={validateField} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field placeholder="National insurance number" name={`shareHolders[${index}].NINnumber`} component={TextField}/>
+                                                        <Field label="National insurance number:" placeholder="your national insurance number" name={`shareHolders[${index}].NINnumber`} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field placeholder="UTR number" name={`shareHolders[${index}].UTRnumber`} component={TextField}/>
+                                                        <Field label="UTR number:" placeholder="your UTR number" name={`shareHolders[${index}].UTRnumber`} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field placeholder="Nationality" name={`shareHolders[${index}].nationality`} validate={validateField} component={TextField}/>
+                                                        <Field label="Nationality:" placeholder="E.g. British" name={`shareHolders[${index}].nationality`} validate={validateField} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field placeholder="Home town" name={`shareHolders[${index}].homeTown`} validate={validateField} component={TextField}/>
+                                                        <Field label="Home town:" placeholder="Name of the city you were born" name={`shareHolders[${index}].homeTown`} validate={validateField} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field placeholder="Mothers maiden name" name={`shareHolders[${index}].mothersMaidenName`} validate={validateField} component={TextField}/>
+                                                        <Field label="Mothers maiden name" placeholder="E.g. Maria" name={`shareHolders[${index}].mothersMaidenName`} validate={validateField} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field placeholder="Fathers name" name={`shareHolders[${index}].fathersName`} validate={validateField} component={TextField}/>
+                                                        <Field label="Fathers name:" placeholder="E.g. Steve" name={`shareHolders[${index}].fathersName`} validate={validateField} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
                                                         <label>Copy of ID: </label>
@@ -282,7 +282,7 @@ return(
                                         {page === values.shareHolders.length + 1 ?
                                                                                 [
                                                                                 <div >
-                                                                                    <Field  placeholder="Aditional informnation" name="message" component={TextArea}/>
+                                                                                    <Field label="Additional information:" placeholder="...." name="message" component={TextArea}/>
                                                                                 </div>,
                                                                                 <label className="checkbox" style={{"color":`${values.confirmed === false ? "red" : "white"}`}}>
                                                                                     <Field type="checkbox" name="confirmed" checked={values.confirmed}/> I confirm that all information provided is correct 

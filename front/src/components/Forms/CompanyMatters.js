@@ -55,28 +55,29 @@ return(
                                 return(
                                     <Form style={{"paddingTop":"10px" , "width":"260px"}}>
                                             <div className="field">
-                                                <Field placeholder="Company Name" name="companyName" validate={validateField} component={TextField}/>
+                                                <Field label="Company name:" placeholder="Name of the company" name="companyName" validate={validateField} component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <Field placeholder="Company Number" name="companyNumber" component={TextField}/>
+                                                <Field label="Company number:" placeholder="Number of the compamny" name="companyNumber" component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <Field placeholder="E-mail" name="email" validate={validateEmail} component={TextField}/>
+                                                <Field label="Email:" placeholder="example@domain.com" name="email" validate={validateEmail} component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <Field placeholder="Telephone" name="telephone" validate={validatePhoneNumber} component={TextField}/>
+                                                <Field label="Telephone:" placeholder="+44..." name="telephone" validate={validatePhoneNumber} component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <Field placeholder="VAT registration number" name="VATNumber" component={TextField}/>
+                                                <Field label="VAT registration number:" placeholder="VAT registration number" name="VATNumber" component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <Field placeholder="UTR number" name="UTRNumber" component={TextField}/>
+                                                <Field label="UTR number:" placeholder="UTR number" name="UTRNumber" component={TextField}/>
                                             </div>
                                             <div className="field">
+                                                <label>File:</label>
                                                 <FileUpload values={values} uploadedFile={props.uploadedFile} setUploadedFile={props.setUploadedFile}/>
                                             </div>
                                             <div >
-                                                <Field  placeholder="Message" name="message" validate={validateField} component={TextArea}/>
+                                                <Field label="Message:"  placeholder="Your message..." name="message" validate={validateField} component={TextArea}/>
                                             </div>
                                             <div style={{"paddingTop":"10px" , "width":"260px"}}>
                                                 <button className="button is-success" type="submit" disabled={!dirty || !isValid}>submit</button>

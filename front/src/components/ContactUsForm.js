@@ -46,13 +46,18 @@ const ContactUsForm = (props) => {
 
     const krc ={
             "padding": "10px",
-            "width" : "375px"
+            "width" : "375px",
+            "position":"relative" // pasislepe scroll baras
     }
 
 
     const topRef = React.useRef(null);
     const scrollToTop = () => {
-        topRef.current.scrollIntoView();
+        topRef.current.scrollIntoView(
+            {
+                behavior: "smooth",
+            }
+        ); // cia kazkas susibugina veleu paziureti 
     };
 
     return (
@@ -63,9 +68,9 @@ const ContactUsForm = (props) => {
                   <p className="title">Contact us</p>
                 </div>
                     {/* {<div className="container py-4 px-6"} >*/}
-                  <div className="modal-content py-4 px-6" style={krc} > 
-                    <div ref={topRef} className="columns is-vcentered is-centered py-3" style={{"paddingTop":"10px" , "width":"300px"}}>
-                      <div className="column is-centered" >
+                  <div className="modal-content py-4 px-6" style={krc}> 
+                    <div className="columns is-vcentered is-centered py-3" style={{"paddingTop":"10px" , "width":"300px"}}>
+                      <div ref={topRef} className="column is-centered" >
                         { loading === "loading" ? 
                                 <div className="loader-wrapper" style={{"height":"100%", "width":"300px", "display":"flex","justifyContent":"center","alignItems":"center"}}>
                                     <div className="loader is-loading" style={{"height":"100px", "width":"100px"}}></div>

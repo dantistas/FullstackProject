@@ -80,6 +80,7 @@ app.post('/swx', async (req, res)  => {
     files.push(req.files.file)
     files[0].mv(`${__dirname}/uploads/${files[0].name}`)
   }
+  console.log(files)
   const toCompany = messageToCompany(values, files)
   // const toClient = messageToClient(req.body)
 

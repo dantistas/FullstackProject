@@ -59,7 +59,7 @@ const Contact = (props) => {
                 <div className="columns " style={{"width": "100%"}}>
                     <div className="column px-6">
                         <a href="mailto:info@mastis.co.uk">
-                            <div className="notification"style={{"opacity":"0.9","text-align":"center"}}>
+                            <div style={{"opacity":"0.9","text-align":"center","backgroundColor":"silver","borderRadius":"10px","padding":"10px"}}>
                                 <Fab>
                                     <EmailIcon color="primary" fontSize="large"/>
                                 </Fab>
@@ -69,7 +69,7 @@ const Contact = (props) => {
                     </div>
                     <div className="column px-6">
                         <a href="tel:+447450225137">
-                            <div className="notification" style={{"opacity":"0.9" ,"text-align":"center"}}>
+                            <div style={{"opacity":"0.9","text-align":"center","backgroundColor":"silver","borderRadius":"10px","padding":"10px"}}>
                                     <Fab>
                                         <CallIcon color="primary" fontSize="large"/>
                                     </Fab>
@@ -79,7 +79,7 @@ const Contact = (props) => {
                     </div>
                     <div className="column px-6">
                         <a type="button" onClick={()=>{props.toggleVisibility()}}>
-                            <div className="notification" style={{"opacity":"0.9","text-align":"center"}}>
+                            <div  style={{"opacity":"0.9","text-align":"center","backgroundColor":"silver","borderRadius":"10px","padding":"10px"}}>
                                 <Fab>
                                     <ChatIcon color="primary" fontSize="large" onClick={()=>{props.toggleVisibility()}}/>
                                 </Fab>

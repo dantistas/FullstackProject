@@ -7,6 +7,7 @@ export const TextField = ({  field, label, placeholder}) => {
 
     return (
         <div>
+            <label>{label}</label>
             <Field className="input" placeholder={placeholder} {...field}/>
             <div style={{ color:'red'}}>
                 <ErrorMessage name={field.name} />
@@ -18,7 +19,8 @@ export const TextField = ({  field, label, placeholder}) => {
 export const TextArea = ({field, label, placeholder}) => {
     return (
         <div>
-            <Field className="textarea" as="textarea" placeholder={placeholder} {...field}/>
+            <label>{label}</label>
+            <Field style={{"height":"200px"}} className="textarea" as="textarea" placeholder={placeholder} {...field}/>
             <div style={{ color:'red' }}>
                 <ErrorMessage name={field.name} />
             </div>
@@ -31,6 +33,7 @@ export const TextArea = ({field, label, placeholder}) => {
 export const FileUpload = (props) => {
     return (
         <div>
+            <label>{props.label}</label>
             <input className="input" onChange={(e)=>{
                 if(!props.values.file){
                     props.setUploadedFile([...props.uploadedFile, e.target.files[0]])
@@ -64,6 +67,7 @@ export const SelectField = ({validate, name, label, options}) =>{
 export const NumberField = ({ field, label, min, max, placeholder }) => {
     return (
         <div>
+            <label>{label}</label>
             <Field className="input" {...field} placeholder={placeholder} type='number' min={min} max={max} />
             <div style={{ color:'red' }}>
                 <ErrorMessage name={field.name} />
@@ -71,3 +75,10 @@ export const NumberField = ({ field, label, min, max, placeholder }) => {
         </div>
     )
 }
+
+
+
+
+
+// paziureti kad butu texfield didesnis per kompa o per tel mazesnis 
+//footeri padaryt ideti piktogramas 
