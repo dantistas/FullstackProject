@@ -7,6 +7,9 @@ import Contact from './components/Contact'
 import ContactUsForm from './components/ContactUsForm'
 import bg from './bg.jpg'
 import mastislogo from './mastislogo.png'
+import quickbooks from "./icons/quickbooks.webp"
+import sage50 from "./icons/sage50.png"
+import vtSoftware from "./icons/VT.png"
 import './App.css'                      //<<<---- dabar gali keisti css xD
 import 'bulma/css/bulma.css'
 import {
@@ -107,10 +110,17 @@ const App = () => {
           </div>
         </div>
       </div>
-      <div id="contact-us-fab">
-          <Fab aria-label="contact-us">
-              <ChatOutlinedIcon onClick={()=>{toggleVisibility()}}/>
-          </Fab>
+      <div id="footer-div">
+              <div style={{"paddingTop":"30px"}}>
+                <img src={sage50} id="icon"></img>
+                <img src={quickbooks} id="icon"></img>
+                <img src={vtSoftware} id="icon"></img>
+              </div>
+              <a role="button" onClick={()=>{toggleVisibility()}} id="contact-us-fab">
+                <Fab aria-label="contact-us">
+                    <ChatOutlinedIcon/>
+                </Fab>
+              </a>
       </div>
     </Router>
   )

@@ -46,19 +46,23 @@ const ContactUsForm = (props) => {
 
     const krc ={
             "padding": "10px",
-            "width" : "375px",
-            "position":"relative" // pasislepe scroll baras
+            "width" : "375px"
+            
     }
 
 
     const topRef = React.useRef(null);
+    
     const scrollToTop = () => {
         topRef.current.scrollIntoView(
             {
                 behavior: "smooth",
+                 block: "end", 
+                 inline: "start"
             }
         ); // cia kazkas susibugina veleu paziureti 
     };
+
 
     return (
         <div>
@@ -70,7 +74,7 @@ const ContactUsForm = (props) => {
                     {/* {<div className="container py-4 px-6"} >*/}
                   <div className="modal-content py-4 px-6" style={krc}> 
                     <div className="columns is-vcentered is-centered py-3" style={{"paddingTop":"10px" , "width":"300px"}}>
-                      <div ref={topRef} className="column is-centered" >
+                      <div className="column is-centered" >
                         { loading === "loading" ? 
                                 <div className="loader-wrapper" style={{"height":"100%", "width":"300px", "display":"flex","justifyContent":"center","alignItems":"center"}}>
                                     <div className="loader is-loading" style={{"height":"100px", "width":"100px"}}></div>
@@ -88,7 +92,7 @@ const ContactUsForm = (props) => {
                                                         <p className="subtitle">{serverResponse}</p>
                                                     </div>
                                 :
-                                <div className="select" style={{"paddingBottom": "5px"}} >
+                                <div className="select" style={{"paddingBottom": "5px"}} ref={topRef} >
                                     <select style={{"width":"260px"}} onChange={handleSelectFieldChange}>
                                         <option disabled selected>Reason for contacting us</option>
                                         <option value="Other queries">Other queries</option>
