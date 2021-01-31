@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Fab } from '@material-ui/core';
 import ChatOutlinedIcon from '@material-ui/icons/ChatOutlined';
+import CallIcon from '@material-ui/icons/Call';
+import EmailIcon from '@material-ui/icons/Email';
+import WhatsAppIcon from '@material-ui/icons/WhatsApp';
 import Service from './components/Service'
 import Home from './components/Home'
 import Contact from './components/Contact'
@@ -116,11 +119,34 @@ const App = () => {
                 <img src={quickbooks} id="icon"></img>
                 <img src={vtSoftware} id="icon"></img>
               </div>
-              <a role="button" onClick={()=>{toggleVisibility()}} id="contact-us-fab">
-                <Fab aria-label="contact-us">
-                    <ChatOutlinedIcon/>
-                </Fab>
-              </a>
+              <div id="whatsapp-us-fab">
+                <a role="button" target="_blank" href="https://wa.me/447498226576">
+                    <Fab size="small" >
+                      <WhatsAppIcon fontSize="small" style={{"color":"green"}}/>
+                    </Fab>
+                  </a>
+              </div>
+              <div id="email-us-fab">
+                <a role="button" href="mailto:info@mastis.co.uk">
+                    <Fab size="small">
+                      <EmailIcon fontSize="small" color="primary"/>
+                    </Fab>
+                  </a>
+              </div>
+              <div id="Call-us-fab">
+                <a role="button" href="tel:+447450225137">
+                    <Fab size="small">
+                      <CallIcon fontSize="small" color="primary"/>
+                    </Fab>
+                  </a>
+              </div>
+              <div id="contact-us-fab">
+                <a role="button" onClick={()=>{toggleVisibility()}}>
+                  <Fab aria-label="contact-us">
+                      <ChatOutlinedIcon/>
+                  </Fab>
+                </a>
+              </div >
       </div>
     </Router>
   )

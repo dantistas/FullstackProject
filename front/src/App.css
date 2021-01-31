@@ -61,6 +61,32 @@
   }
 }
 
+#whatsapp-us-fab{
+  height: 249px;
+  width: 50px;
+  position: fixed;
+  right: 110px;
+  bottom: -165px;
+  z-index: 2;
+}
+
+#email-us-fab{
+  height: 249px;
+  width: 50px;
+  position: fixed;
+  right: 155px;
+  bottom: -165px;
+  z-index: 2;
+}
+
+#Call-us-fab{
+  height: 249px;
+  width: 50px;
+  position: fixed;
+  right: 65px;
+  bottom: -165px;
+  z-index: 2;
+}
 
 #contact-us-fab {
   height: 249px;

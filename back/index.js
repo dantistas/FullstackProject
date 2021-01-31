@@ -4,6 +4,7 @@ const  cors = require('cors');
 require('dotenv').config();
 const nodemailer = require("nodemailer");
 const servicesDB =require('./data/services.json');
+const fs = require('fs')
 const { json } = require('express');
 
 const app = express();
@@ -80,7 +81,6 @@ app.post('/swx', async (req, res)  => {
     files.push(req.files.file)
     files[0].mv(`${__dirname}/uploads/${files[0].name}`)
   }
-  console.log(files)
   const toCompany = messageToCompany(values, files)
   // const toClient = messageToClient(req.body)
 
@@ -90,8 +90,21 @@ app.post('/swx', async (req, res)  => {
       res.json({error:"Something went wrong, please try again later or call us +447450 225 137"})      // kazka sugalvoti su siuo erroru, kad nesiustu useriui
     }else{
       res.json({successful:`Thank you, we have successfuly received your message!`})
+      if(files){
+        for(let i = 0; i< files.length; i++){
+          console.log(files[i].name)
+          fs.unlink(`${__dirname}/uploads/${files[i].name}`, (err) => {
+            if (err) {
+              console.log(err)
+              return
+            }
+            //file removed
+          })                          
+        }
+      }
     }
   });
+
   // res.json(JSON.parse(req.body.values))
 });
 
