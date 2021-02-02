@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
+import Service from './components/Service'
+import Home from './components/Home'
+import Contact from './components/Contact'
+import ContactUsForm from './components/ContactUsForm'
 import { Fab } from '@material-ui/core';
 import ChatOutlinedIcon from '@material-ui/icons/ChatOutlined';
 import CallIcon from '@material-ui/icons/Call';
 import EmailIcon from '@material-ui/icons/Email';
 import WhatsAppIcon from '@material-ui/icons/WhatsApp';
-import Service from './components/Service'
-import Home from './components/Home'
-import Contact from './components/Contact'
-import ContactUsForm from './components/ContactUsForm'
 import bg from './bg.jpg'
 import mastislogo from './mastislogo.png'
 import quickbooks from "./icons/quickbooks.webp"
@@ -28,6 +28,8 @@ const App = () => {
   const [notification, setNotification] = useState(null)
   const [servicesDB, setServicesDB] = useState([])
   const [visible, setVisible] = useState(false)
+  
+  const title = "Mastis"
 
   const showWhenVisible = { display: visible ? 'block' : 'none' }
 
@@ -54,15 +56,15 @@ const App = () => {
 
   return ( 
     <Router>
-      <div class="hero is-fullheight is-dark has-background">
-        <img alt="Background" class="hero-background is-transparent" src={bg} />
+      <div className="hero is-fullheight is-dark has-background">
+        <img alt="Background" className="hero-background is-transparent" src={bg} />
         <div class="hero-head">
-            <nav role="navigation" aria-label="main navigation" class="navbar is-dark is-transparent" id="nav">
-              <div class="navbar-brand">
-                <a class="navbar-item" href="/">
+            <nav role="navigation" aria-label="main navigation" className="navbar is-dark is-transparent" id="nav">
+              <div className="navbar-brand">
+                <a className="navbar-item" href="/">
                   <img alt="" src={mastislogo}/>
                 </a>
-                <a role="button" onClick={()=>{document.querySelector("#navbar-links").classList.toggle('is-active')}} class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <a role="button" onClick={()=>{document.querySelector("#navbar-links").classList.toggle('is-active')}} className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                   <span aria-hidden="true"></span>
                   <span aria-hidden="true"></span>
                   <span aria-hidden="true"></span>
@@ -100,13 +102,13 @@ const App = () => {
                       }}>
               </Route> */}
               <Route path="/services/:id">
-                <Service servicesDB={servicesDB} setVisible={setVisible} visible={visible} showWhenVisible={showWhenVisible} toggleVisibility={toggleVisibility}/>
+                <Service title={title} servicesDB={servicesDB} setVisible={setVisible} visible={visible} showWhenVisible={showWhenVisible} toggleVisibility={toggleVisibility}/>
               </Route>
               <Route path="/contact">
-                <Contact toggleVisibility={toggleVisibility} inform={inform} subject={subject}/>
+                <Contact title={title} toggleVisibility={toggleVisibility} inform={inform} subject={subject}/>
               </Route>
               <Route path="/" exact>
-                <Home Link={Link}/>
+                <Home Link={Link} title={title}/>
               </Route>
             </Switch>
             <ContactUsForm showWhenVisible={showWhenVisible} toggleVisibility={toggleVisibility}/>
@@ -134,7 +136,7 @@ const App = () => {
                   </a>
               </div>
               <div id="Call-us-fab">
-                <a role="button" href="tel:+447450225137">
+                <a role="button" href="tel:+447498226576">
                     <Fab size="small">
                       <CallIcon fontSize="small" color="primary"/>
                     </Fab>

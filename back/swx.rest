@@ -1,9 +1,0 @@
-POST http://localhost:3001/swx
-Content-Type: application/json
-
-{
-  "swx": [1, 10, 2, 0, 3, 0, 2.5],
-  "target": 2.5
-}
-
-###

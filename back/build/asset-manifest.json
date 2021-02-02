@@ -1,26 +1,29 @@
 {
   "files": {
-    "main.css": "/static/css/main.d68f6db3.chunk.css",
-    "main.js": "/static/js/main.c670e9ca.chunk.js",
-    "main.js.map": "/static/js/main.c670e9ca.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.03bbd2e4.js",
-    "runtime-main.js.map": "/static/js/runtime-main.03bbd2e4.js.map",
+    "main.css": "/static/css/main.2bb39413.chunk.css",
+    "main.js": "/static/js/main.05e6ca6d.chunk.js",
+    "main.js.map": "/static/js/main.05e6ca6d.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.29c1953c.js",
+    "runtime-main.js.map": "/static/js/runtime-main.29c1953c.js.map",
     "static/css/2.632c9fdd.chunk.css": "/static/css/2.632c9fdd.chunk.css",
-    "static/js/2.3c9b37d2.chunk.js": "/static/js/2.3c9b37d2.chunk.js",
-    "static/js/2.3c9b37d2.chunk.js.map": "/static/js/2.3c9b37d2.chunk.js.map",
-    "static/js/3.8e77a600.chunk.js": "/static/js/3.8e77a600.chunk.js",
-    "static/js/3.8e77a600.chunk.js.map": "/static/js/3.8e77a600.chunk.js.map",
+    "static/js/2.fbed39f7.chunk.js": "/static/js/2.fbed39f7.chunk.js",
+    "static/js/2.fbed39f7.chunk.js.map": "/static/js/2.fbed39f7.chunk.js.map",
+    "static/js/3.2f0d2362.chunk.js": "/static/js/3.2f0d2362.chunk.js",
+    "static/js/3.2f0d2362.chunk.js.map": "/static/js/3.2f0d2362.chunk.js.map",
     "index.html": "/index.html",
     "static/css/2.632c9fdd.chunk.css.map": "/static/css/2.632c9fdd.chunk.css.map",
-    "static/css/main.d68f6db3.chunk.css.map": "/static/css/main.d68f6db3.chunk.css.map",
-    "static/js/2.3c9b37d2.chunk.js.LICENSE.txt": "/static/js/2.3c9b37d2.chunk.js.LICENSE.txt",
-    "static/media/bg.4b6e310f.jpg": "/static/media/bg.4b6e310f.jpg"
+    "static/css/main.2bb39413.chunk.css.map": "/static/css/main.2bb39413.chunk.css.map",
+    "static/js/2.fbed39f7.chunk.js.LICENSE.txt": "/static/js/2.fbed39f7.chunk.js.LICENSE.txt",
+    "static/media/VT.7d69a40c.png": "/static/media/VT.7d69a40c.png",
+    "static/media/bg.4b6e310f.jpg": "/static/media/bg.4b6e310f.jpg",
+    "static/media/quickbooks.7108d76c.webp": "/static/media/quickbooks.7108d76c.webp",
+    "static/media/sage50.dda7e35d.png": "/static/media/sage50.dda7e35d.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.03bbd2e4.js",
+    "static/js/runtime-main.29c1953c.js",
     "static/css/2.632c9fdd.chunk.css",
-    "static/js/2.3c9b37d2.chunk.js",
-    "static/css/main.d68f6db3.chunk.css",
-    "static/js/main.c670e9ca.chunk.js"
+    "static/js/2.fbed39f7.chunk.js",
+    "static/css/main.2bb39413.chunk.css",
+    "static/js/main.05e6ca6d.chunk.js"
   ]
 }

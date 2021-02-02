@@ -95,17 +95,17 @@ const ContactUsForm = (props) => {
                                 <div className="select" style={{"paddingBottom": "5px"}} ref={topRef} >
                                     <select style={{"width":"260px"}} onChange={handleSelectFieldChange}>
                                         <option disabled selected>Reason for contacting us</option>
-                                        <option value="Other queries">Other queries</option>
-                                        <option value="New company establish">New company establish</option>
+                                        <option value="General queries">General queries</option>
+                                        <option value="Set up a private limited company">Set up a private limited company</option>
                                         <option value="Company matters">Company matters</option>
-                                        <option value="Self employed">Self employed</option>
+                                        <option value="Self-employment queries">Self-employment queries </option>
                                     </select>
                                 </div>
                         }
-                        {type === "Other queries" ? <OtherQueries type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile}/> : null}
-                        {type === "Self employed" ? <SelfEmployed type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile}/> : null}
+                        {type === "General queries" ? <OtherQueries type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile}/> : null}
+                        {type === "Self-employment queries" ? <SelfEmployed type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile}/> : null}
                         {type === "Company matters" ? <CompanyMAtters type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile}/> : null}
-                        {type === "New company establish" ? <NewCompanyEstablish scrollToTop={scrollToTop} type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile} /> : null}                     
+                        {type === "Set up a private limited company" ? <NewCompanyEstablish scrollToTop={scrollToTop} type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile} /> : null}                     
                       </div>
                     </div>
                         <button onClick={()=>{{props.toggleVisibility();setLoading(false);setUploadedFile([])}}} className="modal-close is-large" aria-label="close"></button>
