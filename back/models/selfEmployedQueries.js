@@ -20,6 +20,7 @@ const kveris = {
 const selfEmployedQueriesSchema = mongoose.Schema({
     id: String,
     type: String,
+    date: String,
     name: String,
     surname: String,
     email: String,
@@ -29,6 +30,7 @@ const selfEmployedQueriesSchema = mongoose.Schema({
     dateOfBirth: String,
     UTRnumber: String,
     NINnumber: String,
+    file: String,
     message: String,
 
 

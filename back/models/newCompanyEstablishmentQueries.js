@@ -39,10 +39,12 @@ const kveris = {
   }
   
 
-const newCompanyEstablishSchema = mongoose.Schema({
+const newCompanyEstablishQueriesSchema = mongoose.Schema({
 
     id: String,
     type: String,
+    date: String,
+    name: String,
     preferredCompanyName: String,
     alternativeCompanyName: String,
     typeOfCompany: String,
@@ -63,10 +65,12 @@ const newCompanyEstablishSchema = mongoose.Schema({
 
 
 
-module.exports = mongoose.model("newCompanyEstablish", newCompanyEstablishSchema)
+module.exports = mongoose.model("newCompanyEstablishQueries", newCompanyEstablishQueriesSchema)
 
 
 
-// iskarto isbandysim sita ar veike su array !!!
 
 //datos reike prie kiekvien query!!!!
+
+
+// visada istrinti .env failiuka

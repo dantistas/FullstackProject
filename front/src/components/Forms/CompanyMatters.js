@@ -40,6 +40,7 @@ return(
             <Formik 
                     initialValues={{
                                     type: props.type,
+                                    name:"",
                                     companyName:"",
                                     companyNumber:"",
                                     email:"",
@@ -47,13 +48,17 @@ return(
                                     VATNumber:"",
                                     UTRNumber:"",
                                     message:"",
-                                    file:""
+                                    file:"",
+                                    date:""
                                 }}
                     onSubmit={props.handleSubmit}
                             >
                             {({ isValid, dirty, setFieldValue, setFieldTouched, values, errors, touched})=>{
                                 return(
                                     <Form style={{"paddingTop":"10px" , "width":"260px"}}>
+                                            <div className="field">
+                                                <Field label="Full Name:" placeholder="John Smith" name="name" validate={validateField} component={TextField}/>
+                                            </div>
                                             <div className="field">
                                                 <Field label="Company name:" placeholder="Name of the company" name="companyName" validate={validateField} component={TextField}/>
                                             </div>
@@ -80,7 +85,7 @@ return(
                                                 <Field label="Message:"  placeholder="Your message..." name="message" validate={validateField} component={TextArea}/>
                                             </div>
                                             <div style={{"paddingTop":"10px" , "width":"260px"}}>
-                                                <button className="button is-success" type="submit" disabled={!dirty || !isValid}>submit</button>
+                                                <button className="button is-success" type="submit" disabled={!dirty || !isValid} onClick={()=>{values.date = new Date().toString()}}>submit</button>
                                             </div>
                                     </Form>
                                     )

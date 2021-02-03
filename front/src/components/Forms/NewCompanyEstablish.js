@@ -142,6 +142,7 @@ return(
             <Formik 
                     initialValues={{
                                     type: props.type,
+                                    name:"",
                                     preferredCompanyName:"",
                                     alternativeCompanyName:"",
                                     typeOfCompany:"",
@@ -155,16 +156,21 @@ return(
                                     numberOfShareHolders:"",
                                     shareHolders:[],
                                     confirmed: false,
-                                    message:""
+                                    message:"",
+                                    date:""
 
                                 }}
                     onSubmit={props.handleSubmit}
                             >
                             {({ isValid, dirty, setFieldValue, setFieldTouched, values, errors, touched})=>{
-                                const firstPartValidation = values.numberOfShareHolders > 3 || values.numberOfShareHolders < 1 || errors.alternativeCompanyName || errors.companyAdress || errors.companyPostcode || errors.email || errors.natureOfBusiness || errors.numberOfShareHolders || errors.numberOfShares || errors.preferredCompanyName || errors.telephone || errors.typeOfCompany || errors.valueOfAllShares
+                                const firstPartValidation = values.numberOfShareHolders > 3 || values.numberOfShareHolders < 1 || errors.alternativeCompanyName || errors.companyAdress || errors.companyPostcode || errors.email || errors.natureOfBusiness || errors.numberOfShareHolders || errors.numberOfShares || errors.preferredCompanyName || errors.telephone || errors.typeOfCompany || errors.valueOfAllShares || errors.name
                                 return(
                                     <Form style={{"paddingTop":"10px" , "width":"260px"}}>
-                                        { page === 0  ? [<div className="field">
+                                        { page === 0  ? [
+                                            <div className="field">
+                                                <Field label="Full name:" placeholder="John Smith" name="name" validate={validateField} component={TextField}/>
+                                            </div>,
+                                            <div className="field">
                                                 <Field label="Company name:" placeholder="Preferred company name" name="preferredCompanyName" validate={validateField} component={TextField}/>
                                             </div>,
                                             <div className="field">
@@ -288,7 +294,7 @@ return(
                                                                                     <Field type="checkbox" name="confirmed" checked={values.confirmed}/> I confirm that all information provided is correct 
                                                                                 </label>,
                                                                                 <div className="buttons" >
-                                                                                    <button className="button is-success" type="submit" disabled={!dirty || !isValid || values.confirmed === false}>Submit</button>
+                                                                                    <button className="button is-success" type="submit" disabled={!dirty || !isValid || values.confirmed === false} onClick={()=>{values.date = new Date().toString()}}>Submit</button>
                                                                                     <button  type="button" className="button is-success is-inverted" onClick={()=>{setPage(page-1)}}>Back</button>
                                                                                 </div>
                                                                                 

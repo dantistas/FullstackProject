@@ -50,7 +50,8 @@ return(
                                     UTRnumber:"",
                                     NINnumber: "",
                                     file:"",
-                                    message:""
+                                    message:"",
+                                    date:""
                                 }}
                     onSubmit={props.handleSubmit}
                             >
@@ -92,7 +93,7 @@ return(
                                                 <Field label="Message:" placeholder="Your message..." name="message" validate={validateField} component={TextArea}/>
                                             </div>
                                             <div style={{"paddingTop":"10px" , "width":"260px"}}>
-                                                <button className="button is-success" type="submit" disabled={!dirty ||!isValid}>submit</button>
+                                                <button className="button is-success" type="submit" disabled={!dirty ||!isValid} onClick={()=>{values.date = new Date().toString()}}>submit</button>
                                             </div>
         
                                     </Form>

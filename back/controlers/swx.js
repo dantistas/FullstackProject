@@ -1,5 +1,8 @@
 const swxRouter = require('express').Router();
-const generalQueries = require('../models/generalQueries')
+const generalQueries = require('../models/generalQueries') // gali but kad situos kverius reikes sukelti i atskira foldery
+const selfEmployedQueries = require('../models/selfEmployedQueries')
+const companyMattersQueries = require('../models/companyMattersQueries')
+const newCompanyEstablishQueries = require('../models/newCompanyEstablishmentQueries')
 const fileUpload = require('express-fileupload');
 require('dotenv').config();
 const nodemailer = require("nodemailer");
@@ -87,19 +90,72 @@ const deleteFiles = (files) => {
 swxRouter.post('/', async (req, res)  => {
     const values = JSON.parse(req.body.values)
     let files = []
-    
+    let query 
+
     if(values.type === "General queries"){
-        const query = new generalQueries({
-    
+        query = new generalQueries({
             type: values.type,
+            date: values.date,
             name: values.name,
             email: values.email,
             telephone: values.telephone,
+            file: values.file || "no file",
             message: values.message
         })
-        const savedQuery = await query.save()
-        res.json({successful:`Thank you for your enquiry. Your message has been sent successfully.`})
+    }else if (values.type === "Self-employment queries" ){
+      query = new selfEmployedQueries({
+          type: values.type,
+          date: values.date,
+          name: values.name,
+          surname: values.surname,
+          email: values.email,
+          telephone: values.telephone,
+          address: values.address,
+          postcode: values.postcode,
+          dateOfBirth: values.dateOfBirth,
+          UTRnumber: values.UTRnumber || "no entry",
+          NINnumber: values.NINnumber || "no entry",
+          file: values.file || "no file",
+          message: values.message
+      })
+    }else if(values.type === "Company matters"){
+      query = new companyMattersQueries({
+        type: values.type,
+        date: values.date,
+        name: values.name,
+        companyName: values.companyName,
+        companyNumber: values.companyNumber,
+        email: values.email,
+        telephone: values.telephone,
+        VATNumber: values.VATNumber || "no entry",
+        UTRNumber: values.UTRNumber || "no entry",
+        file: values.file || "no file",
+        message: values.message
+      })
+    }else if (values.type === "Set up a private limited company"){
+      query = new newCompanyEstablishQueries({
+        type: values.type,
+        date: values.date,
+        name: values.name,
+        preferredCompanyName: values.preferredCompanyName,
+        alternativeCompanyName: values.alternativeCompanyName,
+        typeOfCompany: values.typeOfCompany,
+        natureOfBusiness: values.natureOfBusiness,
+        email: values.email,
+        telephone: values.telephone,
+        companyAdress: values.companyAdress,
+        companyPostcode: values.companyPostcode,
+        numberOfShares: values.numberOfShares,
+        valueOfAllShares: values.valueOfAllShares,
+        numberOfShareHolders: values.numberOfShareHolders,
+        shareHolders: values.shareHolders,
+        confirmed: values.confirmed,
+        message: values.message || "no entry"
+      })
     }
+
+    const savedQuery = await query.save()
+    // res.json({successful:`Thank you for your enquiry. Your message has been sent successfully. ---->>${savedQuery}`})
   
     if(req.files && req.files.file.length > 0){
       for(let i = 0; i< req.files.file.length; i++){
@@ -114,15 +170,15 @@ swxRouter.post('/', async (req, res)  => {
     const toCompany = messageToCompany(values, files)
     const toClient = messageToClient(req.body) //sitas bus klientuj.
   
-    // await transporter.sendMail(toCompany,(err)=>{
-    //   if(err){
-    //     console.log(err)
-    //     res.json({error:"Something went wrong, please try again later or call us 07498 226576"})      // kazka sugalvoti su siuo erroru, kad nesiustu useriui sita galima padaryti kad man tiesei i emaila atsisutu asmensikai
-    //   }else{
-    //     res.json({successful:`Thank you for your enquiry. Your message has been sent successfully.`})
-    //     deleteFiles(files)
-    //   }
-    // });
+    await transporter.sendMail(toCompany,(err)=>{
+      if(err){
+        console.log(err)
+        res.json({error:"Something went wrong, please try again later or call us."})      // kazka sugalvoti su siuo erroru, kad nesiustu useriui sita galima padaryti kad man tiesei i emaila atsisutu asmensikai
+      }else{
+        res.json({successful:`Thank you for your enquiry. Your message has been sent successfully.`})
+        deleteFiles(files)
+      }
+    });
   
     // res.json({successful:`Thank you for your enquiry. Your message has been sent successfully.`})
   });
