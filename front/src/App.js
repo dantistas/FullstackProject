@@ -3,6 +3,7 @@ import Service from './components/Service'
 import Home from './components/Home'
 import Contact from './components/Contact'
 import ContactUsForm from './components/ContactUsForm'
+import FloatingButtonContent from './components/FloatingButtonContent'
 import { Fab } from '@material-ui/core';
 import ChatOutlinedIcon from '@material-ui/icons/ChatOutlined';
 import CallIcon from '@material-ui/icons/Call';
@@ -16,8 +17,8 @@ import vtSoftware from "./icons/VT.png"
 import './App.css'                      //<<<---- dabar gali keisti css xD
 import 'bulma/css/bulma.css'
 import {
-  HashRouter as Router,   //<<----- BrowserRouter pakeistas i HashRouter
-  Switch, Route, Link, useHistory , //<--- kadangi usehistory neveike, permesi router i index.js!!!
+   //<<----- BrowserRouter pakeistas i HashRouter
+  Switch, Route, Link, useHistory ,useLocation  //<--- kadangi usehistory neveike, permesi router i index.js!!!
 } from "react-router-dom"
 import axios from 'axios'
 
@@ -30,10 +31,12 @@ const App = () => {
   const [visible, setVisible] = useState(false)
   
   const title = "Mastis"
+  let location = useLocation()
+  console.log(location.pathname)
 
   const showWhenVisible = { display: visible ? 'block' : 'none' }
 
-  let history = useHistory();
+
 
   const toggleVisibility = () => {
     setVisible(!visible)
@@ -41,7 +44,7 @@ const App = () => {
 
   useEffect(()=>{
    
-    axios.get("/api/services").then((res)=>{     //<<<----- paskui pakeisti i api/services tik!
+    axios.get("http://localhost:3001/api/services").then((res)=>{     //<<<----- paskui pakeisti i api/services tik!
          setServicesDB(res.data)
        })
 
@@ -55,7 +58,7 @@ const App = () => {
   }
 
   return ( 
-    <Router>
+    <div>
       <div className="hero is-fullheight is-dark has-background">
         <img alt="Background" className="hero-background is-transparent" src={bg} />
         <div class="hero-head">
@@ -84,7 +87,6 @@ const App = () => {
                     </div>
                   </div>
                   <a className="navbar-item" href='https://www.employedandselfemployed.co.uk/tax-calculator'>Calculator</a>
-                  {/* <Link class="navbar-item" to="/calculator">Calculator</Link> */}
                 </div>
                 <div class="navbar-end">
                   <Link role="button" dissabled class="navbar-item" to="/contact" onClick={()=>{document.querySelector("#navbar-links").classList.toggle('is-active')}} >Contact us</Link>
@@ -95,12 +97,6 @@ const App = () => {
         <div class="hero-body">
           <div class="container is-fluid py-6">
             <Switch>
-              {/* <Route path='/calculator'
-                    component={() => { 
-                      window.location.href = 'https://www.employedandselfemployed.co.uk/tax-calculator'; 
-                      return null;
-                      }}>
-              </Route> */}
               <Route path="/services/:id">
                 <Service title={title} servicesDB={servicesDB} setVisible={setVisible} visible={visible} showWhenVisible={showWhenVisible} toggleVisibility={toggleVisibility}/>
               </Route>
@@ -111,7 +107,7 @@ const App = () => {
                 <Home Link={Link} title={title}/>
               </Route>
             </Switch>
-            <ContactUsForm showWhenVisible={showWhenVisible} toggleVisibility={toggleVisibility}/>
+            <FloatingButtonContent location={location.pathname} showWhenVisible={showWhenVisible} toggleVisibility={toggleVisibility}/>
           </div>
         </div>
       </div>
@@ -150,7 +146,7 @@ const App = () => {
                 </a>
               </div >
       </div>
-    </Router>
+    </div>
   )
 }
 

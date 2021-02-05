@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react'
+import { useHistory } from "react-router-dom"
 import axios from 'axios'
 import OtherQueries from './Forms/OtherQueries'
 import SelfEmployed from './Forms/SelfEmployed'
@@ -14,6 +15,9 @@ const ContactUsForm = (props) => {
     const [serverResponse, setServerResponse] = useState("")
     const [uploadedFile, setUploadedFile] = useState([])
 
+    let history = useHistory()
+    console.log(history)
+    
     const handleSelectFieldChange = (event) => {
         setType(event.target.value)
         setUploadedFile([])
@@ -29,7 +33,7 @@ const ContactUsForm = (props) => {
                 formData.append('file', uploadedFile[i])
             }  
         } 
-        axios.post('/swx', formData).then((response) => {
+        axios.post('http://localhost:3001/swx', formData).then((response) => {
             if(response.data.successful){
                 setServerResponse(response.data.successful)
                 setLoading("successful")
@@ -60,18 +64,15 @@ const ContactUsForm = (props) => {
                  block: "end", 
                  inline: "start"
             }
-        ); // cia kazkas susibugina veleu paziureti 
+        ); 
     };
 
 
     return (
         <div>
-            <div className="modal py-6" style={props.showWhenVisible}>
-              <div className="modal-background"></div>
                 <div className="container px-5">
                   <p className="title">Contact us</p>
                 </div>
-                    {/* {<div className="container py-4 px-6"} >*/}
                   <div className="modal-content py-4 px-6" style={krc}> 
                     <div className="columns is-vcentered is-centered py-3" style={{"paddingTop":"10px" , "width":"300px"}}>
                       <div className="column is-centered" >
@@ -108,11 +109,9 @@ const ContactUsForm = (props) => {
                         {type === "Set up a private limited company" ? <NewCompanyEstablish scrollToTop={scrollToTop} type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile} /> : null}                     
                       </div>
                     </div>
-                        <button onClick={()=>{{props.toggleVisibility();setLoading(false);setUploadedFile([])}}} className="modal-close is-large" aria-label="close"></button>
+                        <button onClick={props.location ==="/webchat" ? ()=>{history.push("/")} : ()=>{{props.toggleVisibility();setLoading(false);setUploadedFile([])}}} className="modal-close is-large" aria-label="close"></button>
                   </div>
-                {/* {</div>} */}
             </div>
-      </div>
     )
 
 }
