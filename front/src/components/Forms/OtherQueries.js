@@ -10,9 +10,9 @@ const OtherQueries = (props) => {
     const validateEmail = (value) => {
         let errorMessage;
         if(!value){
-            errorMessage="Field is required"
+            errorMessage= props.changeTitleLanguage("Field is required", "Privalomas laukelis")
         }else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-          errorMessage = 'Invalid email address';
+          errorMessage = props.changeTitleLanguage("Invalid email address", "Neteisingas elektroninio pašto adresas")
         }
         return errorMessage;
       };
@@ -20,7 +20,7 @@ const OtherQueries = (props) => {
     const validateField = (value) => {
         let errorMessage;
         if(!value){
-            errorMessage = "Field is required"
+            errorMessage = props.changeTitleLanguage("Field is required", "Privalomas laukelis")
         }
         return errorMessage
     } 
@@ -28,9 +28,9 @@ const OtherQueries = (props) => {
     const validatePhoneNumber = (value) => {
         let errorMessage;
         if(!value){
-            errorMessage = "Field is required"
+            errorMessage = props.changeTitleLanguage("Field is required", "Privalomas laukelis")
         }else if (isNaN(value)){
-            errorMessage = "Invalid phone number"
+            errorMessage = props.changeTitleLanguage("Invalid phone number", "Neteisingas telefono numeris")
         }
         return errorMessage
     } 
@@ -53,22 +53,22 @@ return(
                                 return(
                                     <Form style={{"paddingTop":"10px" , "width":"260px"}}>
                                             <div className="field">
-                                                <Field label="Name:" placeholder="John" name="name" validate={validateField} component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("Name:","Vardas:")} placeholder={props.changeTitleLanguage("John","Jonas")} name="name" validate={validateField} component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <Field label="Email:" placeholder="example@domain.com" name="email" validate={validateEmail} component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("Email:","Elektroninio pašto adresas:")} placeholder={props.changeTitleLanguage("example@domain.com","pavyzdys@domenas.com")} name="email" validate={validateEmail} component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <Field label="Telephone:" placeholder="+44..." name="telephone" validate={validatePhoneNumber} component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("Telephone:","Telefono numeris:")} placeholder="+44..." name="telephone" validate={validatePhoneNumber} component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <FileUpload label="File:" values={values} uploadedFile={props.uploadedFile} setUploadedFile={props.setUploadedFile}/>
+                                                <FileUpload label={props.changeTitleLanguage("File:","Failas:")} values={values} uploadedFile={props.uploadedFile} setUploadedFile={props.setUploadedFile}/>
                                             </div>
                                             <div >
-                                                <Field label="Message:" placeholder="Your message..." name="message" validate={validateField} component={TextArea}/>
+                                                <Field label={props.changeTitleLanguage("Message:","Pranešimas:")} placeholder={props.changeTitleLanguage("Your message...:","Jūsų žinutė...")} name="message" validate={validateField} component={TextArea}/>
                                             </div>
                                             <div style={{"paddingTop":"10px" , "width":"260px"}}>
-                                                <button className="button is-success" type="submit" disabled={!dirty || !isValid} onClick={()=>{values.date = new Date().toString()}}>submit</button>
+                                                <button className="button is-success" type="submit" disabled={!dirty || !isValid} onClick={()=>{values.date = new Date().toString()}}>{props.changeTitleLanguage("Submit", "Siūsti")}</button>
                                             </div>
                                     </Form>
                                     )

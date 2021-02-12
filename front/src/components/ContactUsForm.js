@@ -16,7 +16,6 @@ const ContactUsForm = (props) => {
     const [uploadedFile, setUploadedFile] = useState([])
 
     let history = useHistory()
-    console.log(history)
     
     const handleSelectFieldChange = (event) => {
         setType(event.target.value)
@@ -33,7 +32,7 @@ const ContactUsForm = (props) => {
                 formData.append('file', uploadedFile[i])
             }  
         } 
-        axios.post('http://localhost:3001/swx', formData).then((response) => {
+        axios.post('/swx', formData).then((response) => {
             if(response.data.successful){
                 setServerResponse(response.data.successful)
                 setLoading("successful")
@@ -46,6 +45,14 @@ const ContactUsForm = (props) => {
                 setLoading("error")
             }
         })
+    }
+
+    const changeTitleLanguage = (en, lt) => {
+        if(props.language === "en"){
+            return en
+        }else if(props.language === "lt") {
+            return lt
+        }
     }
 
     const krc ={
@@ -71,13 +78,13 @@ const ContactUsForm = (props) => {
     return (
         <div>
                 <div className="container px-5">
-                  <p className="title">Contact us</p>
+                  <p className="title">{changeTitleLanguage("Contact us", "Susisiekite su mumis")}</p>
                 </div>
                   <div className="modal-content py-4 px-6" style={krc}> 
                     <div className="columns is-vcentered is-centered py-3" style={{"paddingTop":"10px" , "width":"300px"}}>
                       <div className="column is-centered" >
                         { loading === "loading" ? 
-                                <div className="loader-wrapper" style={{"height":"100%", "width":"300px", "display":"flex","justifyContent":"center","alignItems":"center"}}>
+                                <div className="loader-wrapper" style={{"height":"100%", "width":"250px", "display":"flex","justifyContent":"center","alignItems":"center"}}>
                                     <div className="loader is-loading" style={{"height":"100px", "width":"100px"}}></div>
                                 </div> 
                                 :
@@ -95,18 +102,18 @@ const ContactUsForm = (props) => {
                                 :
                                 <div className="select" style={{"paddingBottom": "5px"}} ref={topRef} >
                                     <select style={{"width":"260px"}} onChange={handleSelectFieldChange}>
-                                        <option disabled selected>Reason for contacting us</option>
-                                        <option value="General queries">General queries</option>
-                                        <option value="Set up a private limited company">Set up a private limited company</option>
-                                        <option value="Company matters">Company matters</option>
-                                        <option value="Self-employment queries">Self-employment queries </option>
+                                        <option disabled selected>{changeTitleLanguage("Reason for contacting us", "Priežastis")}</option>
+                                        <option value="General queries">{changeTitleLanguage("General queries", "Bendri klausimai")}</option>
+                                        <option value="Set up a private limited company">{changeTitleLanguage("Set up a private limited company", "Naujos įmonės įsteigimas")}</option>
+                                        <option value="Company matters">{changeTitleLanguage("Company matters","Įmonės reikalai")}</option>
+                                        <option value="Self-employment queries">{changeTitleLanguage("Self-employment queries", "Besiverčiantys privačia veikla")}</option>
                                     </select>
                                 </div>
                         }
-                        {type === "General queries" ? <OtherQueries type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile}/> : null}
-                        {type === "Self-employment queries" ? <SelfEmployed type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile}/> : null}
-                        {type === "Company matters" ? <CompanyMAtters type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile}/> : null}
-                        {type === "Set up a private limited company" ? <NewCompanyEstablish scrollToTop={scrollToTop} type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile} /> : null}                     
+                        {type === "General queries" ? <OtherQueries  changeTitleLanguage={changeTitleLanguage} type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile}/> : null}
+                        {type === "Self-employment queries" ? <SelfEmployed changeTitleLanguage={changeTitleLanguage} type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile}/> : null}
+                        {type === "Company matters" ? <CompanyMAtters changeTitleLanguage={changeTitleLanguage} type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile}/> : null}
+                        {type === "Set up a private limited company" ? <NewCompanyEstablish changeTitleLanguage={changeTitleLanguage} scrollToTop={scrollToTop} type={type} handleSubmit={handleSubmit} uploadedFile={uploadedFile} setUploadedFile={setUploadedFile} /> : null}                     
                       </div>
                     </div>
                         <button onClick={props.location ==="/webchat" ? ()=>{history.push("/")} : ()=>{{props.toggleVisibility();setLoading(false);setUploadedFile([])}}} className="modal-close is-large" aria-label="close"></button>

@@ -51,10 +51,7 @@ const deleteFiles = (files) => {
   });
   
   const messageToCompany = (values, files) => {
-    // const{type, name, email, telephone, message, shareHolder} = values
-    // Object.keys(values).forEach((key)=>{console.log(key, values[key])})
-    console.log("message : ", typeof values)
-    
+
     const emailPattern = {
       from: process.env.EMAIL, // sender address/ company name
       to: process.env.EMAIL_TO_ADMIN , // list of receivers

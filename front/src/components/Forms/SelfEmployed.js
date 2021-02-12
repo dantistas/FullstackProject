@@ -10,9 +10,9 @@ const SelfEmployed = (props) => {
     const validateEmail = (value) => {
         let errorMessage;
         if(!value){
-            errorMessage="Field is required"
+            errorMessage= props.changeTitleLanguage("Field is required", "Privalomas laukelis")
         }else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-          errorMessage = 'Invalid email address';
+          errorMessage = props.changeTitleLanguage("Invalid email address", "Neteisingas elektroninio pašto adresas");
         }
         return errorMessage;
       };
@@ -20,7 +20,7 @@ const SelfEmployed = (props) => {
     const validateField = (value) => {
         let errorMessage;
         if(!value){
-            errorMessage = "Field is required"
+            errorMessage = props.changeTitleLanguage("Field is required", "Privalomas laukelis")
         }
         return errorMessage
     } 
@@ -28,9 +28,9 @@ const SelfEmployed = (props) => {
     const validatePhoneNumber = (value) => {
         let errorMessage;
         if(!value){
-            errorMessage = "Field is required"
+            errorMessage = props.changeTitleLanguage("Field is required", "Privalomas laukelis")
         }else if (isNaN(value)){
-            errorMessage = "Invalid phone number"
+            errorMessage = props.changeTitleLanguage("Invalid phonenumber", "Neteisingas telefono numeris")
         }
         return errorMessage
     } 
@@ -59,41 +59,41 @@ return(
                                 return(
                                     <Form style={{"paddingTop":"10px" , "width":"260px"}}>
                                             <div className="field">
-                                                <Field label="Name:" placeholder="John" name="name" validate={validateField} component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("Name:","Vardas:")} placeholder={props.changeTitleLanguage("John","Jonas")} name="name" validate={validateField} component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <Field label="Surname:" placeholder="Smith" name="surname" validate={validateField} component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("Surname:","Pavardė:")} placeholder={props.changeTitleLanguage("Smith","Petrauskas")} name="surname" validate={validateField} component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <Field label="Date of Birth:" placeholder="DD/MM/YYYY" name="dateOfBirth" validate={validateField} component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("Date of Birth:","Gimimo data:")} placeholder="DD/MM/YYYY" name="dateOfBirth" validate={validateField} component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <Field label="Email:" placeholder="example@domain.com" name="email" validate={validateEmail} component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("Email:","Elektroninio pašto adresas:")} placeholder={props.changeTitleLanguage("example@domain.com","pavyzdys@domenas.com")} name="email" validate={validateEmail} component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <Field label="Telephone:" placeholder="+44..." name="telephone" validate={validatePhoneNumber} component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("Telephone:","Telefono numeris:")} placeholder="+44..." name="telephone" validate={validatePhoneNumber} component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <Field label="Address:" placeholder="Street name and house number" name="address" component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("Address:","Adresas:")} placeholder={props.changeTitleLanguage("Street name and house number","Gatvės pavadinimas ir namo numeris")} name="address" component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <Field label="Postcode:" placeholder="Postcode" name="postcode" component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("Postcode:","Pašto kodas:")} placeholder={props.changeTitleLanguage("Postcode","Pašto kodas")} name="postcode" component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <Field label="UTR number:" placeholder="Your UTR number" name="UTRnumber" component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("UTR number:","UTR numeris:")} placeholder={props.changeTitleLanguage("Your UTR number","Jūsų UTR numeris")} name="UTRnumber" component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <Field label="National insurance number:" placeholder="your national insurance number" name="NINnumber" component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("National insurance number:","National insurance numeris:")} placeholder={props.changeTitleLanguage("Your national insurance number","Jūsų national insurance numeris")} name="NINnumber" component={TextField}/>
                                             </div>
                                             <div className="field">
-                                                <label>Picture of ID :</label>
+                                                <label>{props.changeTitleLanguage("Picture of ID:","Paso arba ID kortelės kopija:")}</label>
                                                 <FileUpload values={values} uploadedFile={props.uploadedFile} setUploadedFile={props.setUploadedFile} />
                                             </div>
                                             <div >
-                                                <Field label="Message:" placeholder="Your message..." name="message" validate={validateField} component={TextArea}/>
+                                                <Field label={props.changeTitleLanguage("Message:","Pranešimas:")} placeholder={props.changeTitleLanguage("Your message...","Jūsų žinutė...")} name="message" validate={validateField} component={TextArea}/>
                                             </div>
                                             <div style={{"paddingTop":"10px" , "width":"260px"}}>
-                                                <button className="button is-success" type="submit" disabled={!dirty ||!isValid} onClick={()=>{values.date = new Date().toString()}}>submit</button>
+                                                <button className="button is-success" type="submit" disabled={!dirty ||!isValid} onClick={()=>{values.date = new Date().toString()}}>{props.changeTitleLanguage("Submit","Siūsti")}</button>
                                             </div>
         
                                     </Form>

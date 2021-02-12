@@ -1,13 +1,15 @@
 const  express = require('express');
+const path = require('path')
+const enforce = require('express-sslify');
 // const fileUpload = require('express-fileupload');
 const  cors = require('cors');
 // require('dotenv').config();
 // const nodemailer = require("nodemailer");
-const servicesDB =require('./data/services.json');
+const servicesDB = require('./data/services.json');
 // const fs = require('fs')
 const mongoose = require('mongoose');
-const { json } = require('express');
-const swxRouter = require('./controlers/swx')
+const swxRouter = require('./controlers/swx');
+
 
 
 //mongodb 
@@ -22,10 +24,13 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true,
 
 // app 
 const app = express();
+app.use(enforce.HTTPS({ trustProtoHeader: true }));  // <<----- production mode!!!
 
 app.use(cors());
 app.use(express.static('build')); // build <<----
 app.use(express.json());
+
+
 
 const port = process.env.PORT || 3001 ;
 
@@ -35,6 +40,13 @@ app.use('/swx', swxRouter )
 app.get('/api/services', (req,res)=>{
   res.json(servicesDB)  //<<---- servicesDB
 })
+
+
+app.get('*', (req, res)=>{
+  res.sendFile(path.resolve(`${__dirname}/build`, 'index.html'))
+})
+
+
 
 
 app.listen(port, () => {

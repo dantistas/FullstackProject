@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Formik, Field, Form, FieldArray } from 'formik';
+import { Formik, Field, Form } from 'formik';
 import {TextField, TextArea, FileUpload, SelectField, NumberField} from './FormField'
 
 
@@ -12,9 +12,9 @@ const NewCompanyEstablish = (props) => {
     const validateEmail = (value) => {
         let errorMessage;
         if(!value){
-            errorMessage="Field is required"
+            errorMessage=props.changeTitleLanguage("Field is required", "Privalomas laukelis")
         }else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-          errorMessage = 'Invalid email address';
+          errorMessage = props.changeTitleLanguage("Invalid email address", "Neteisingas elektroninio pašto adresas")
         }
         return errorMessage;
       };
@@ -22,7 +22,7 @@ const NewCompanyEstablish = (props) => {
     const validateField = (value) => {
         let errorMessage;
         if(!value){
-            errorMessage = "Field is required"
+            errorMessage = props.changeTitleLanguage("Field is required", "Privalomas laukelis")
         }
         return errorMessage
     }
@@ -30,9 +30,9 @@ const NewCompanyEstablish = (props) => {
     const validateNumberField = (value) => {
         let errorMessage
         if(!value){
-            errorMessage = "Field is required"
+            errorMessage = props.changeTitleLanguage("Field is required", "Privalomas laukelis")
         }else if (isNaN(value)){
-            errorMessage = "Invalid value"
+            errorMessage = props.changeTitleLanguage("Invalid value", "Turi būti numeris")
         }
         return errorMessage
     }
@@ -40,9 +40,9 @@ const NewCompanyEstablish = (props) => {
     const validatePhoneNumber = (value) => {
         let errorMessage;
         if(!value){
-            errorMessage = "Field is required"
+            errorMessage = props.changeTitleLanguage("Field is required", "Privalomas laukelis")
         }else if (isNaN(value)){
-            errorMessage = "Invalid phone number"
+            errorMessage = props.changeTitleLanguage("Invalid phone number", "Neteisingas telefono numeris")
         }
         return errorMessage
     }
@@ -50,11 +50,11 @@ const NewCompanyEstablish = (props) => {
     const validateNumberOfShareHolders = (value) => {
         let errorMessage;
         if(value < 1 || value === 0 || !value){
-            errorMessage = "Field is required or value is invalid"
+            errorMessage = props.changeTitleLanguage("Field is required or value is invalid", "Privalomas laukelis arba neteisingas santykis")
         }else if (isNaN(value)){
-            errorMessage = "Must be a number"
+            errorMessage = props.changeTitleLanguage("Must be a number", "Privalo būti numeris")
         }else if(value > 3){
-            errorMessage = "If more than 3 contacts us directly"
+            errorMessage = props.changeTitleLanguage("If more than 3 shareholders contact us directly", "Jeigu daugiau negu 3 akcininkai, paskambinkite mums")
         }
         return errorMessage
 
@@ -63,13 +63,13 @@ const NewCompanyEstablish = (props) => {
     const validateSelectField = (value) =>{
         let errorMessage;
         if(!value){
-            errorMessage = "Field is required"
+            errorMessage = props.changeTitleLanguage("Field is required", "Privalomas laukelis")
         }
         if(value === "Type of the company"){
-            errorMessage = "Please select type of the company"
+            errorMessage = props.changeTitleLanguage("Please select type of the company", "Pasirinkite kompanijos rūšį")
         }
         if(value === "Position of shareholder"){
-            errorMessage = "Please select position of the shareholder"
+            errorMessage = props.changeTitleLanguage("Please select position of the shareholder", "Pasrininkite akcininko pozicija")
         }
         return errorMessage
     }
@@ -77,10 +77,10 @@ const NewCompanyEstablish = (props) => {
     const validateSharesPerShareholder = (value) => {
         let errorMessage;
         if(!value){
-            errorMessage= "Field is required"
+            errorMessage= props.changeTitleLanguage("Field is required", "Privalomas laukelis")
         }
         if(isNaN(value)){
-            errorMessage = "value must be a number"
+            errorMessage = props.changeTitleLanguage("Value must be a number", "Privalo būti numeris")
         }
         setShares(shares - value)
         return errorMessage
@@ -90,26 +90,26 @@ const NewCompanyEstablish = (props) => {
         let errorMessage;
         const datePatern = /^(?:(?:31(\/|-|\.)(?:0?[13578]|1[02]|(?:Jan|Mar|May|Jul|Aug|Oct|Dec)))\1|(?:(?:29|30)(\/|-|\.)(?:0?[1,3-9]|1[0-2]|(?:Jan|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec))\2))(?:(?:1[6-9]|[2-9]\d)?\d{2})$|^(?:29(\/|-|\.)(?:0?2|(?:Feb))\3(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00))))$|^(?:0?[1-9]|1\d|2[0-8])(\/|-|\.)(?:(?:0?[1-9]|(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep))|(?:1[0-2]|(?:Oct|Nov|Dec)))\4(?:(?:1[6-9]|[2-9]\d)?\d{2})$/
         if(!value){
-            errorMessage = "Field is required"
+            errorMessage = props.changeTitleLanguage("Field is required", "Privalomas laukelis")
         }
         if(!datePatern.test(value)){
-            errorMessage = "Invalid value of date of birth"
+            errorMessage = props.changeTitleLanguage("Invalid value of date of birth", "Neteisingas datos formatas, pabandykite Diena/Mėnesis/Metai")
         }
         return errorMessage
     }
 
     
     const typeOfCompanyOptions = [
-        { value: null, label: "Type of the company"},
+        { value: null, label: props.changeTitleLanguage("Type of the company", "Įmonės tipas")},
         { value: "LTD" , label: "LTD" },
         { value: "LIMITED" , label: "LIMITED" }
     ]
 
     const positionOfShareholderOptions = [
-        { value: null, label: "Position of shareholder"},
-        { value: "Director" , label: "Director" },
-        { value: "Secretary " , label: "Secretary "},
-        { value: "Only shareholder" , label: "Only shareholder" }
+        { value: null, label: props.changeTitleLanguage("Position of shareholder", "Akcininko pozicija") },
+        { value: "Director" , label: props.changeTitleLanguage("Director", "Direktorius/ė") },
+        { value: "Secretary " , label: props.changeTitleLanguage("Secretary", "Sekretorius/ė")},
+        { value: "Only shareholder" , label: props.changeTitleLanguage("Only shareholder", "Tiesiog akcininkas/ė") }
     ]
 
     const createShareholders = (values) => {
@@ -168,48 +168,48 @@ return(
                                     <Form style={{"paddingTop":"10px" , "width":"260px"}}>
                                         { page === 0  ? [
                                             <div className="field">
-                                                <Field label="Full name:" placeholder="John Smith" name="name" validate={validateField} component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("Full name:", "Vardas ir pavardė:")} placeholder={props.changeTitleLanguage("John Smith", "Jonas Petrauskas")} name="name" validate={validateField} component={TextField}/>
                                             </div>,
                                             <div className="field">
-                                                <Field label="Company name:" placeholder="Preferred company name" name="preferredCompanyName" validate={validateField} component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("Company name:", "Įmonės pavadinimas:")} placeholder={props.changeTitleLanguage("Preferred company name", "Norimas įmonės pavadinimas")} name="preferredCompanyName" validate={validateField} component={TextField}/>
                                             </div>,
                                             <div className="field">
-                                                <Field label="Alternative company name:" placeholder="Alternative company name" name="alternativeCompanyName" validate={validateField} component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("Alternative company name:", "Alternatyvus įmonės pavadnimas:")} placeholder={props.changeTitleLanguage("Alternative company name", "Alternatyvus įmonės pavadnimas")} name="alternativeCompanyName" validate={validateField} component={TextField}/>
                                             </div>,
                                             <div className="field">
                                                 <SelectField label="Entry type" name="typeOfCompany" options={typeOfCompanyOptions} validate={validateSelectField}/>
                                                 <div style={{color:'red'}}>
-                                                    {errors.typeOfCompany ? <p>Please select a type of a company</p> : null}
+                                                    {errors.typeOfCompany ? <p>{props.changeTitleLanguage("Please select a type of a company", "Pasirinkite įmonės tipą")}</p> : null}
                                                 </div>
                                             </div>,
                                             <div className="field">
-                                                <Field label="Nature of business:" placeholder="Purpose of the business" name="natureOfBusiness" validate={validateField} component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("Nature of business:", "Įmonės veikla:")} placeholder={props.changeTitleLanguage("Purpose of the business", "Įmonės veikla")} name="natureOfBusiness" validate={validateField} component={TextField}/>
                                             </div>,
                                             <div className="field">
-                                                <Field label="Email:" placeholder="example@domain.com" name="email" validate={validateEmail} component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("Email:","Elektroninio pašto adresas:")} placeholder={props.changeTitleLanguage("example@domain.com","pavyzdys@domenas.com")} name="email" validate={validateEmail} component={TextField}/>
                                             </div>,
                                             <div className="field">
-                                                <Field label="Telephone:" placeholder="+44..." name="telephone" validate={validatePhoneNumber} component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("Telephone:","Telefono numeris:")} placeholder="+44..." name="telephone" validate={validatePhoneNumber} component={TextField}/>
                                             </div>,
                                             <div className="field">
-                                                <Field label="Company Address:" placeholder="Street name and house number" name="companyAdress" validate={validateField} component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("Company Address:","Įmonės adresas:")} placeholder={props.changeTitleLanguage("Street name and house number","Gatvės pavadinimas ir namo numeris")} name="companyAdress" validate={validateField} component={TextField}/>
                                             </div>,
                                             <div className="field">
-                                                <Field label="Postcode:" placeholder="Company postcode" name="companyPostcode" validate={validateField} component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("Postcode:","Pašto kodas:")} placeholder={props.changeTitleLanguage("Postcode of the company","Įmonės pašto kodas")} name="companyPostcode" validate={validateField} component={TextField}/>
                                             </div>,
                                             <div className="field">
-                                                <Field label="Number of shares:" placeholder="E.g. 100" name="numberOfShares" validate={validateNumberField} component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("Number of shares:","Akcijų kiekis:")} placeholder="100" name="numberOfShares" validate={validateNumberField} component={TextField}/>
                                             </div>,
                                             <div className="field">
-                                                <Field label="Value of shares:" placeholder="E.g. 1000£" name="valueOfAllShares" validate={validateNumberField} component={TextField}/>
+                                                <Field label={props.changeTitleLanguage("Value of shares:","Akcijų vertė:")}  placeholder="1000£" name="valueOfAllShares" validate={validateNumberField} component={TextField}/>
                                             </div>,
                                             <div className="field">
-                                                <Field label="Number of Share Holders:" placeholder="Max 3" name="numberOfShareHolders" component={NumberField} min={1} max={3} validate={validateNumberOfShareHolders}/>
+                                                <Field label={props.changeTitleLanguage("Number of Share Holders:","Akcininkų kiekis:")} placeholder="Max 3" name="numberOfShareHolders" component={NumberField} min={1} max={3} validate={validateNumberOfShareHolders}/>
                                             </div>,
                                             <div className="buttons">
-                                                <button className="button is-success" disabled={values.numberOfShareHolders > 3 || values.numberOfShareHolders < 1 || firstPartValidation}  type="button" onClick={()=>{createShareholders(values)}}>Next</button>
+                                                <button className="button is-success" disabled={values.numberOfShareHolders > 3 || values.numberOfShareHolders < 1 || firstPartValidation}  type="button" onClick={()=>{createShareholders(values)}}>{props.changeTitleLanguage("Next","Sekantis")}</button>
                                                 <div>
-                                                   {firstPartValidation ? <p style={{"color": "red"}}>Please check the fields!</p> : null} 
+                                                   {firstPartValidation ? <p style={{"color": "red"}}>{props.changeTitleLanguage("Please check the fields!","Peržiūrėkite laukelius!")}</p> : null} 
                                                 </div>
                                             </div>
                                             ] 
@@ -221,7 +221,7 @@ return(
                                                 return(
                                                 <div>
                                                     { page === shareholder.shareholder ? 
-                                                    [<h3 className="subtitle is-4">Shareholder {shareholder.shareholder} of {values.shareHolders.length}</h3>,
+                                                    [<h3 className="subtitle is-4">{props.changeTitleLanguage("Shareholder","Akcininkas")} {shareholder.shareholder} {props.changeTitleLanguage("of","iš")} {values.shareHolders.length}</h3>,
                                                     <div className="field"> 
                                                         <SelectField label="Position" name={`shareHolders[${index}].position`} options={positionOfShareholderOptions} validate={validateSelectField} />
                                                         <div style={{color:'red'}}>
@@ -229,56 +229,56 @@ return(
                                                         </div>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field label="Number of shares holding:" placeholder="E.g. 100" name={`shareHolders[${index}].numberOfShares`} validate={validateSharesPerShareholder} component={TextField}/>
+                                                        <Field label={props.changeTitleLanguage("Number of shares holding:","Turimų akcijų kiekis:")} placeholder="100" name={`shareHolders[${index}].numberOfShares`} validate={validateSharesPerShareholder} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field label="Name:" placeholder="John" name={`shareHolders[${index}].name`} validate={validateField} component={TextField}/>
+                                                        <Field label={props.changeTitleLanguage("Name:","Vardas:")} placeholder={props.changeTitleLanguage("John","Jonas")} name={`shareHolders[${index}].name`} validate={validateField} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field label="Surname:" placeholder="Smith" name={`shareHolders[${index}].surname`} validate={validateField} component={TextField}/>
+                                                        <Field label={props.changeTitleLanguage("Surname:","Pavardė:")} placeholder={props.changeTitleLanguage("Smith","Petrauskas")} name={`shareHolders[${index}].surname`} validate={validateField} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field label="Date of Birth:" placeholder="DD/MM/YYYY" name={`shareHolders[${index}].dateOfBirth`} validate={validateDOB} component={TextField}/>
+                                                        <Field label={props.changeTitleLanguage("Date of birth:","Gimimo data:")} placeholder="DD/MM/YYYY" name={`shareHolders[${index}].dateOfBirth`} validate={validateDOB} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field label="Email:" placeholder="example@domain.com" name={`shareHolders[${index}].email`} validate={validateEmail} component={TextField}/>
+                                                        <Field label={props.changeTitleLanguage("Email:","Elektroninio pašto adresas:")} placeholder={props.changeTitleLanguage("example@domain.com","pavyzdys@domenas.com")} name={`shareHolders[${index}].email`} validate={validateEmail} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field label="Telephone:" placeholder="+44..." name={`shareHolders[${index}].phonenumber`} validate={validatePhoneNumber} component={TextField}/>
+                                                        <Field label={props.changeTitleLanguage("Telephone:","Telefono numeris:")} placeholder="+44..." name={`shareHolders[${index}].phonenumber`} validate={validatePhoneNumber} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field label="Address:" placeholder="Street name and house number" name={`shareHolders[${index}].address`} validate={validateField} component={TextField}/>
+                                                        <Field label={props.changeTitleLanguage("Address:","Adresas:")} placeholder={props.changeTitleLanguage("Street name and house number","Gatvės pavadinimas ir namo numeris")} name={`shareHolders[${index}].address`} validate={validateField} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field label="Postcode:" placeholder="Postcode" name={`shareHolders[${index}].postcode`} validate={validateField} component={TextField}/>
+                                                        <Field label={props.changeTitleLanguage("Postcode:","Pašto kodas:")} placeholder={props.changeTitleLanguage("Postcode","Pašto kodas")} name={`shareHolders[${index}].postcode`} validate={validateField} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field label="National insurance number:" placeholder="your national insurance number" name={`shareHolders[${index}].NINnumber`} component={TextField}/>
+                                                        <Field label={props.changeTitleLanguage("National insurance number:","National insurance numeris:")} placeholder={props.changeTitleLanguage("Your national insurance number","Jūsų national insurance numeris")} name={`shareHolders[${index}].NINnumber`} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field label="UTR number:" placeholder="your UTR number" name={`shareHolders[${index}].UTRnumber`} component={TextField}/>
+                                                        <Field label={props.changeTitleLanguage("UTR number:","UTR numeris:")} placeholder={props.changeTitleLanguage("Your UTR number","Jūsų UTR numeris")} name={`shareHolders[${index}].UTRnumber`} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field label="Nationality:" placeholder="E.g. British" name={`shareHolders[${index}].nationality`} validate={validateField} component={TextField}/>
+                                                        <Field label={props.changeTitleLanguage("Nationality:","Pilietybė:")} placeholder={props.changeTitleLanguage("British","Lietuvis")} name={`shareHolders[${index}].nationality`} validate={validateField} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field label="Home town:" placeholder="Name of the city you were born" name={`shareHolders[${index}].homeTown`} validate={validateField} component={TextField}/>
+                                                        <Field label={props.changeTitleLanguage("Home town:","Gimimo vieta:")} placeholder={props.changeTitleLanguage("Name of the city you were born","Miesto pavadinimas kuriame gimėte")} name={`shareHolders[${index}].homeTown`} validate={validateField} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field label="Mothers maiden name" placeholder="E.g. Maria" name={`shareHolders[${index}].mothersMaidenName`} validate={validateField} component={TextField}/>
+                                                        <Field label={props.changeTitleLanguage("Mothers maiden name:","Motinos mergautinė pavardė:")} placeholder={props.changeTitleLanguage("Maria","Petrauskaitė")} name={`shareHolders[${index}].mothersMaidenName`} validate={validateField} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <Field label="Fathers name:" placeholder="E.g. Steve" name={`shareHolders[${index}].fathersName`} validate={validateField} component={TextField}/>
+                                                        <Field label={props.changeTitleLanguage("Fathers name:","Tėvo vardas:")} placeholder={props.changeTitleLanguage("Steve","Antanas")} name={`shareHolders[${index}].fathersName`} validate={validateField} component={TextField}/>
                                                     </div>,
                                                     <div className="field">
-                                                        <label>Copy of ID: </label>
+                                                        <label>{props.changeTitleLanguage("Copy of ID:","Paso arba ID kortelės kopija:")}</label>
                                                         <FileUpload values={values.shareHolders[index]} uploadedFile={props.uploadedFile} setUploadedFile={props.setUploadedFile}/>
                                                     </div>,
                                                     <div className="buttons">
-                                                        <button type="button" className="button is-success" disabled={!shareholder.position || shareholderInfoValidation} onClick={nextPage}>Next</button>
-                                                        <button type="button" className="button is-danger is-inverted" onClick={previousPage}>Back</button>
+                                                        <button type="button" className="button is-success" disabled={!shareholder.position || shareholderInfoValidation} onClick={nextPage}>{props.changeTitleLanguage("Next","Sekantis")}</button>
+                                                        <button type="button" className="button is-danger is-inverted" onClick={previousPage}>{props.changeTitleLanguage("Back","Atgal")}</button>
                                                         <div>
-                                                            {shareholderInfoValidation ? <p style={{"color": "red"}}>Please check the fields!</p> : null} 
+                                                            {shareholderInfoValidation ? <p style={{"color": "red"}}>{props.changeTitleLanguage("Please check the fields!","Peržiūrėkite laukelius!")}</p> : null} 
                                                         </div>
                                                     </div>]
                                                     : null }
@@ -288,14 +288,14 @@ return(
                                         {page === values.shareHolders.length + 1 ?
                                                                                 [
                                                                                 <div >
-                                                                                    <Field label="Additional information:" placeholder="...." name="message" component={TextArea}/>
+                                                                                    <Field label={props.changeTitleLanguage("Additional information:","Papildoma informacija:")} placeholder="...." name="message" component={TextArea}/>
                                                                                 </div>,
                                                                                 <label className="checkbox" style={{"color":`${values.confirmed === false ? "red" : "white"}`}}>
-                                                                                    <Field type="checkbox" name="confirmed" checked={values.confirmed}/> I confirm that all information provided is correct 
+                                                                                    <Field type="checkbox" name="confirmed" checked={values.confirmed}/>{props.changeTitleLanguage("I confirm that all information provided is correct","Patvirtinu, kad pateikta informacija yra teisinga")} 
                                                                                 </label>,
                                                                                 <div className="buttons" >
-                                                                                    <button className="button is-success" type="submit" disabled={!dirty || !isValid || values.confirmed === false} onClick={()=>{values.date = new Date().toString()}}>Submit</button>
-                                                                                    <button  type="button" className="button is-success is-inverted" onClick={()=>{setPage(page-1)}}>Back</button>
+                                                                                    <button className="button is-success" type="submit" disabled={!dirty || !isValid || values.confirmed === false} onClick={()=>{values.date = new Date().toString()}}>{props.changeTitleLanguage("Submit","Siūsti")}</button>
+                                                                                    <button  type="button" className="button is-danger is-inverted" onClick={()=>{setPage(page-1)}}>{props.changeTitleLanguage("Back","Atgal")}</button>
                                                                                 </div>
                                                                                 
                                                                                 ] : null }
