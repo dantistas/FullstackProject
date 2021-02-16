@@ -24,7 +24,7 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true,
 
 // app 
 const app = express();
-app.use(enforce.HTTPS({ trustProtoHeader: true }));  // <<----- production mode!!!
+// app.use(enforce.HTTPS({ trustProtoHeader: true }));  // <<----- production mode!!!
 
 app.use(cors());
 app.use(express.static('build')); // build <<----

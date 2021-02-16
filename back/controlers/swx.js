@@ -3,12 +3,16 @@ const generalQueries = require('../models/generalQueries') // gali but kad situo
 const selfEmployedQueries = require('../models/selfEmployedQueries')
 const companyMattersQueries = require('../models/companyMattersQueries')
 const newCompanyEstablishQueries = require('../models/newCompanyEstablishmentQueries')
+const { Dropbox } = require('dropbox');
 const fileUpload = require('express-fileupload');
 require('dotenv').config();
 const nodemailer = require("nodemailer");
 const fs = require('fs')
 
 swxRouter.use(fileUpload())
+
+// var dbx = new Dropbox ({ accessToken: process.env.DROPBOX_ACCESS_TOKEN })
+// dbx.filesUpload({path: '/' + "alio.txt", contents: `${__dirname}/uploads/alio.txt`})   <<<---- sitas veike jau normalei jei ka https://github.com/andreafabrizi/Dropbox-Uploader/issues/514
 
 const deleteFiles = (files) => {
     if(files){
@@ -163,6 +167,9 @@ swxRouter.post('/', async (req, res)  => {
       files.push(req.files.file)
       files[0].mv(`${__dirname}/uploads/${files[0].name}`)
     }
+
+
+
 
     const toCompany = messageToCompany(values, files)
     const toClient = messageToClient(req.body) //sitas bus klientuj.

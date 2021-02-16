@@ -32,7 +32,7 @@ const ContactUsForm = (props) => {
                 formData.append('file', uploadedFile[i])
             }  
         } 
-        axios.post('/swx', formData).then((response) => {
+        axios.post('http://localhost:3001/swx', formData).then((response) => {
             if(response.data.successful){
                 setServerResponse(response.data.successful)
                 setLoading("successful")

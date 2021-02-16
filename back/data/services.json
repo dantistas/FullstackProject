@@ -1,45 +1,72 @@
 [
     {
         "service": "Taxation",
-        "description": "We aim to work closely with you in order for you to pay minimum tax required by law. We will help you to plan your budget so that you can carry out operations in a manner that is tax efficient. We will help you to identify areas where we can assist in minimizing your tax liability or making improvements in identified areas. We will walk through with you so you can understand financial aspects within your business which will help you to plan for the future. We will help you with all needed registration in order for you to start working - either it is limited company or personal tax matters.",
+        "description": "We aim to work closely with you in order for you to pay minimum tax required by law and help you to plan your budget so that you can carry out operations in a manner that is tax efficient. Our main goal is to help you to identify areas where we can assist in minimizing your tax liability or making improvements in identified areas. We will walk through with you so you can understand financial aspects within your business which will help you to plan for the future.  Mastis accountants will assist you with any essential registrations in order for you to start working - either it is limited company or personal tax matters.",
         "paslauga": "Apmokestinimas",
-        "aprasymas": "Siekiame glaudžiai bendradarbiauti su jumis, kad galėtumėte mokėti minimalius teisės aktų nustatytus mokesčius. Mes padėsime jums suplanuoti jūsų biudžetą, kad galėtumėte veiklą vykdyti efektyviai mokestine prasme. Mes padėsime jums nustatyti sritis, kuriose galime padėti sumažindami jūsų mokestines prievoles ar atlikdami patobulinimus nustatytose srityse. Mes jums viską nuosekliai paaiškinsime, kad galėtumėte suprasti savo įmonės finansinius aspektus, kurie padės jums planuoti ateitį. Mes padėsime jums atlikti reikalingą registraciją, kad galėtumėte pradėti dirbti, nesvarbu ar tai būtų ribotos atsakomybės bendrovės ar asmeniniai mokesčiai."
+        "aprasymas": "Siekiame glaudžiai bendradarbiauti su jumis, kad galėtumėte mokėti minimalius teisės aktų nustatytus mokesčius. Mes padėsime suplanuoti jūsų biudžetą, kad galėtumėte veiklą vykdyti efektyviai mokestine prasme, padėsime nustatyti sritis, kuriose galime patarti. Viską nuosekliai paaiškinsime, kad galėtumėte suprasti savo įmonės finansinius aspektus, kurie gelbės planuojant ateitį. Atliksime reikalingas registracijas, nesvarbu ar tai būtų susijusios su bendrove ar privačiu asmens apmokestinimo klausimu.",
+        "SEO": {
+            "en":"We will help you to identify areas where we can assist in minimizing your tax liability or making improvements in identified areas.",
+            "lt":"Mes padėsime jums suplanuoti jūsų biudžetą, kad galėtumėte veiklą vykdyti efektyviai mokestine prasme, padėsime jums nustatyti sritis, kuriose galime padėti."
+        }
     },
     {
-        "service": "Self – assessments",
-        "description": "We can complete your tax returns, ensuring they meet all compliance requirements. We can provide advice on most aspects of personal taxation. We will prepare accounts to help in completion of self-assessment tax returns and submit it with tax authorities. We will go through all computation of tax liabilities so you can understand how tax liabilities are calculated. We will help you dealing with tax enquiries or any correspondence with HMRC. In an unfortunate event of HMRC penalty which is not a pleasant experience, we will help you to minimize these penalties.",     
-        "paslauga": "Asmeninės apskaitos tvarkymas",
-        "aprasymas": "Mes galime užpildyti jūsų mokesčių deklaracijas užtikrindami, kad jos atitiktų visus atitikties reikalavimus. Mes galime patarti daugeliu asmens apmokestinimo aspektų. Parengsime ataskaitas, kurios padės užpildant asmeninės apskaitos mokesčių deklaracijas, ir pateiksime jas mokesčių institucijoms. Mes atliksime visą mokestinių įsipareigojimų apskaičiavimą, kad galėtumėte suprasti, kaip apskaičiuojami mokestiniai įsipareigojimai. Mes padėsime jums atsakant į nurodymus pateikti informaciją dėl mokestinių klausimų bei į bet kokius susirašinėjimus su karališkąja mokesčių ir muitų tarnyba. Jeigu įvyko toks nemalonus dalykas ir jums karališkoji mokesčių ir muitinės tarnyba paskyrė baudą, šis dalykas pats savaime nėra maloni patirtis, tačiau mes padėsime jums, kad šios baudos būtų kuo mažesnės."
-
+        "service": "Self-assessments and tax rebate",
+        "description": "We will help you with your tax returns, ensuring they meet all compliance requirements, and provide advice on most aspects of personal taxation. We will go through all computation of tax liabilities so you can understand how tax liabilities are calculated. In case you overpaid in taxes, Mastis is to step in with your tax rebates. In an unfortunate event of HMRC penalty which is not a pleasant experience, we will help you to minimize these penalties by dealing with tax enquiries or any HMRC correspondence.",     
+        "paslauga": "Asmeninės apskaitos tvarkymas ir mokesčių grąžinimas",
+        "aprasymas": "Užpildysime jūsų mokesčių deklaracijas užtikrindami, kad jos atitiktų visus Jungtinės Karalystės mokesčių nustatytos tvarkos reikalavimus. Patarsime daugeliu asmens apmokestinimo aspektų, padėsime susigrąžinti permokėtus mokesčius. Parengsime ataskaitas ir pateiksime jas mokesčių institucijoms, bendradarbiausime susirašinėjimuose su HMRC. Baudos atveju patarsime, kaip išspręsti šią problemą arba minimalizuoti esančią baudą.",
+        "SEO": {
+            "en":"We will help you with your tax returns, ensuring they meet all compliance requirements, and provide advice on most aspects of personal taxation.",
+            "lt":"Patarsime daugeliu asmens apmokestinimo aspektų, padėsime sugrąžinti permokėtus mokesčius."
+        }
     },
     {
         "service": "VAT",
-        "description": "We can advise and complete your VAT returns by also helping you to understand the complex area of VAT providing our efficient and cost-effective VAT service. Mistakes in VAT returns can be expensive for business. Therefore, we will take away stress for completing VAT returns. We will register, prepare, investigate, plan and advice on most of VAT matters. We will implement most beneficial VAT strategy for your business.",
+        "description": "Mistakes in VAT returns can be expensive for business. Our goal is to advise and complete your VAT returns by also helping you to understand the complex area of VAT providing our efficient and cost-effective VAT service. Therefore, we will take away stress for completing VAT returns. We will register, prepare, investigate, plan and advise on most VAT matters, implement the most beneficial VAT strategy for your business.",
         "paslauga": "PVM",
-        "aprasymas": "Mes galime patarti ir užpildyti jūsų PVM deklaracijas, bei padėti jums suprasti sudėtingą PVM sritį teikdami efektyvias ir ekonomiškas PVM skirtas paslaugas. Klaidos PVM deklaracijose įmonei gali brangiai kainuoti. Mums užpildant PVM deklaracijas nebepatirsite streso. Mes registruosime, rengsime, tirsime, planuosime ir konsultuosime daugeliu PVM klausimų. Mes įgyvendinsime naudingiausią jūsų verslui PVM strategiją."
+        "aprasymas": "Klaidos PVM deklaracijose įmonei gali brangiai kainuoti, todėl padėsime užpildyti jūsų PVM deklaracijas, bei suprasti šią sudėtingą sritį. Registruosime, rengsime, tirsime, planuosime ir konsultuosime daugeliu PVM klausimų. Mes įgyvendinsime naudingiausią jūsų verslui PVM strategiją.",
+        "SEO": {
+            "en":"Mistakes in VAT returns can be expensive for business. We can advise and complete your VAT returns by also helping you to understand the complex area of VAT providing our efficient and cost-effective VAT service.",
+            "lt":"Klaidos PVM deklaracijose įmonei gali brangiai kainuoti. Užpildysime jūsų PVM deklaracijas, bei padėsime jums suprasti sudėtingą PVM sritį. Mes registruosime, rengsime, tirsime, planuosime ir konsultuosime daugeliu PVM klausimų."
+        }
     },
     {
         "service": "Business start-up",
-        "description": "We can help you to decide which business structure is most suitable for you by completing any registration procedures with Companies House and HM Revenue & Customs. We will help you to decide most suitable business structure and will deal with secretarial issues. We will help with all aspects of business compliance and administration.",
+        "description": "We can help you to decide which business structure is most suitable for you by completing any registration procedures with Companies House and HM Revenue & Customs. We will assist you in choosing the most suitable business structure, deal with secretarial issues and all aspects of business compliance and administration.",
         "paslauga": "Verslo pradžia",
-        "aprasymas": "Atlikdami visas registracijos procedūras įmonių registre ir karališkojoje mokesčių ir muitų tarnyboje galime padėti jums nuspręsti, kuri verslo forma jums yra tinkamiausia. Mes padėsime jums apsispręsti dėl tinkamiausios verslo struktūros ir išspręsime kanceliarinius klausimus. Mes padėsime visais verslo atitikties teisės aktų reikalavimams ir administravimo aspektais."
+        "aprasymas": "Atlikdami visas registracijos procedūras įmonių registre ir HMRC galime padėti jums nuspręsti, kuri verslo forma jums yra tinkamiausia. Padėsime jums apsispręsti dėl tinkamiausios verslo struktūros ir išspręsime kanceliarinius klausimus. Konsultuosime visais verslo atitikties teisės aktų reikalavimams ir administravimo aspektais.",
+        "SEO": {
+            "en":"We can help you to decide which business structure is most suitable for you by completing any registration procedures with Companies House and HM Revenue & Customs. We will help you to decide most suitable business structure and will deal with secretarial issues. We will help with all aspects of business compliance and administration.",
+            "lt":"Atlikdami visas registracijos procedūras įmonių registre ir HMRC galime padėti jums nuspręsti, kuri verslo forma jums yra tinkamiausia. Padėsime jums apsispręsti dėl tinkamiausios verslo struktūros ir išspręsime kanceliarinius klausimus."
+        }
     },
     {
         "service": "Bookkeeping",
         "description": "All businesses recognize the great importance of maintaining accurate books and records in order to meet regulatory requirements, however, many businesses find themselves unable to carry out these tasks themselves, that's why we are here to help. We will be on top of your bookkeeping, VAT, payroll and other accounting requirements also helping with most aspects of your company administration and compliance. We will tailor reports to individual requirements and provide with right amount of useful information.",
         "paslauga": "Buhalterinė apskaita",
-        "aprasymas": "Visos įmonės pripažįsta, kad labai svarbu tiksliai tvarkyti apskaitą ir registrus, kad būtų laikomasi reglamentavimo reikalavimų, tačiau daugelis įmonių pačios negali atlikti šių užduočių, todėl mes esame tam, kad padėtume. Mes tvarkysime jūsų buhalterinę apskaitą, PVM, darbo užmokestį ir įgyvendinsime kitus apskaitos reikalavimus, taip pat padėsime spręsti daugumą jūsų įmonės administravimo ir atitikties teisės aktams aspektų. Mes pritaikysime ataskaitas pagal individualius reikalavimus ir pateiksime reikiamą naudingos informacijos kiekį."
+        "aprasymas": "Visos įmonės pripažįsta, kad labai svarbu tiksliai tvarkyti apskaitą ir registrus, kad būtų laikomasi reglamentavimo reikalavimų, tačiau daugelis įmonių pačios negali atlikti šių užduočių, todėl mes esame tam, kad padėtume. Mes tvarkysime jūsų buhalterinę apskaitą, PVM, darbo užmokesčiu susijusius klausimus ir įgyvendinsime kitus apskaitos reikalavimus, taip pat padėsime spręsti daugumą jūsų įmonės administravimo aspektų. Mes pritaikysime ataskaitas pagal individualius reikalavimus ir pateiksime reikiamą naudingos informacijos kiekį.",
+        "SEO": {
+            "en":"We will be on top of your bookkeeping, VAT, payroll and other accounting requirements also helping with most aspects of your company administration and compliance.",
+            "lt":"Tvarkysime jūsų buhalterinę apskaitą, PVM, darbo užmokesčiu susijusius klausimus ir įgyvendinsime kitus apskaitos reikalavimus, taip pat padėsime spręsti daugumą jūsų įmonės administravimo aspektų."
+        }
     },
     {
         "service": "Payroll & CIS",
-        "description": "We will deal with payroll operations on your behalf. We will process and report real time filling with HMRC and pension authorities. We will help you to understand how payroll works and will provide you all needed documentation: pay slips, P60, P32, subcontractor pay slips, etc. As most of our clients come from construction industry background, we have strong knowledge of it. We do help with all essential CIS registrations and submissions needed for your business to operate.",  
-        "paslauga": "Darbo užmokestis ir SSP",
-        "aprasymas": "Mes atliksime darbo užmokesčio operacijas jūsų vardu. Mes tvarkysime ir realiu laiku teiksime dokumentus karališkajai mokesčių ir muitų tarnybai bei pensijų institucijomis. Mes padėsime jums suprasti, kaip veikia darbo užmokesčio fondas, ir pateiksime jums visus reikalingus dokumentus: algalapius, formas P60 ir P32, atsiskaitymo su subrangovais lapelius ir kt. Kadangi dauguma mūsų klientų yra iš statybų sektoriaus atstovai, mes šiuos dalykus tikrai gerai išmanome. Mes padedame atlikti visas būtinas SSP registracijas ir pateikti visus reikiamus dokumentus, kad jūsų įmonė galėtų veikti."
+        "description": "We will deal with payroll operations on your behalf, process and report real time filling with HMRC and pension authorities, complete all necessary PAYE and CIS registrations. We will provide you all needed documentation: payslips, P60, P32, subcontractor payslips, etc.",  
+        "paslauga": "Atlyginimų mokėjimas ir statybų sektorius",
+        "aprasymas": "Kadangi dauguma mūsų klientų yra iš statybų sektoriaus, padėsime atlikti visas būtinas CIS registracijas ir pateikti visus reikiamus dokumentus, kad jūsų įmonė galėtų veikti. Mes atliksime darbo užmokesčio operacijas jūsų vardu. Tvarkysime ir teiksime dokumentus į HMRC bei pensijų institucijas. Padėsime jums suprasti, kaip veikia darbo užmokesčio fondas, ir pateiksime jums visus reikalingus dokumentus: algalapius, formas P60 ir P32, atsiskaitymo su subrangovais algalapius ir kt.",
+        "SEO": {
+            "en":"We will process and report real time filling with HMRC and pension authorities.",
+            "lt":"Tvarkysime ir teiksime dokumentus į HMRC bei pensijų institucijas. Padėsime jums suprasti, kaip veikia darbo užmokesčio fondas, ir pateiksime jums visus reikalingus dokumentus"
+        }
     },
     {
         "service": "Consultation",
-        "description": "Our goal is to get to know your business better so we can offer the best advice. We try to do more than completing relevant paperwork, we will give you advice on your tax positions and liabilities, we will consult on most accountancy matters. We will help you to plan your personal and business taxes, giving you most tax efficient strategies for profit extractions or remunerations.",
+        "description": "Our goal is to get to know your business better so we can offer the best advice.We will help you to plan your personal and business taxes, giving you most tax efficient strategies for profit extractions or remunerations.",
         "paslauga": "Konsultacijos",
-        "aprasymas": "Mūsų tikslas yra geriau pažinti jūsų verslą, kad galėtume pasiūlyti geriausius patarimus. Mes stengiamės padaryti daugiau nei už atitinkamų dokumentų pildymą, mes suteiksime jums patarimų dėl jūsų mokestinės padėties ir įsipareigojimų, bei konsultuosime daugeliu apskaitos klausimų. Mes padėsime jums suplanuoti jūsų asmeninius ir įmonės mokesčius, pateikdami jums efektyviausias pelno gavimo ar atlygio strategijas."
+        "aprasymas": "Mūsų tikslas yra geriau pažinti jūsų verslą, kad galėtume pasiūlyti geriausius patarimus. Suteiksime jums patarimų dėl jūsų mokestinės padėties ir įsipareigojimų, bei konsultuosime daugeliu apskaitos klausimų. Padėsime jums suplanuoti jūsų asmeninius ir įmonės mokesčius, pateikdami jums efektyviausias verslo strategijas.",
+        "SEO": {
+            "en":"We will give you advice on your tax positions and liabilities by consulting on most accountancy matters.",
+            "lt":"Mūsų tikslas yra geriau pažinti jūsų verslą, kad galėtume pasiūlyti geriausius patarimus. Suteiksime jums patarimų dėl jūsų mokestinės padėties ir įsipareigojimų, bei konsultuosime daugeliu apskaitos klausimų."
+        }
     }
   ]

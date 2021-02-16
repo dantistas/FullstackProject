@@ -10,7 +10,7 @@ const Contact = (props) => {
 
         return (
             <div className="block">
-                <MetaCreator title={props.title + " - Contact us" } description="Accounting, bookkepping services in London, UK."/>
+                <MetaCreator title={props.title + " | Contact us" } description="Accounting, bookkepping services in London, UK. Contact us 07498226576, info@mastis.co.uk - Mastis Accounting, All rights reserved 2021"/>
                 <div className="columns " style={{"width": "100%"}}>
                     <div className="column px-6">
                         <a href="mailto:info@mastis.co.uk">

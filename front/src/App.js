@@ -29,7 +29,7 @@ const App = () => {
   const [visible, setVisible] = useState(false)
   const [language, setLanguage] = useState("en")
   
-  const title = "Mastis"
+  const title = "mastis.co.uk"
   let location = useLocation()
 
   const showWhenVisible = { display: visible ? 'block' : 'none' }
@@ -59,7 +59,7 @@ const App = () => {
 
   useEffect(()=>{
    
-    axios.get("/api/services").then((res)=>{     //<<<----- paskui pakeisti i api/services tik!
+    axios.get("http://localhost:3001/api/services").then((res)=>{     //<<<----- paskui pakeisti i api/services tik!
          setServicesDB(res.data)
        })
 
@@ -95,7 +95,7 @@ const App = () => {
                       </div>
                     </div>
                   </div>
-                  <a className="navbar-item" href='https://www.employedandselfemployed.co.uk/tax-calculator'>{buttonsLanguage("Calculator","Skaičiuotuvas")}</a>
+                  <a className="navbar-item" target="_blank" href='https://www.employedandselfemployed.co.uk/tax-calculator'>{buttonsLanguage("Calculator","Skaičiuotuvas")}</a>
                 </div>
                 <div class="navbar-end">
                   <Link role="button" dissabled class="navbar-item" to="/contact" onClick={()=>{document.querySelector("#navbar-links").classList.toggle('is-active')}} >{buttonsLanguage("Contact us","Susisiekite su mumis")}</Link>
@@ -113,14 +113,17 @@ const App = () => {
         <div class="hero-body">
           <div class="container is-fluid py-6">
             <Switch>
-              <Route path="/services/:id">
+              <Route path="/services/:id" exact>
                 <Service language={language} title={title} servicesDB={servicesDB} setVisible={setVisible} visible={visible} showWhenVisible={showWhenVisible} toggleVisibility={toggleVisibility}/>
               </Route>
-              <Route path="/contact">
+              <Route path="/contact" exact>
                 <Contact title={title} toggleVisibility={toggleVisibility} subject={subject}/>
               </Route>
               <Route path="/" exact>
                 <Home Link={Link} title={title} language={language}/>
+              </Route>
+              <Route path="/">
+                  <h1 className="title">{language=== "en" ? "404 Page not found" : language === "lt" ? "404 puslapis nerastas" : null}</h1>
               </Route>
             </Switch>
             <FloatingButtonContent language={language} location={location.pathname} showWhenVisible={showWhenVisible} toggleVisibility={toggleVisibility}/>
