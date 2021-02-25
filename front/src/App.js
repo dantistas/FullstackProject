@@ -59,7 +59,7 @@ const App = () => {
 
   useEffect(()=>{
    
-    axios.get("http://localhost:3001/api/services").then((res)=>{     //<<<----- paskui pakeisti i api/services tik!
+    axios.get("/api/services").then((res)=>{     //<<<----- paskui pakeisti i api/services tik!
          setServicesDB(res.data)
        })
 
@@ -131,12 +131,12 @@ const App = () => {
         </div>
       </div>
       <div id="footer-div">
-              <div style={{"paddingTop":"30px"}}>
+              {/* <div style={{"paddingTop":"30px"}}>
                 <img src={sage50} id="icon"></img>
                 <img src={quickbooks} id="icon"></img>
                 <img src={vtSoftware} id="icon"></img>
-              </div>
-              <div id="whatsapp-us-fab">
+              </div> */}
+              {/* <div id="whatsapp-us-fab">
                 <a role="button" target="_blank" href="https://wa.me/447498226576">
                     <Fab size="small" >
                       <WhatsAppIcon fontSize="small" style={{"color":"green"}}/>
@@ -156,6 +156,24 @@ const App = () => {
                       <CallIcon fontSize="small" color="primary"/>
                     </Fab>
                   </a>
+              </div> */}
+              <div id="contacts">
+                  <div>
+                    <a role="button" href="tel:+447498226576">
+                        <CallIcon id="call-icon"/> <u style={{"color":"black"}}>07498 226576</u>
+                    </a>
+                  </div>
+                  <div>
+                    <a role="button" href="mailto:info@mastis.co.uk">
+                        <EmailIcon id="email-icon"/> <u style={{"color":"black"}}>info@mastis.co.uk</u>
+                    </a>
+                  </div>
+                  <div>
+                    <a role="button" target="_blank" href="https://wa.me/447498226576">
+                        <WhatsAppIcon id="whatsapp-icon" /> <u style={{"color":"black"}}>WhatsApp</u>
+                    </a>
+                  </div>
+
               </div>
               <div id="contact-us-fab">
                 <a role="button" onClick={()=>{toggleVisibility()}}>

@@ -127,3 +127,35 @@
   right: 25px;
   z-index: 1;
 }
+
+
+#contacts{
+  height: 275px;
+  width: 150px;
+  position: fixed;
+  left: 55px;
+  bottom: -190px;
+  z-index: 2;
+}
+#call-icon{
+  position:fixed;
+  bottom: 60px;
+  left: 15px;
+  color:#ffc37b
+}
+#email-icon{
+  position:fixed;
+  bottom: 35px;
+  left: 15px;
+  color:#ffc37b
+}
+#whatsapp-icon{
+  position:fixed;
+  bottom: 11px;
+  left: 15px;
+  color:#ffc37b
+}
+#software-icons{
+  position: fixed;
+  right: 75px;
+}

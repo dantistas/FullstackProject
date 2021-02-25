@@ -8,11 +8,12 @@ const fileUpload = require('express-fileupload');
 require('dotenv').config();
 const nodemailer = require("nodemailer");
 const fs = require('fs')
+const path = require('path')
 
 swxRouter.use(fileUpload())
+const dbx = new Dropbox ({ accessToken: process.env.DROPBOX_ACCESS_TOKEN })
 
-// var dbx = new Dropbox ({ accessToken: process.env.DROPBOX_ACCESS_TOKEN })
-// dbx.filesUpload({path: '/' + "alio.txt", contents: `${__dirname}/uploads/alio.txt`})   <<<---- sitas veike jau normalei jei ka https://github.com/andreafabrizi/Dropbox-Uploader/issues/514
+
 
 const deleteFiles = (files) => {
     if(files){
@@ -160,15 +161,18 @@ swxRouter.post('/', async (req, res)  => {
   
     if(req.files && req.files.file.length > 0){
       for(let i = 0; i< req.files.file.length; i++){
-        files.push(req.files.file[i])                              
-        files[i].mv(`${__dirname}/uploads/${files[i].name}`)
+        dbx.filesUpload({path: `/ToBeConfirmed/${savedQuery._id}/${req.files.file[i]}` , contents: req.files.file[i].data }).then(res=>console.log(res))  // <<<---- sitas veike jau normalei jei ka https://github.com/andreafabrizi/Dropbox-Uploader/issues/514
+        files.push(req.files.file[i])                            // sito greiciausiai, kad nereikes, nes viskas eis i dropboxa   
+        files[i].mv(`${__dirname}/uploads/${files[i].name}`)  // sito greiciausiai, kad nereikes, nes viskas eis i dropboxa
       }
     } else if (req.files){
-      files.push(req.files.file)
-      files[0].mv(`${__dirname}/uploads/${files[0].name}`)
+      dbx.filesUpload({path: `/ToBeConfirmed/${savedQuery._id}/${req.files.file.name}` , contents: req.files.file.data }).then(res=>console.log(res))  // <<<---- sitas veike jau normalei jei ka https://github.com/andreafabrizi/Dropbox-Uploader/issues/514
+      files.push(req.files.file)                              // sito greiciausiai, kad nereikes, nes viskas eis i dropboxa
+      files[0].mv(`${__dirname}/uploads/${files[0].name}`)   // sito greiciausiai, kad nereikes, nes viskas eis i dropboxa
     }
 
-
+  
+  
 
 
     const toCompany = messageToCompany(values, files)
