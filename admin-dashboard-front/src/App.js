@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react'
 import {Switch, Route, Link, useHistory ,useLocation } from "react-router-dom"
 import './App.css';
 import 'bulma/css/bulma.css'
+import NavigationBar from './components/NavigationBar'
 import NewQueries from "./components/NewQueries"
+import Querie from './components/Querie'
 import axios from 'axios'
 
 const  App = () => {
@@ -17,14 +19,20 @@ const  App = () => {
 
   return (
     <div className="App">
-      <Link to="/new-queries">New Queries</Link>
-      <Link to="/clients">Clients</Link>
+      <NavigationBar>
+        <Link to="/new-queries">New Queries</Link>
+        <Link to="/clients">Clients</Link>
+        <input className="input" placeholder="search..."></input>
+      </NavigationBar>
       <Switch>
         <Route path="/new-queries" exact>
             <NewQueries allNewQueries={allNewQueries}/>
         </Route>
         <Route path="/clients" exact>
             <h1>klientaiXDDDD</h1>
+        </Route>
+        <Route path="/query/:id" exact>
+            <Querie/>
         </Route>
       </Switch>
     </div>

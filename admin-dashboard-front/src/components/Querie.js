@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import { useParams } from "react-router-dom";
+import axios from 'axios'
 import GeneralQuerie from './queries/GeneralQuerie'
 import CompanyMatersQuerie from './queries/CompanyMattersQuerie'
 import NewCompanyEstablishQuerie from './queries/NewCompanyEstablishQuerie'
@@ -11,17 +13,39 @@ import ClientToDatabaseForm from './forms/clientToDatabase'
 
 
 
-const Querie = ({querie}) => {
+const Querie = () => {
     const [visible, setVisible] = useState(false)
-    console.log(13%4)
+    const [flinas, setFlinas] = useState([])
+
+    let { id } = useParams();
+
+// useEffect(()=>{
+//     if(querie.type === "General queries"){
+//         axios.get('http://localhost:3001/api/get-thumbnail').then((res)=>{
+//             setFlinas(res.data)
+//         })
+//     }else if(querie.type === "Company matters"){
+//         console.log(querie.file)
+//     }else if(querie.type === "Set up a private limited company"){
+//         querie.shareHolders.forEach((shareholder)=>{console.log(shareholder.file)})
+//     }else if(querie.type === "Self-employment queries"){
+//         console.log(querie.file)
+//     }
+// })
+    
+ 
     const showWhenVisible = { display: visible ? 'block' : 'none' }
 
     const toggleVisibility = () => {
       setVisible(!visible)
     }
-    console.log(querie)
+
+    console.log("EIK TU NXAXUI")
+
 return (
     <div style={{"border": "solid"}}>
+        <div>{id}</div>
+        {/* {flinas ?<img src={``}></img> :null }
         <button onClick={()=>{console.log(visible)}}>steitas</button>
         {querie._id}
         <button onClick={()=>{toggleVisibility()}}>{!visible ? "view" : "hide"}</button>
@@ -61,7 +85,7 @@ return (
             </div>
             <ClientToDatabaseForm querie={querie}/>
             {querie.type === "General queries" ? <GeneralQuerie querie={querie}/> : querie.type === "Company matters" ? <CompanyMatersQuerie/> : querie.type === "Set up a private limited company" ? <NewCompanyEstablishQuerie/> : querie.type === "Self-employment queries" ? <SeflEmployedQuerie/> : null }
-        </div>
+        </div> */}
     </div>
 )
 
@@ -70,3 +94,8 @@ return (
 
 
 export default Querie
+
+
+
+// gerai baxuras zeurei gerai pavarei cia pagirtina rytojuj --> per propsus ideti visus tuos querius ir per querius surasti butent 
+//sito _id query , tada viskas tas pats ir idedi thumbnaila, vsio finisas

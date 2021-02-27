@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import Querie from './Querie'
-
+import { useHistory } from "react-router-dom";
 
 const NewQueries = ({allNewQueries}) => {
     const [queries, setQueries] = useState([])
+    let history = useHistory()
 
 return (
     <div>
@@ -14,7 +14,12 @@ return (
             <button onClick={()=>{setQueries(allNewQueries.selfEmployedQueries)}}>Self employed queries ({allNewQueries.selfEmployedQueries.length})</button>
         </div>
         <div>
-            {queries.map((querie)=>(<Querie key={queries.indexOf(querie)} querie={querie}/>))}
+            {queries.map((querie)=>(
+                <div style={{"border": "solid"}}>
+                    <button onClick={()=>{history.push(`/query/${querie._id}`)}}>view</button>
+                    <p><strong>{querie.name}</strong> | {querie.date}</p>
+                </div>
+            ))}
         </div>
     </div>
 )

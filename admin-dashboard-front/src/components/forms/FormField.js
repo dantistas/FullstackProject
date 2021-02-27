@@ -51,14 +51,18 @@ export const FileUpload = (props) => {
 
 export const SelectField = ({validate, name, label, options}) =>{
     return (
-        <div className="select">
-            <Field as="select" name={name} style={{"width":"260px"}} validate={validate}>
-                {options.map(option => (
-                    <option key={option.value} value={option.value}>
-                    {option.label}
-                    </option>
-                ))}
-            </Field>
+        <div>
+            {label}
+            <div className="select">
+                <Field as="select" name={name} style={{"width":"260px"}} validate={validate}>
+                    <option value="" disabled selected>Please select an option</option>
+                    {options.map(option => (
+                        <option key={option.value} value={option.value}>
+                        {option.label}
+                        </option>
+                    ))}
+                </Field>
+            </div>
         </div>
     )
 } 
