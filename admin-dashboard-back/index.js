@@ -1,7 +1,8 @@
 const  express = require('express');
 const  cors = require('cors');
 const mongoose = require('mongoose');
-const newQueriesRouter = require('./controlers/newQueries');
+const newQueriesRouter = require('./controlers/newQueriesRouter');
+const databaseRouter = require('./controlers/databaseRouter');
 const getThumbnail = require('./controlers/getThumbnail');
 
 
@@ -21,6 +22,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/new-queries', newQueriesRouter)
+app.use('/api/database', databaseRouter)
 app.use('/api/get-thumbnail', getThumbnail)
 
 

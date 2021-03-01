@@ -7,17 +7,55 @@ import NewCompanyEstablishQuerie from './queries/NewCompanyEstablishQuerie'
 import SeflEmployedQuerie from './queries/SelfEmployedQuerie'
 
 
+import clientDatabaseServices from '../services/clientsDatabase'
+
 
 import ClientToDatabaseForm from './forms/clientToDatabase'
 
 
 
 
-const Querie = () => {
+const Querie = ({allNewQueries}) => {
     const [visible, setVisible] = useState(false)
-    const [flinas, setFlinas] = useState([])
+    const [querie, setQuerie] = useState([])
+    const [thumbnail, setThumbnail] = useState([])
+    const [loading, setLoading] = useState("");
+    const [serverResponse, setServerResponse] = useState("")
 
     let { id } = useParams();
+
+   useEffect(()=>{
+    Object.entries(allNewQueries).forEach((querieGroup)=>{querieGroup[1].filter((querie)=>{
+        if(querie._id === id){
+            setQuerie(querie)
+        }})})
+        // axios.get('http://localhost:3001/api/get-thumbnail').then((res)=>{
+        //         setThumbnail(res.data)  
+        //         console.log("pavyko")
+        //     })
+    
+   },[])
+
+
+   const handleSubmit = (values) => {
+    setLoading("loading")
+    // clientDatabaseServices.updatedClient('603d1558243ae66b2c865804',values).then((response)=>{
+    //     setServerResponse(response.successful)
+    // })
+    clientDatabaseServices.createClient(values).then((response)=>{
+        if(response.successful){
+            setServerResponse(response.successful)
+            setLoading("successful")
+
+        }else if(response.error){
+            setServerResponse(response.error)
+            setLoading("error")
+        }else{
+            setServerResponse("error")
+            setLoading("error")
+        }
+    })
+}
 
 // useEffect(()=>{
 //     if(querie.type === "General queries"){
@@ -40,52 +78,75 @@ const Querie = () => {
       setVisible(!visible)
     }
 
-    console.log("EIK TU NXAXUI")
-
 return (
-    <div style={{"border": "solid"}}>
-        <div>{id}</div>
-        {/* {flinas ?<img src={``}></img> :null }
-        <button onClick={()=>{console.log(visible)}}>steitas</button>
-        {querie._id}
-        <button onClick={()=>{toggleVisibility()}}>{!visible ? "view" : "hide"}</button>
-        <button>delete</button>
-        <p><strong>{querie.name}</strong> | {querie.date}</p>
-        <div style={showWhenVisible}>
-            <div>
-                {Object.keys(querie).map((key)=>{  // sumepina visa query
-                        if(Array.isArray(querie[key])){
-                            return (
-                                <div>
-                                    <h1>Shareholders</h1>
-                                    {querie[key].map((element)=>{
-                                        return(
-                                            <div>
-                                                {Object.keys(element).map((keyInArray)=>{
-                                                    return(
-                                                        <div>
-                                                            <p><strong>{keyInArray.split(/(?=[A-Z])/).join(" ")}</strong> : {element[keyInArray]}</p>
+    <div>
+        <div className="column is-centered" >
+                        { loading === "loading" ? 
+                                <div className="loader-wrapper" style={{"height":"100%", "width":"250px", "display":"flex","justifyContent":"center","alignItems":"center"}}>
+                                    <div className="loader is-loading" style={{"height":"100px", "width":"100px"}}></div>
+                                </div> 
+                                :
+                                loading === "successful" ?
+                                                        <div className="notification is-success" style={{"width":"250px"}}>
+                                                            <button className="delete" onClick={()=>{setLoading(false)}}></button>
+                                                            <p className="subtitle">{serverResponse}</p>
                                                         </div>
-                                                    )
-                                                })}
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-                            )
-                        }else {
-                            return(
-                                <div>
-                                    <p><strong>{key.split(/(?=[A-Z])/).join(" ")}</strong> : {querie[key]}</p>
-                                </div>
-                            )
+                                :
+                                loading === "error" ?
+                                                    <div className="notification is-danger" style={{"width":"250px"}}>
+                                                        <button className="delete" onClick={()=>{setLoading(false)}}></button>
+                                                        <p className="subtitle">{serverResponse}</p>
+                                                    </div>
+                                :
+                                null
                         }
-                    })
-                }
             </div>
-            <ClientToDatabaseForm querie={querie}/>
-            {querie.type === "General queries" ? <GeneralQuerie querie={querie}/> : querie.type === "Company matters" ? <CompanyMatersQuerie/> : querie.type === "Set up a private limited company" ? <NewCompanyEstablishQuerie/> : querie.type === "Self-employment queries" ? <SeflEmployedQuerie/> : null }
-        </div> */}
+        <div style={{"border": "solid"}}>
+            <p><strong>{querie.name}</strong> | {querie.date} | <strong>{querie.type}</strong> <button onClick={()=>{clientDatabaseServices.deleteQuerie(querie.type, querie._id).then((res)=>{console.log(res)})}}>delete</button></p>
+            <button onClick={()=>{console.log(querie)}}>steitas</button>
+            <div>
+                <div>
+                    {Object.keys(querie).map((key)=>{  // sumepina visa query
+                            if(Array.isArray(querie[key])){
+                                return (
+                                    <div>
+                                        <h1>Shareholders</h1>
+                                        {querie[key].map((element)=>{
+                                            return(
+                                                <div>
+                                                    {Object.keys(element).map((keyInArray)=>{
+                                                        return(
+                                                            <div>
+                                                                <p><strong>{keyInArray.split(/(?=[A-Z])/).join(" ")}</strong> : {element[keyInArray]}</p>
+                                                            </div>
+                                                        )
+                                                    })}
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                )
+                            }else if(key === "file"){
+                                return (
+                                    <div>
+                                        <p><strong>{key}</strong> : <a href={`https://www.dropbox.com/home/ToBeConfirmed/${id}`} target="_blank">{querie[key]}</a></p>
+                                    </div>
+                                )
+                            }
+                            else {
+                                return(
+                                    <div>
+                                        <p><strong>{key.split(/(?=[A-Z])/).join(" ")}</strong> : {querie[key]}</p>
+                                    </div>
+                                )
+                            }
+                        })
+                    }
+                </div>
+                <ClientToDatabaseForm querie={querie} handleSubmit={handleSubmit}/>
+                {querie.type === "General queries" ? <GeneralQuerie querie={querie}/> : querie.type === "Company matters" ? <CompanyMatersQuerie/> : querie.type === "Set up a private limited company" ? <NewCompanyEstablishQuerie/> : querie.type === "Self-employment queries" ? <SeflEmployedQuerie/> : null }
+            </div>
+        </div>
     </div>
 )
 

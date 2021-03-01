@@ -1,14 +1,16 @@
 import React,{useState} from 'react'
 import { Formik, Field, Form } from 'formik';
 import {TextField, TextArea, FileUpload, SelectField} from './FormField'
-import './formos.css'
+import axios from 'axios'
 
 
 
 
-const ClientToDatabaseForm = ({querie}) => {
+const ClientToDatabaseForm = ({querie, handleSubmit}) => {
+    const [loading, setLoading] = useState("");
+    const [serverResponse, setServerResponse] = useState("")
     //hide  show
-    const [requiredInformation, setRequiredInformation] = useState(false)
+    const [requiredInformation, setRequiredInformation] = useState(true)
     const [companyDetails, setCompanyDetails] = useState(false)
     const [mainContact, setMainContact] = useState(false)
     const [accountsAndReturnsDetails, setAccountsAndReturnsDetails] = useState(false)
@@ -67,7 +69,7 @@ return(
                                         bankName:"",
                                         sortCode:"",
                                         accountNumber:"",
-                                        IBAN:""
+                                        iban:""
                                     },
                                     companyDetails:{
                                         companyNumber:"",
@@ -77,8 +79,8 @@ return(
                                         companyPostalAddress:"",
                                         companyEmail:"",
                                         sicCode:"",
-                                        natureOfbusiness:"",
-                                        companyUTR:"",
+                                        natureOfBusiness:"",
+                                        companyUtr:"",
                                         companiesHouseAuthentificationNumber:"",
                                         disolvedOn:"",
                                     },
@@ -92,13 +94,13 @@ return(
                                         telephone:"",
                                         ninNumber:"",
                                         utrNumber:"",
-                                        IDverified:"",
+                                        idVerified:"",
                                         maritalStatus:"",
                                         nationality:"",
                                     },
                                     accountsAndReturnsDetails:{
                                         companiesHouseYearEnd:"",
-                                        HMRCyearEND:"",
+                                        hmrcYearEnd:"",
                                         latestAction:"",        
                                     },
                                     confirmationStatement:{
@@ -115,10 +117,10 @@ return(
                                         vatNumber:"",
                                         eoriNumber:"",
                                         vatAddress:"",
-                                        dateOfregistration:"",
+                                        dateOfRegistration:"",
                                         effectiveVatDate:"",
                                         estimatedTurnover:"",
-                                        MTD:"",
+                                        mtd:"",
                                         box5LastQuarterSubmitted:"",
                                         vatDeregistrationDate:""
                                     },
@@ -126,25 +128,27 @@ return(
                                         employersReference:"",
                                         accountsOfficeRefference:"",
                                         pensionProvider:"",
-                                        pensionID:"",
+                                        pensionId:"",
                                         declarationOfComplianceSubmission:"",
-                                        P11D:"",
-                                        CIS:"",
+                                        p11d:"",
+                                        cis:"",
                                     },
                                     agentAuthorization:{
                                         corporationTax:"",
-                                        PAYE:"",
-                                        CIS:""
+                                        paye:"",
+                                        cis:""
                                     }
                                 }}
-                    onSubmit={()=>{console.log("zjbs")}}
+                    onSubmit={handleSubmit}
                             >
                             {({ isValid, dirty, setFieldValue, setFieldTouched, values, errors, touched})=>{
                                 return(
                                     <Form style={{"paddingTop":"10px" , "width":"260px"}}>
                                             <div>
-                                                <h1>Required information:</h1>
-                                                <button onClick={()=>{setRequiredInformation(!requiredInformation)}}>{requiredInformation ? "Hide" : "Show"}</button>
+                                                <div>
+                                                    <h1>Required information:</h1>
+                                                    <button type="button" onClick={()=>{setRequiredInformation(!requiredInformation)}}>{requiredInformation ? "Hide" : "Show"}</button>   
+                                                </div>
                                                 <div style={showWhenVisible(requiredInformation)}>
                                                     <div className="field">
                                                         <Field label="Name:" placeholder="John" name="requiredInformation.name" component={TextField}/>
@@ -165,13 +169,13 @@ return(
                                                         <Field label="Account number:" placeholder="xxxxxxxxxx" name="requiredInformation.accountNumber" component={TextField}/>
                                                     </div>
                                                     <div className="field">
-                                                        <Field label="IBAN:" placeholder="GB XXXX XXXX XX" name="requiredInformation.IBAN" component={TextField}/>
+                                                        <Field label="IBAN:" placeholder="GB XXXX XXXX XX" name="requiredInformation.iban" component={TextField}/>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div>
                                                 <h1>Company details:</h1>
-                                                <button onClick={()=>{setCompanyDetails(!companyDetails)}}>{companyDetails ? "Hide" : "Show"}</button>
+                                                <button type="button" onClick={()=>{setCompanyDetails(!companyDetails)}}>{companyDetails ? "Hide" : "Show"}</button>
                                                 <div style={showWhenVisible(companyDetails)}>
                                                     <div className="field">
                                                         <Field label="Company number:" placeholder="XXXXXXXXXX" name="companyDetails.companyNumber" component={TextField}/>
@@ -195,10 +199,10 @@ return(
                                                         <Field label="SIC code:" placeholder="XXXXX" name="companyDetails.sicCode" component={TextField}/>
                                                     </div>
                                                     <div className="field">
-                                                        <Field label="Nature of business:" placeholder="purpose of business" name="companyDetails.natureOfbusiness" component={TextField}/>
+                                                        <Field label="Nature of business:" placeholder="purpose of business" name="companyDetails.natureOfBusiness" component={TextField}/>
                                                     </div>
                                                     <div className="field">
-                                                        <Field label="Company UTR number:" placeholder="XXXXXXXXXXX" name="companyDetails.companyUTR" component={TextField}/>
+                                                        <Field label="Company UTR number:" placeholder="XXXXXXXXXXX" name="companyDetails.companyUtr" component={TextField}/>
                                                     </div>
                                                     <div className="field">
                                                         <Field label="Companys authentification number:" placeholder="RUXXXXXXXXX" name="companyDetails.companiesHouseAuthentificationNumber" component={TextField}/>
@@ -210,7 +214,7 @@ return(
                                             </div>
                                             <div>
                                                 <h1>Main contact:</h1>
-                                                <button onClick={()=>{setMainContact(!mainContact)}}>{mainContact ? "Hide" : "Show"}</button>
+                                                <button type="button" onClick={()=>{setMainContact(!mainContact)}}>{mainContact ? "Hide" : "Show"}</button>
                                                 <div style={showWhenVisible(mainContact)}>
                                                     <div className="field">
                                                         <Field label="First name:" placeholder="Antanas" name="mainContact.firstName" component={TextField}/>
@@ -240,7 +244,7 @@ return(
                                                         <Field label="UTR number:" placeholder="XXXXXXXXX" name="mainContact.utrNumber" component={TextField}/>
                                                     </div>
                                                     <div className="field">
-                                                        <SelectField label="ID verified:" name="mainContact.IDverified" options={generateOptions(["YES", "NO"])}/>
+                                                        <SelectField label="ID verified:" name="mainContact.idVerified" options={generateOptions(["YES", "NO"])}/>
                                                     </div>
                                                     <div className="field">
                                                         <SelectField label="Marital status:" name="mainContact.maritalStatus" options={generateOptions(["Married","Widowed", "Divorced", "Single"])}/>
@@ -252,13 +256,13 @@ return(
                                             </div>
                                             <div>
                                                 <h1>Accounts and returns details:</h1>
-                                                <button onClick={()=>{setAccountsAndReturnsDetails(!accountsAndReturnsDetails)}}>{accountsAndReturnsDetails ? "Hide" : "Show"}</button>
+                                                <button type="button" onClick={()=>{setAccountsAndReturnsDetails(!accountsAndReturnsDetails)}}>{accountsAndReturnsDetails ? "Hide" : "Show"}</button>
                                                 <div style={showWhenVisible(accountsAndReturnsDetails)}>
                                                     <div className="field">
                                                         <Field label="Companies house year end:" placeholder="DD/MM/YYYY" name="accountsAndReturnsDetails.companiesHouseYearEnd" component={TextField}/>
                                                     </div>
                                                     <div className="field">
-                                                        <Field label="HMRC year end:" placeholder="DD/MM/YYYY" name="accountsAndReturnsDetails.HMRCyearEND" component={TextField}/>
+                                                        <Field label="HMRC year end:" placeholder="DD/MM/YYYY" name="accountsAndReturnsDetails.hmrcYearEnd" component={TextField}/>
                                                     </div>
                                                     <div className="field">
                                                         <SelectField label="Latest action:" name="accountsAndReturnsDetails.latestAction" options={generateOptions(["Records requested","Records received", "In progress", "Queries sent", "Completed"])}/>
@@ -267,7 +271,7 @@ return(
                                             </div>
                                             <div>
                                                 <h1>Confirmation statement:</h1>
-                                                <button onClick={()=>{setConfirmationStatement(!confirmationStatement)}}>{confirmationStatement ? "Hide" : "Show"}</button>
+                                                <button type="button" onClick={()=>{setConfirmationStatement(!confirmationStatement)}}>{confirmationStatement ? "Hide" : "Show"}</button>
                                                 <div style={showWhenVisible(confirmationStatement)}>
                                                     <div className="field">
                                                         <Field label="Confirmation statement date:" placeholder="DD/MM/YYYY" name="confirmationStatement.confirmationStatementDate" component={TextField}/>
@@ -288,7 +292,7 @@ return(
                                             </div>
                                             <div>
                                                 <h1>VAT details:</h1>
-                                                <button onClick={()=>{setVatDetails(!vatDetails)}}>{vatDetails ? "Hide" : "Show"}</button>
+                                                <button type="button" onClick={()=>{setVatDetails(!vatDetails)}}>{vatDetails ? "Hide" : "Show"}</button>
                                                 <div style={showWhenVisible(vatDetails)}>
                                                     <div className="field">
                                                         <SelectField label="VAT frequency:" name="vatDetails.vatFrequency" options={generateOptions(["Quarterly","Monthly", "Yearly", "Other"])}/>
@@ -309,7 +313,7 @@ return(
                                                         <Field label="VAT number:" placeholder="Full adress" name="vatDetails.vatAddress" component={TextField}/>
                                                     </div>
                                                     <div className="field">
-                                                        <Field label="Date of registration:" placeholder="DD/MM/YYYY" name="vatDetails.dateOfregistration" component={TextField}/>
+                                                        <Field label="Date of registration:" placeholder="DD/MM/YYYY" name="vatDetails.dateOfRegistration" component={TextField}/>
                                                     </div>
                                                     <div className="field">
                                                         <Field label="Effective VAT date:" placeholder="DD/MM/YYYY" name="vatDetails.effectiveVatDate" component={TextField}/>
@@ -318,7 +322,7 @@ return(
                                                         <Field label="Estimated turnover:" placeholder="£100,000" name="vatDetails.estimatedTurnover" component={TextField}/>
                                                     </div>
                                                     <div className="field">
-                                                        <SelectField label="MTD:" name="vatDetails.MTD" options={generateOptions(["Yes", "No"])}/>
+                                                        <SelectField label="MTD:" name="vatDetails.mtd" options={generateOptions(["Yes", "No"])}/>
                                                     </div>
                                                     <div className="field">
                                                         <Field label="Box 5 last quarter submitted:" placeholder="£20125.63" name="vatDetails.box5LastQuarterSubmitted" component={TextField}/>
@@ -330,7 +334,7 @@ return(
                                             </div>
                                             <div>
                                                 <h1>PAYE details:</h1>
-                                                <button onClick={()=>{setPayeDetails(!payeDetails)}}>{payeDetails ? "Hide" : "Show"}</button>
+                                                <button type="button" onClick={()=>{setPayeDetails(!payeDetails)}}>{payeDetails ? "Hide" : "Show"}</button>
                                                 <div style={showWhenVisible(payeDetails)}>
                                                     <div className="field">
                                                         <Field label="Employers reference:" placeholder="120/FB00000000" name="payeDetails.employersReference" component={TextField}/>
@@ -342,39 +346,36 @@ return(
                                                         <Field label="Pension provider:" placeholder="NEST" name="payeDetails.pensionProvider" component={TextField}/>
                                                     </div>
                                                     <div className="field">
-                                                        <Field label="Pension ID:" placeholder="123456789" name="payeDetails.pensionID" component={TextField}/>
+                                                        <Field label="Pension ID:" placeholder="123456789" name="payeDetails.pensionId" component={TextField}/>
                                                     </div>
                                                     <div className="field">
                                                         <Field label="Declaration of compliance submission:" placeholder="DD/MM/YYYY" name="payeDetails.declarationOfComplianceSubmission" component={TextField}/>
                                                     </div>
                                                     <div className="field">
-                                                        <Field label="Declaration of compliance submission:" placeholder="DD/MM/YYYY" name="payeDetails.declarationOfComplianceSubmission" component={TextField}/>
+                                                        <SelectField label="P11D:" name="payeDetails.p11d" options={generateOptions(["Yes", "No"])}/>
                                                     </div>
                                                     <div className="field">
-                                                        <SelectField label="P11D:" name="payeDetails.P11D" options={generateOptions(["Yes", "No"])}/>
-                                                    </div>
-                                                    <div className="field">
-                                                        <SelectField label="CIS:" name="payeDetails.CIS" options={generateOptions(["Yes", "No"])}/>
+                                                        <SelectField label="CIS:" name="payeDetails.cis" options={generateOptions(["Yes", "No"])}/>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div>
                                                 <h1>Agent authorization:</h1>
-                                                <button onClick={()=>{setAgentAuthorization(!agentAuthorization)}}>{agentAuthorization ? "Hide" : "Show"}</button>
+                                                <button type="button" onClick={()=>{setAgentAuthorization(!agentAuthorization)}}>{agentAuthorization ? "Hide" : "Show"}</button>
                                                     <div style={showWhenVisible(agentAuthorization)}>                                               <div className="field">
                                                         <SelectField label="Corporation tax:" name="agentAuthorization.corporationTax" options={generateOptions(["Yes", "No"])}/>
                                                     </div>
                                                     <div className="field">
-                                                        <SelectField label="PAYE:" name="agentAuthorization.PAYE" options={generateOptions(["Yes", "No"])}/>
+                                                        <SelectField label="PAYE:" name="agentAuthorization.paye" options={generateOptions(["Yes", "No"])}/>
                                                     </div>
                                                     <div className="field">
-                                                        <SelectField label="CIS:" name="agentAuthorization.CIS" options={generateOptions(["Yes", "No"])}/>
+                                                        <SelectField label="CIS:" name="agentAuthorization.cis" options={generateOptions(["Yes", "No"])}/>
                                                     </div>
                                                 </div> 
                                             </div>
                                             <div style={{"paddingTop":"10px" , "width":"260px"}}>
                                                 <button onClick={()=>{console.log(values)}}>values</button>
-                                                <button className="button is-success" type="submit" onClick={()=>{values.date = new Date().toString()}}>Submit</button>
+                                                <button className="button is-success" type="submit" onClick={()=>{values.date = new Date().toString()}}>Save to the database</button>
                                             </div>
                                     </Form>
                                     )

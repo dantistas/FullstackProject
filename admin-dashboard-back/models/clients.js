@@ -1,80 +1,6 @@
 const mongoose = require('mongoose')
 
 
-const kveris = {
-    requiredInformation = {
-        name:"string",
-        clientType:"string",
-        manager:"string",
-        bankName:"string",
-        sortCode:"string",
-        accountNumber:"string",
-        IBAN:"string"
-    },
-    companyDetails={
-        companyNumber:"",
-        companyStatus:"",
-        incorporationDate:"",
-        registeredAddress:"",
-        companyPostalAddress:"",
-        companyEmail:"",
-        sicCode:"",
-        natureOfbusiness:"",
-        companyUTR:"",
-        companiesHouseAuthentificationNumber:"",
-        disolvedOn:"",
-    },
-    mainContact={
-        firstName:"",
-        middleName:"",
-        lastName:"",
-        dateOfBirth:"",
-        deceased:"",
-        email:"",
-        telephone:"",
-        ninNumber:"",
-        utrNumber:"",
-        IDverfied:"boelean",
-        maritalStatus:"",
-        nationality:"",
-    },
-    accountsAndReturnsDetails={
-        confirmationStatementDate:"",
-        shareCapital:"",
-        peopleWithSignificantControl:"",
-        latestAction:""
-    },
-    vatDetails={
-        vatFrequency:"",
-        vatPeriodEnd:"",
-        latestAction:"",
-        vatNumber:"",
-        eoriNumber:"",
-        vatAddress:"",
-        dateOfregistration:"",
-        effectiveVatDate:"",
-        estimatedTurnover:"",
-        MTD:"boelean",
-        box5LastQuarterSubmitted:"",
-        vatDeregistrationDate:""
-    },
-    payeDetails={
-        employersReference:"",
-        accountsOfficeRefference:"",
-        pensionProvider:"",
-        pensionID:"",
-        declarationOfComplianceSubmission:"",
-        P11D:"boolean",
-        CIS:"Boolean",
-    },
-    agentAuthorization={
-        corporationTax:"boolean",
-        PAYE:"boolean",
-        CIS:"boolean"
-    }
-  }
-  
-
   const clientsSchema  = mongoose.Schema({
       id:String,
       requiredInformation: {
@@ -84,7 +10,7 @@ const kveris = {
             bankName: String,
             sortCode: String,
             accountNumber: String,
-            IBAN: String
+            iban: String
       },
       companyDetails: {
         companyNumber: String,
@@ -94,14 +20,68 @@ const kveris = {
         companyPostalAddress: String,
         companyEmail: String,
         sicCode: String,
-        natureOfbusiness: String,
-        companyUTR: String,
+        natureOfBusiness: String,
+        companyUtr: String,
         companiesHouseAuthentificationNumber: String,
         disolvedOn: String,
+        companyUtr: String
       },
       mainContact: {
-
-      }
+        firstName: String,
+        middleName: String,
+        lastName: String,
+        dateOfBirth: String,
+        deceased: String,
+        email: String,
+        telephone: String,
+        ninNumber: String,
+        utrNumber: String,
+        idVerified: String,
+        maritalStatus: String,
+        nationality: String,
+      },
+      accountsAndReturnsDetails: {
+        companiesHouseYearEnd: String,
+        latestAction: String,
+        hmrcYearEnd: String,
+      },
+      confirmationStatement: {
+        confirmationStatementDate: String,
+        shareCapital: String,
+        shareholder: String,
+        peopleWithSignificantControl: String,
+        latestAction: String
+      },
+      vatDetails: {
+        vatFrequency: String,
+        vatPeriodEnd: String,
+        latestAction: String,
+        vatNumber: String,
+        eoriNumber: String,
+        vatAddress: String,
+        dateOfRegistration: String,
+        effectiveVatDate: String,
+        estimatedTurnover: String,
+        mtd: String,
+        box5LastQuarterSubmitted: String,
+        vatDeregistrationDate: String
+      },
+      payeDetails: {
+        employersReference: String,
+        accountsOfficeRefference: String,
+        pensionProvider: String,
+        pensionId: String,
+        declarationOfComplianceSubmission: String,
+        p11d: String,
+        cis: String
+      },
+      agentAuthorization: {
+        corporationTax: String,
+        paye: String,
+        cis: String
+      },
+      comments: [Object],
+      date: String,
 
 
   })
