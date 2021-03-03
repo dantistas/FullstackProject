@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom";
 import axios from 'axios'
-import GeneralQuerie from './queries/GeneralQuerie'
-import CompanyMatersQuerie from './queries/CompanyMattersQuerie'
-import NewCompanyEstablishQuerie from './queries/NewCompanyEstablishQuerie'
-import SeflEmployedQuerie from './queries/SelfEmployedQuerie'
 
 
-import clientDatabaseServices from '../services/clientsDatabase'
+
+import clientDatabaseServices from '../services/clientsDatabaseServises'
 
 
 import ClientToDatabaseForm from './forms/clientToDatabase'
@@ -15,12 +12,13 @@ import ClientToDatabaseForm from './forms/clientToDatabase'
 
 
 
-const Querie = ({allNewQueries}) => {
+const Querie = ({allNewQueries, clients}) => {
     const [visible, setVisible] = useState(false)
     const [querie, setQuerie] = useState([])
     const [thumbnail, setThumbnail] = useState([])
     const [loading, setLoading] = useState("");
     const [serverResponse, setServerResponse] = useState("")
+    const type = "Save to the database"
 
     let { id } = useParams();
 
@@ -35,7 +33,6 @@ const Querie = ({allNewQueries}) => {
         //     })
     
    },[])
-
 
    const handleSubmit = (values) => {
     setLoading("loading")
@@ -143,8 +140,7 @@ return (
                         })
                     }
                 </div>
-                <ClientToDatabaseForm querie={querie} handleSubmit={handleSubmit}/>
-                {querie.type === "General queries" ? <GeneralQuerie querie={querie}/> : querie.type === "Company matters" ? <CompanyMatersQuerie/> : querie.type === "Set up a private limited company" ? <NewCompanyEstablishQuerie/> : querie.type === "Self-employment queries" ? <SeflEmployedQuerie/> : null }
+                {querie.length !== 0 ? <ClientToDatabaseForm clients={clients} type={type} querie={querie} handleSubmit={handleSubmit}/> : <p>Querie not found </p>}
             </div>
         </div>
     </div>

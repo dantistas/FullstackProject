@@ -9,7 +9,8 @@ const servicesDB = require('./data/services.json');
 // const fs = require('fs')
 const mongoose = require('mongoose');
 const swxRouter = require('./controlers/swx');
-
+// require('dotenv').config()   <-- reike nereike ???
+ 
 
 
 //mongodb 

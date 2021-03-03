@@ -1,16 +1,21 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import { Formik, Field, Form } from 'formik';
 import {TextField, TextArea, FileUpload, SelectField} from './FormField'
 import axios from 'axios'
+import clientDatabaseServices from '../../services/clientsDatabaseServises'
+import clientsDatabaseServises from '../../services/clientsDatabaseServises';
 
 
 
 
-const ClientToDatabaseForm = ({querie, handleSubmit}) => {
+const ClientToDatabaseForm = ({type, querie, client, clients,  handleSubmit}) => {
+
     const [loading, setLoading] = useState("");
     const [serverResponse, setServerResponse] = useState("")
+    // const [test, setTest] = useState({})
+
     //hide  show
-    const [requiredInformation, setRequiredInformation] = useState(true)
+    const [requiredInformation, setRequiredInformation] = useState(false)
     const [companyDetails, setCompanyDetails] = useState(false)
     const [mainContact, setMainContact] = useState(false)
     const [accountsAndReturnsDetails, setAccountsAndReturnsDetails] = useState(false)
@@ -22,7 +27,13 @@ const ClientToDatabaseForm = ({querie, handleSubmit}) => {
     const showWhenVisible = (component) => { return {display: component ? 'block' : 'none'} }
     // iki cia 
 
-
+    // useEffect(()=>{
+    //     if(type === "Overwrite"){
+    //         const {_id, date, __v, ...rest} = client
+    //         setTest(rest)
+    //     }
+    // },[])
+    // console.log(clients)
     // const validateEmail = (value) => {
     //     let errorMessage;
     //     if(!value){
@@ -51,102 +62,225 @@ const ClientToDatabaseForm = ({querie, handleSubmit}) => {
     //     return errorMessage
     // } 
 
-
     const generateOptions = (values) => {
-    
         return values.map((value) => ({value: value, label:value}))
 
     }
 
+    const checkIfclientExist = ( values ) => {
+        const existOrnot = clients.filter(client=> client.requiredInformation.name === values.requiredInformation.name || ( client.mainContact.name && client.mainContact.lastName && values.mainContact.lastName && client.mainContact.name === values.mainContact.name && client.mainContact.lastName === values.mainContact.lastName) )
+        if(existOrnot.length > 0){
+            const ok = window.confirm( existOrnot.length + ` client(s) with the same name and surname already exist. Do you still want to save it?`)
+            if(ok){
+                // ideti kazkoki tai history redirecta
+                clientDatabaseServices.createClient(values)
+                clientDatabaseServices.deleteQuerie(querie.type, querie._id).then((res)=>{console.log(res)})
+            }   
+        }else {
+            clientDatabaseServices.createClient(values)
+            clientDatabaseServices.deleteQuerie(querie.type, querie._id).then((res)=>{console.log(res)})
+        }
+    }
+    
+    const setValues = (typeOfObject) => {
+      if(typeOfObject === "Overwrite"){
+            const {_id, date, __v, ...rest} = client
+            return rest
+      }else if(typeOfObject === "Save to the database") {
+          const saveToDatabaseObject = {
+            requiredInformation:{
+                name: querie.name || "",
+                clientType: "",
+                manager:"",
+                bankName:"",
+                sortCode:"",
+                accountNumber:"",
+                iban:""
+            },
+            companyDetails:{
+                companyName: querie.companyName || "",
+                companyNumber: querie.companyNumber || "",
+                companyStatus:"",
+                incorporationDate:"",
+                registeredAddress:"",
+                companyPostalAddress:"",
+                companyEmail:"",
+                sicCode:"",
+                natureOfBusiness:"",
+                companyUtr:"",
+                companiesHouseAuthentificationNumber:"",
+                disolvedOn:"",
+            },
+            mainContact:{
+                firstName:"",
+                middleName:"",
+                lastName:"",
+                dateOfBirth:"",
+                deceased:"",
+                email: querie.email || "",
+                telephone: querie.telephone || "",
+                ninNumber:"",
+                utrNumber:"",
+                idVerified:"",
+                maritalStatus:"",
+                nationality:"",
+            },
+            accountsAndReturnsDetails:{
+                companiesHouseYearEnd:"",
+                hmrcYearEnd:"",
+                latestAction:"",        
+            },
+            confirmationStatement:{
+                confirmationStatementDate:"",
+                shareCapital:"",
+                shareholder:"",
+                peopleWithSignificantControl:"",
+                latestAction:""
+            },
+            vatDetails:{
+                vatFrequency:"",
+                vatPeriodEnd:"",
+                latestAction:"",
+                vatNumber:"",
+                eoriNumber:"",
+                vatAddress:"",
+                dateOfRegistration:"",
+                effectiveVatDate:"",
+                estimatedTurnover:"",
+                mtd:"",
+                box5LastQuarterSubmitted:"",
+                vatDeregistrationDate:""
+            },
+            payeDetails:{
+                employersReference:"",
+                accountsOfficeRefference:"",
+                pensionProvider:"",
+                pensionId:"",
+                declarationOfComplianceSubmission:"",
+                p11d:"",
+                cis:"",
+            },
+            agentAuthorization:{
+                corporationTax:"",
+                paye:"",
+                cis:""
+            },
+            comments:[]
+        }
+            return saveToDatabaseObject
+      } else {
+          const defaultFormObject = {
+            requiredInformation:{
+                name: "",
+                clientType: "",
+                manager:"",
+                bankName:"",
+                sortCode:"",
+                accountNumber:"",
+                iban:""
+            },
+            companyDetails:{
+                companyName: "",
+                companyNumber:"",
+                companyStatus:"",
+                incorporationDate:"",
+                registeredAddress:"",
+                companyPostalAddress:"",
+                companyEmail:"",
+                sicCode:"",
+                natureOfBusiness:"",
+                companyUtr:"",
+                companiesHouseAuthentificationNumber:"",
+                disolvedOn:"",
+            },
+            mainContact:{
+                firstName:"",
+                middleName:"",
+                lastName:"",
+                dateOfBirth:"",
+                deceased:"",
+                email:"",
+                telephone:"",
+                ninNumber:"",
+                utrNumber:"",
+                idVerified:"",
+                maritalStatus:"",
+                nationality:"",
+            },
+            accountsAndReturnsDetails:{
+                companiesHouseYearEnd:"",
+                hmrcYearEnd:"",
+                latestAction:"",        
+            },
+            confirmationStatement:{
+                confirmationStatementDate:"",
+                shareCapital:"",
+                shareholder:"",
+                peopleWithSignificantControl:"",
+                latestAction:""
+            },
+            vatDetails:{
+                vatFrequency:"",
+                vatPeriodEnd:"",
+                latestAction:"",
+                vatNumber:"",
+                eoriNumber:"",
+                vatAddress:"",
+                dateOfRegistration:"",
+                effectiveVatDate:"",
+                estimatedTurnover:"",
+                mtd:"",
+                box5LastQuarterSubmitted:"",
+                vatDeregistrationDate:""
+            },
+            payeDetails:{
+                employersReference:"",
+                accountsOfficeRefference:"",
+                pensionProvider:"",
+                pensionId:"",
+                declarationOfComplianceSubmission:"",
+                p11d:"",
+                cis:"",
+            },
+            agentAuthorization:{
+                corporationTax:"",
+                paye:"",
+                cis:""
+            },
+            comments:[]
+        }
+          return defaultFormObject
+      }
+    }
+
 return(
         <div>
+            <h1>{type}</h1>
+            <button type="button" onClick={()=>{console.log(client._id)}}>clientas</button>
             <Formik 
-                    initialValues={{
-                                    requiredInformation:{
-                                        name: "",
-                                        clientType:"",
-                                        manager:"",
-                                        bankName:"",
-                                        sortCode:"",
-                                        accountNumber:"",
-                                        iban:""
-                                    },
-                                    companyDetails:{
-                                        companyNumber:"",
-                                        companyStatus:"",
-                                        incorporationDate:"",
-                                        registeredAddress:"",
-                                        companyPostalAddress:"",
-                                        companyEmail:"",
-                                        sicCode:"",
-                                        natureOfBusiness:"",
-                                        companyUtr:"",
-                                        companiesHouseAuthentificationNumber:"",
-                                        disolvedOn:"",
-                                    },
-                                    mainContact:{
-                                        firstName:"",
-                                        middleName:"",
-                                        lastName:"",
-                                        dateOfBirth:"",
-                                        deceased:"",
-                                        email:"",
-                                        telephone:"",
-                                        ninNumber:"",
-                                        utrNumber:"",
-                                        idVerified:"",
-                                        maritalStatus:"",
-                                        nationality:"",
-                                    },
-                                    accountsAndReturnsDetails:{
-                                        companiesHouseYearEnd:"",
-                                        hmrcYearEnd:"",
-                                        latestAction:"",        
-                                    },
-                                    confirmationStatement:{
-                                        confirmationStatementDate:"",
-                                        shareCapital:"",
-                                        shareholder:"",
-                                        peopleWithSignificantControl:"",
-                                        latestAction:""
-                                    },
-                                    vatDetails:{
-                                        vatFrequency:"",
-                                        vatPeriodEnd:"",
-                                        latestAction:"",
-                                        vatNumber:"",
-                                        eoriNumber:"",
-                                        vatAddress:"",
-                                        dateOfRegistration:"",
-                                        effectiveVatDate:"",
-                                        estimatedTurnover:"",
-                                        mtd:"",
-                                        box5LastQuarterSubmitted:"",
-                                        vatDeregistrationDate:""
-                                    },
-                                    payeDetails:{
-                                        employersReference:"",
-                                        accountsOfficeRefference:"",
-                                        pensionProvider:"",
-                                        pensionId:"",
-                                        declarationOfComplianceSubmission:"",
-                                        p11d:"",
-                                        cis:"",
-                                    },
-                                    agentAuthorization:{
-                                        corporationTax:"",
-                                        paye:"",
-                                        cis:""
-                                    }
-                                }}
-                    onSubmit={handleSubmit}
+                    initialValues={
+                        setValues(type)        
+                    }
+                    onSubmit={
+                        type === "Overwrite" ? 
+                        (values)=>{
+                        const ok = window.confirm("are you sure you want to overwrite?" )
+                        if(ok){
+                            clientsDatabaseServises.updatedClient(client._id,values)
+                        }
+                    }: type === "Save to the database" ? (values)=>{
+                        checkIfclientExist(values)
+                        // handleSubmit(values)
+                    }  : null}
                             >
                             {({ isValid, dirty, setFieldValue, setFieldTouched, values, errors, touched})=>{
+                                let commentToAdd 
                                 return(
                                     <Form style={{"paddingTop":"10px" , "width":"260px"}}>
                                             <div>
                                                 <div>
                                                     <h1>Required information:</h1>
+                                                    <button type="button" onClick={()=>{console.log(values)}}>values</button>
                                                     <button type="button" onClick={()=>{setRequiredInformation(!requiredInformation)}}>{requiredInformation ? "Hide" : "Show"}</button>   
                                                 </div>
                                                 <div style={showWhenVisible(requiredInformation)}>
@@ -177,6 +311,9 @@ return(
                                                 <h1>Company details:</h1>
                                                 <button type="button" onClick={()=>{setCompanyDetails(!companyDetails)}}>{companyDetails ? "Hide" : "Show"}</button>
                                                 <div style={showWhenVisible(companyDetails)}>
+                                                <div className="field">
+                                                        <Field label="Company name:" placeholder="company name" name="companyDetails.companyName" component={TextField}/>
+                                                    </div>
                                                     <div className="field">
                                                         <Field label="Company number:" placeholder="XXXXXXXXXX" name="companyDetails.companyNumber" component={TextField}/>
                                                     </div>
@@ -373,9 +510,31 @@ return(
                                                     </div>
                                                 </div> 
                                             </div>
+                                            <div>
+                                                <h1>Comments:</h1>
+                                                {values.comments.length > 0 ? 
+                                                    <div>
+                                                        {values.comments.map((comment)=>{
+                                                            return <ul>{comment.comment + comment.date}</ul>
+                                                        })}
+                                                    </div>
+                                                :
+                                                    <div>
+                                                         <p>no comments yet!</p>
+                                                    </div>
+                                                }
+                                                <div className="field">
+                                                    
+                                                    <textarea id="comment" className="textarea" onChange={(e)=>{commentToAdd = e.target.value}} placeholder="Your comment..."></textarea>
+                                                    <button type="button" onClick={()=>{
+                                                        document.getElementById("comment").value= ""
+                                                        values.comments.push({date: new Date().toString(), comment: commentToAdd})
+                                                    }}>+</button>
+                                                </div>
+                                            </div>
                                             <div style={{"paddingTop":"10px" , "width":"260px"}}>
                                                 <button onClick={()=>{console.log(values)}}>values</button>
-                                                <button className="button is-success" type="submit" onClick={()=>{values.date = new Date().toString()}}>Save to the database</button>
+                                                <button className="button is-success" type="submit" onClick={()=>{values.date = new Date().toString()}}>{type}</button>
                                             </div>
                                     </Form>
                                     )

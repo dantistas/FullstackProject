@@ -2,7 +2,7 @@ const newQueriesRouter = require('express').Router();
 const objectId = require('mongodb').ObjectID
 
 const { Dropbox } = require('dropbox');
-const dbx = new Dropbox ({ accessToken: '' })
+const dbx = new Dropbox ({ accessToken: process.env.DROPBOX_ACCESS_TOKEN })
 
 const generalQueries = require('../models/generalQueries')
 const companyMattersQueries = require('../models/companyMattersQueries')

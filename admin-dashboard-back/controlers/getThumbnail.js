@@ -1,6 +1,6 @@
 const getThumbnailAndFileRouter = require('express').Router();
 const { Dropbox } = require('dropbox');
-const dbx = new Dropbox ({ accessToken: 'OgH7rwT1gKYAAAAAAAAAAfxW2rps33hhBgSeI262Iyd3BArRPA9rOOLJqYDa9FdJ' })
+const dbx = new Dropbox ({ accessToken: process.env.DROPBOX_ACCESS_TOKEN  })
 
 
 

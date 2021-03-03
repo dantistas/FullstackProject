@@ -9,6 +9,11 @@ const getAllClients = async () => {
     return request.data
 }
 
+const getAllNewQueries = async () => {
+    const request = await axios.get(newQueriesUrl)
+    return request.data
+}
+
 const createClient = async (clientValues) => {
     // const config = {
     //     headers: { Authorization: token }
@@ -47,4 +52,4 @@ const deleteQuerie = async (type, id) => {
 
 
 
-export default {getAllClients, createClient, deleteClient, deleteQuerie, updatedClient}
+export default {getAllClients, createClient, deleteClient, deleteQuerie, updatedClient, getAllNewQueries}

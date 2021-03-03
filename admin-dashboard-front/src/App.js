@@ -5,18 +5,22 @@ import 'bulma/css/bulma.css'
 import NavigationBar from './components/NavigationBar'
 import NewQueries from "./components/NewQueries"
 import Querie from './components/Querie'
-import axios from 'axios'
-import clientDatabaseServices from './services/clientsDatabase'
+import Clients from './components/AllClients'
+import Client from './components/Client'
+import ClientToDatabaseForm from './components/forms/clientToDatabase'
+import clientsDatabaseServises from './services/clientsDatabaseServises';
 
 const  App = () => {
   const [allNewQueries , setAllNewQueries] = useState([])
   const [clients, setClients] = useState([])
+
+  let history = useHistory()
     
   useEffect(()=>{
-      axios.get("http://localhost:3001/api/new-queries").then((res)=>{     //<<<----- paskui pakeisti i api/new-queries tik! 
-      setAllNewQueries(res.data)                                            // padaryt if else statementus jeigu nera tokeno tada i login page jei yra tokenas wiskas ok 
+      clientsDatabaseServises.getAllNewQueries().then((res)=>{     //<<<----- paskui pakeisti i api/new-queries tik! 
+        setAllNewQueries(res)                                          // padaryt if else statementus jeigu nera tokeno tada i login page jei yra tokenas wiskas ok 
          })
-         clientDatabaseServices.getAllClients().then((res)=>{
+         clientsDatabaseServises.getAllClients().then((res)=>{
             setClients(res)
          })
     },[])
@@ -26,19 +30,26 @@ const  App = () => {
     <div className="App">
       <button onClick={()=>{console.log(clients)}}>clients</button>
       <NavigationBar>
-        <Link to="/new-queries">New Queries</Link>
+        <Link as="button" to="/new-queries">New Queries</Link>
         <Link to="/clients">Clients</Link>
         <input className="input" placeholder="search..."></input>
+        <button className="button is-success" onClick={()=>{history.push('/add-new-client')}}>+ Add new client</button>
       </NavigationBar>
       <Switch>
         <Route path="/new-queries" exact>
             <NewQueries allNewQueries={allNewQueries}/>
         </Route>
         <Route path="/clients" exact>
-            <h1>klientaiXDDDD</h1>
+            <Clients clients={clients}/>
         </Route>
         <Route path="/query/:id" exact>
-            <Querie allNewQueries={allNewQueries}/>
+            <Querie clients={clients} allNewQueries={allNewQueries}/>
+        </Route>
+        <Route path="/client/:id" exact>
+            <Client clients={clients}/>
+        </Route>
+        <Route path="/add-new-client" exact>
+            <ClientToDatabaseForm type="Add new client"/>
         </Route>
       </Switch>
     </div>

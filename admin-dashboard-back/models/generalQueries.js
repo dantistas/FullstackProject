@@ -11,7 +11,6 @@ const generalQueriesSchema = mongoose.Schema({
     file: String,
     message: String
     
-    //reikalingas kazkoks tai id kad susieti su failais dropboxe
 })
 
 

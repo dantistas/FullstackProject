@@ -1,12 +1,13 @@
 const  express = require('express');
 const  cors = require('cors');
 const mongoose = require('mongoose');
+require('dotenv').config()
 const newQueriesRouter = require('./controlers/newQueriesRouter');
 const databaseRouter = require('./controlers/databaseRouter');
 const getThumbnail = require('./controlers/getThumbnail');
 
 
-const MONGODB_URI = ""
+const MONGODB_URI = process.env.MONGODB_URI
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false, useCreateIndex: true })
   .then(() => {
     console.log('connected to MongoDB')

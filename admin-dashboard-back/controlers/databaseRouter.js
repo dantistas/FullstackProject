@@ -97,7 +97,8 @@ databaseRouter.post('/', async (req, res)=>{
         vatDetails: req.body.vatDetails,
         payeDetails: req.body.payeDetails,
         agentAuthorization: req.body.agentAuthorization,
-        date: req.body.date
+        date: req.body.date,
+        comments: req.body.comments
     })
     const savedClient = await clientToDB.save()
 
@@ -109,6 +110,7 @@ databaseRouter.post('/', async (req, res)=>{
 })
 
 databaseRouter.post('/:id', async (req, res)=>{
+    console.log(req.body)
     const request = {
         requiredInformation: req.body.requiredInformation,
         companyDetails: req.body.companyDetails,
@@ -118,7 +120,8 @@ databaseRouter.post('/:id', async (req, res)=>{
         vatDetails: req.body.vatDetails,
         payeDetails: req.body.payeDetails,
         agentAuthorization: req.body.agentAuthorization,
-        date: req.body.date
+        date: req.body.date,
+        comments: req.body.comments
     }
 
     const updatedClient = await client.findOneAndUpdate(
