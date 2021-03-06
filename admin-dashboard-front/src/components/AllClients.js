@@ -6,7 +6,7 @@ const AllClients = ({clients}) => {
 
 return (
     <div >
-       {clients.map((client)=>{
+       {clients.length === 0 ? <p>No clients to show, press add new client to create.</p> : clients.map((client)=>{
            return (
             <div>
                 <p><strong>{client.requiredInformation.name} | {client.requiredInformation.clientType}</strong> <button onClick={()=>{history.push(`/client/${client._id}`)}}>view</button></p>

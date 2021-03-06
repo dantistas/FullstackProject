@@ -1,17 +1,18 @@
 import React,{useEffect, useState} from 'react'
+import { useHistory } from "react-router-dom";
 import { Formik, Field, Form } from 'formik';
 import {TextField, TextArea, FileUpload, SelectField} from './FormField'
 import axios from 'axios'
 import clientDatabaseServices from '../../services/clientsDatabaseServises'
-import clientsDatabaseServises from '../../services/clientsDatabaseServises';
 
 
+//client searcha ideti i client componenta
 
-
-const ClientToDatabaseForm = ({type, querie, client, clients,  handleSubmit}) => {
+const ClientToDatabaseForm = ({type, querie, client, clients, overwrite, saveQuerieToDatabase}) => {
 
     const [loading, setLoading] = useState("");
     const [serverResponse, setServerResponse] = useState("")
+    let history = useHistory()
     // const [test, setTest] = useState({})
 
     //hide  show
@@ -65,21 +66,6 @@ const ClientToDatabaseForm = ({type, querie, client, clients,  handleSubmit}) =>
     const generateOptions = (values) => {
         return values.map((value) => ({value: value, label:value}))
 
-    }
-
-    const checkIfclientExist = ( values ) => {
-        const existOrnot = clients.filter(client=> client.requiredInformation.name === values.requiredInformation.name || ( client.mainContact.name && client.mainContact.lastName && values.mainContact.lastName && client.mainContact.name === values.mainContact.name && client.mainContact.lastName === values.mainContact.lastName) )
-        if(existOrnot.length > 0){
-            const ok = window.confirm( existOrnot.length + ` client(s) with the same name and surname already exist. Do you still want to save it?`)
-            if(ok){
-                // ideti kazkoki tai history redirecta
-                clientDatabaseServices.createClient(values)
-                clientDatabaseServices.deleteQuerie(querie.type, querie._id).then((res)=>{console.log(res)})
-            }   
-        }else {
-            clientDatabaseServices.createClient(values)
-            clientDatabaseServices.deleteQuerie(querie.type, querie._id).then((res)=>{console.log(res)})
-        }
     }
     
     const setValues = (typeOfObject) => {
@@ -253,6 +239,17 @@ const ClientToDatabaseForm = ({type, querie, client, clients,  handleSubmit}) =>
       }
     }
 
+    const handleSubmit = (values) => {
+        if(type === "Overwrite" ) {
+            overwrite(values)
+        }else if (type === "Save to the database"){
+            saveQuerieToDatabase(values)
+        }else if (type === "Add new client"){
+            clientDatabaseServices.createClient(values)
+            history.push('/clients')
+        }
+    }
+
 return(
         <div>
             <h1>{type}</h1>
@@ -262,16 +259,7 @@ return(
                         setValues(type)        
                     }
                     onSubmit={
-                        type === "Overwrite" ? 
-                        (values)=>{
-                        const ok = window.confirm("are you sure you want to overwrite?" )
-                        if(ok){
-                            clientsDatabaseServises.updatedClient(client._id,values)
-                        }
-                    }: type === "Save to the database" ? (values)=>{
-                        checkIfclientExist(values)
-                        // handleSubmit(values)
-                    }  : null}
+                        handleSubmit}
                             >
                             {({ isValid, dirty, setFieldValue, setFieldTouched, values, errors, touched})=>{
                                 let commentToAdd 
@@ -285,7 +273,7 @@ return(
                                                 </div>
                                                 <div style={showWhenVisible(requiredInformation)}>
                                                     <div className="field">
-                                                        <Field label="Name:" placeholder="John" name="requiredInformation.name" component={TextField}/>
+                                                        <Field label="Full name:" placeholder="John Doe" name="requiredInformation.name" component={TextField}/>
                                                     </div>
                                                     <div className="field">
                                                         <SelectField label="Client type:" name="requiredInformation.clientType" options={generateOptions(["Private limited company","Self assessment", "LLP", "Charity", "Other"])}/>
@@ -524,17 +512,20 @@ return(
                                                     </div>
                                                 }
                                                 <div className="field">
-                                                    
+
                                                     <textarea id="comment" className="textarea" onChange={(e)=>{commentToAdd = e.target.value}} placeholder="Your comment..."></textarea>
                                                     <button type="button" onClick={()=>{
-                                                        document.getElementById("comment").value= ""
-                                                        values.comments.push({date: new Date().toString(), comment: commentToAdd})
+                                                        if(commentToAdd){
+                                                            values.comments.push({date: new Date().toString(), comment: commentToAdd})
+                                                            document.getElementById("comment").value= ""
+                                                        }
+                                                        
                                                     }}>+</button>
                                                 </div>
                                             </div>
                                             <div style={{"paddingTop":"10px" , "width":"260px"}}>
                                                 <button onClick={()=>{console.log(values)}}>values</button>
-                                                <button className="button is-success" type="submit" onClick={()=>{values.date = new Date().toString()}}>{type}</button>
+                                                <button className="button is-success" disabled={!values.requiredInformation.name} type="submit" onClick={()=>{values.date = new Date().toString()}}>{type}</button>
                                             </div>
                                     </Form>
                                     )

@@ -1,80 +1,49 @@
 const databaseRouter = require('express').Router();
 const objectId = require('mongodb').ObjectID
 const client = require('../models/clients') //perasyti is klients i klient
+const { Dropbox } = require('dropbox');
+const dbx = new Dropbox ({ accessToken: process.env.DROPBOX_ACCESS_TOKEN  })
+
+const moveFilesFromToBeConfirmedToClientsFolder = async (toBeConfirmedId, clientId) => {
+
+    const files =  await dbx.filesListFolder({
+        path: `/ToBeConfirmed/${toBeConfirmedId}`
+      }).then((res) =>{
+        return res.result.entries.map((entrie)=>{
+            return {
+                from_path: `/ToBeConfirmed/${toBeConfirmedId}/${entrie.name}`,
+                to_path: `/Clients/${clientId}/${entrie.name}`
+            }
+        })
+      })
+
+    const moveFiles = await dbx.filesMoveBatchV2({entries: files, autorename: true})
+    const { async_job_id } = moveFiles.result
+
+    if (async_job_id) {
+        do {
+        checkIfFilesWereMoved = await dbx.filesMoveBatchCheckV2({ async_job_id })
+        // console.log(checkIfFilesWereMoved.result['.tag'])
+        } while (checkIfFilesWereMoved.result['.tag'] === 'in_progress')
+        // console.log(checkIfFilesWereMoved.result)
+        const filesWereMoved = checkIfFilesWereMoved.result.entries.filter((entrie)=>{if(entrie['.tag'] === 'success'){return entrie} })
+        
+        if(filesWereMoved.length === files.length){
+          const eraseFolder =  await dbx.filesDeleteV2({
+                path: `/ToBeConfirmed/${toBeConfirmedId}`
+            })
+
+            return `${filesWereMoved.length} files were moved to /Clients/${clientId} and folder ${eraseFolder.result.metadata.path_display} was deleted.`
+        }else{
+            return `error: ${filesWereMoved.length} files were moved out of ${files.length} try to do it manualy from /ToBeConfirmed/${toBeConfirmedId} to /Clients/${clientId}`
+        }
+    }
 
 
+    
 
-// cia yra normalu ????  {
-//     requiredInformation: {
-//       name: 'asafafsa',
-//       clientType: '',
-//       manager: '',
-//       bankName: '',
-//       sortCode: '',
-//       accountNumber: '',
-//       IBAN: ''
-//     },
-//     companyDetails: {
-//       companyNumber: '',
-//       companyStatus: '',
-//       incorporationDate: '',
-//       registeredAddress: '',
-//       companyPostalAddress: '',
-//       companyEmail: '',
-//       sicCode: '',
-//       natureOfbusiness: '',
-//       companyUTR: '',
-//       companiesHouseAuthentificationNumber: '',
-//       disolvedOn: ''
-//     },
-//     mainContact: {
-//       firstName: '',
-//       middleName: '',
-//       lastName: '',
-//       dateOfBirth: '',
-//       deceased: '',
-//       email: '',
-//       telephone: '',
-//       ninNumber: '',
-//       utrNumber: '',
-//       IDverified: '',
-//       maritalStatus: '',
-//       nationality: ''
-//     },
-//     accountsAndReturnsDetails: { companiesHouseYearEnd: '', HMRCyearEND: '', latestAction: '' },
-//     confirmationStatement: {
-//       confirmationStatementDate: '',
-//       shareCapital: '',
-//       shareholder: '',
-//       peopleWithSignificantControl: '',
-//       latestAction: ''
-//     },
-//     vatDetails: {
-//       vatFrequency: '',
-//       vatPeriodEnd: '',
-//       latestAction: '',
-//       vatNumber: '',
-//       eoriNumber: '',
-//       vatAddress: '',
-//       dateOfregistration: '',
-//       effectiveVatDate: '',
-//       estimatedTurnover: '',
-//       MTD: '',
-//       box5LastQuarterSubmitted: '',
-//       vatDeregistrationDate: ''
-//     },
-//     payeDetails: {
-//       employersReference: '',
-//       accountsOfficeRefference: '',
-//       pensionProvider: '',
-//       pensionID: '',
-//       declarationOfComplianceSubmission: '',
-//       P11D: '',
-//       CIS: ''
-//     },
-//     agentAuthorization: { corporationTax: '', PAYE: '', CIS: '' },
-//     date: 'Mon Mar 01 2021 13:46:28 GMT+0000 (Greenwich Mean Time)'
-//   }
+}
+
   
 databaseRouter.get('/', async (req,res)=>{
     const allClients = await client.find({})
@@ -82,12 +51,12 @@ databaseRouter.get('/', async (req,res)=>{
 })
 
 databaseRouter.post('/', async (req, res)=>{
-    // const swx = await client.findOne({
-    //     "mainContact.firstName": req.body.mainContact.firstName,
-    //     "mainContact.middleName": req.body.mainContact.middleName,
-    //     "mainContact.lastName": req.body.mainContact.lastName
-    // })
-    console.log("cia yra normalu ???? ",req.body)
+    const toBeConfirmedId = req.body.id
+    let answer = {
+        client: "",
+        dropbox: ""
+    } 
+
     const clientToDB = new client({
         requiredInformation: req.body.requiredInformation,
         companyDetails: req.body.companyDetails,
@@ -103,14 +72,33 @@ databaseRouter.post('/', async (req, res)=>{
     const savedClient = await clientToDB.save()
 
 
-    res.send({successful: `${savedClient.requiredInformation.name} ${savedClient._id} was succesfully saved to database.`})
-    // res.send({successful: `${swx}`})
+     // // // cia logika dropbokso
+
+    if(toBeConfirmedId ){
+      answer.dropbox = await moveFilesFromToBeConfirmedToClientsFolder(toBeConfirmedId, savedClient._id)
+      answer.client = savedClient
+    }else{
+      await dbx.filesCreateFolderV2({
+          path: `/Clients/${savedClient._id}`
+      }).then((res)=>{
+        answer.dropbox = `Folder for client was created ${res.result.metadata.path_display}`
+      }).catch((err)=>{
+          console.log(err)
+      })
+    }
+
+    res.send(answer)
+
+    // // // cia logika dropbokso
+
+
+    // res.send({successful: `${savedClient.requiredInformation.name} ${savedClient._id} was succesfully saved to database.`})
 
 
 })
 
 databaseRouter.post('/:id', async (req, res)=>{
-    console.log(req.body)
+    
     const request = {
         requiredInformation: req.body.requiredInformation,
         companyDetails: req.body.companyDetails,

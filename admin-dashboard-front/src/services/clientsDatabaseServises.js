@@ -45,7 +45,6 @@ const deleteQuerie = async (type, id) => {
 //       const config = {
 //     headers: { Authorization: token }
 //   }
-    console.log(id,type)
     const request = await axios.delete(`${newQueriesUrl}/${type}/${id}`)
     return request.data
 }

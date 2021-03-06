@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import axios from 'axios'
 
 
@@ -19,6 +19,7 @@ const Querie = ({allNewQueries, clients}) => {
     const [loading, setLoading] = useState("");
     const [serverResponse, setServerResponse] = useState("")
     const type = "Save to the database"
+    let history = useHistory()
 
     let { id } = useParams();
 
@@ -27,48 +28,29 @@ const Querie = ({allNewQueries, clients}) => {
         if(querie._id === id){
             setQuerie(querie)
         }})})
-        // axios.get('http://localhost:3001/api/get-thumbnail').then((res)=>{
-        //         setThumbnail(res.data)  
-        //         console.log("pavyko")
-        //     })
-    
    },[])
 
-   const handleSubmit = (values) => {
-    setLoading("loading")
-    // clientDatabaseServices.updatedClient('603d1558243ae66b2c865804',values).then((response)=>{
-    //     setServerResponse(response.successful)
-    // })
-    clientDatabaseServices.createClient(values).then((response)=>{
-        if(response.successful){
-            setServerResponse(response.successful)
-            setLoading("successful")
+   console.log(querie._id)
 
-        }else if(response.error){
-            setServerResponse(response.error)
-            setLoading("error")
-        }else{
-            setServerResponse("error")
-            setLoading("error")
+   const saveQuerieToDatabase = (values) => {
+    setLoading("loading")
+    
+    const existOrnot = clients.filter(client=> client.requiredInformation.name === values.requiredInformation.name || ( client.mainContact.name && client.mainContact.lastName && values.mainContact.lastName && client.mainContact.name === values.mainContact.name && client.mainContact.lastName === values.mainContact.lastName) )
+        if(existOrnot.length > 0){
+            const ok = window.confirm( existOrnot.length + ` client(s) with the same name and surname already exist. Do you still want to save it?`)
+            if(ok){
+                clientDatabaseServices.createClient({...values, id: querie._id}).then((res)=>{console.log(res)})
+                // clientDatabaseServices.deleteQuerie(querie.type, querie._id).then((res)=>{console.log(res)})
+                // history.push("/new-queries")
+                // kai bus reduksas tures cia buti steito atnaujinimas.
+            }   
+        }else {
+            clientDatabaseServices.createClient({...values, id: querie._id}).then((res)=>{console.log(res)})
+            // clientDatabaseServices.deleteQuerie(querie.type, querie._id).then((res)=>{console.log(res)})
+            // history.push("/new-queries")
         }
-    })
 }
 
-// useEffect(()=>{
-//     if(querie.type === "General queries"){
-//         axios.get('http://localhost:3001/api/get-thumbnail').then((res)=>{
-//             setFlinas(res.data)
-//         })
-//     }else if(querie.type === "Company matters"){
-//         console.log(querie.file)
-//     }else if(querie.type === "Set up a private limited company"){
-//         querie.shareHolders.forEach((shareholder)=>{console.log(shareholder.file)})
-//     }else if(querie.type === "Self-employment queries"){
-//         console.log(querie.file)
-//     }
-// })
-    
- 
     const showWhenVisible = { display: visible ? 'block' : 'none' }
 
     const toggleVisibility = () => {
@@ -140,7 +122,7 @@ return (
                         })
                     }
                 </div>
-                {querie.length !== 0 ? <ClientToDatabaseForm clients={clients} type={type} querie={querie} handleSubmit={handleSubmit}/> : <p>Querie not found </p>}
+                {querie.length !== 0 ? <ClientToDatabaseForm clients={clients} type={type} querie={querie} saveQuerieToDatabase={saveQuerieToDatabase}/> : <p>Querie not found </p>}
             </div>
         </div>
     </div>
@@ -151,8 +133,3 @@ return (
 
 
 export default Querie
-
-
-
-// gerai baxuras zeurei gerai pavarei cia pagirtina rytojuj --> per propsus ideti visus tuos querius ir per querius surasti butent 
-//sito _id query , tada viskas tas pats ir idedi thumbnaila, vsio finisas

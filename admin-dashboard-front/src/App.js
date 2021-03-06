@@ -9,6 +9,7 @@ import Clients from './components/AllClients'
 import Client from './components/Client'
 import ClientToDatabaseForm from './components/forms/clientToDatabase'
 import clientsDatabaseServises from './services/clientsDatabaseServises';
+import bg from './icons/bg.jpg'
 
 const  App = () => {
   const [allNewQueries , setAllNewQueries] = useState([])
@@ -28,30 +29,34 @@ const  App = () => {
 
   return (
     <div className="App">
-      <button onClick={()=>{console.log(clients)}}>clients</button>
-      <NavigationBar>
-        <Link as="button" to="/new-queries">New Queries</Link>
-        <Link to="/clients">Clients</Link>
-        <input className="input" placeholder="search..."></input>
-        <button className="button is-success" onClick={()=>{history.push('/add-new-client')}}>+ Add new client</button>
-      </NavigationBar>
-      <Switch>
-        <Route path="/new-queries" exact>
-            <NewQueries allNewQueries={allNewQueries}/>
-        </Route>
-        <Route path="/clients" exact>
-            <Clients clients={clients}/>
-        </Route>
-        <Route path="/query/:id" exact>
-            <Querie clients={clients} allNewQueries={allNewQueries}/>
-        </Route>
-        <Route path="/client/:id" exact>
-            <Client clients={clients}/>
-        </Route>
-        <Route path="/add-new-client" exact>
-            <ClientToDatabaseForm type="Add new client"/>
-        </Route>
-      </Switch>
+      <div className="hero is-fullheight is-dark has-background">
+        <img alt="Background" className="hero-background is-transparent" src={bg} />
+        <div className="hero-head">
+          <NavigationBar clients={clients}>
+            {/* <Link as="button" to="/new-queries">New Queries</Link>
+            <Link to="/clients">Clients</Link>
+            <input className="input" placeholder="search..."></input>
+            <button className="button is-success" onClick={()=>{history.push('/add-new-client')}}>+ Add new client</button> */}
+          </NavigationBar>
+        </div>
+        <Switch>
+          <Route path="/new-queries" exact>
+              <NewQueries allNewQueries={allNewQueries}/>
+          </Route>
+          <Route path="/clients" exact>
+              <Clients clients={clients}/>
+          </Route>
+          <Route path="/query/:id" exact>
+              <Querie clients={clients} allNewQueries={allNewQueries}/>
+          </Route>
+          <Route path="/client/:id" exact>
+              <Client clients={clients}/>
+          </Route>
+          <Route path="/add-new-client" exact>
+              <ClientToDatabaseForm type="Add new client"/>
+          </Route>
+        </Switch>
+      </div>
     </div>
   );
 }

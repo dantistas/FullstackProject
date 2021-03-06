@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from "react-router-dom";
 import ClientToDatabaseForm from './forms/clientToDatabase'
+import clientsDatabaseServices from '../services/clientsDatabaseServises'
 
 const Client = ({clients}) => {
     const [client, setClient] = useState(null)
@@ -16,10 +17,19 @@ const Client = ({clients}) => {
         } )
     },[])
 
+    const overwrite = (values) => {
+        const ok = window.confirm("are you sure you want to overwrite?" )
+        if(ok){
+            clientsDatabaseServices.updatedClient(client._id,values)
+            history.push('/clients')
+            //ideti returna is serviso i notificasionus
+        }
+    }
+
 return (
     <div >
        {id} <button onClick={()=>{console.log(client)}}>client</button>
-       {client ? <ClientToDatabaseForm type={type} client={client} clients={clients}/> : <p>client not found</p> }
+       {client ? <ClientToDatabaseForm overwrite={overwrite} type={type} client={client}/> : <p>client not found</p> }
         
     </div>
 )
