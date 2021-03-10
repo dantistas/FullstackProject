@@ -3,21 +3,26 @@ import { useHistory } from "react-router-dom";
 
 const NewQueries = ({allNewQueries}) => {
     const [queries, setQueries] = useState([])
+    const [querieType, setQuerieType] = useState("")
     let history = useHistory()
 
+
+    const buttonGeneralQueries = querieType === "general queries"  ?  "button is-primary is-inverted" : "button is-primary"
+    console.log(queries)
+
+
 return (
-    <div>
-        <div>
-            <button onClick={()=>{setQueries(allNewQueries.generalQueries)}}>General queries ({allNewQueries.generalQueries.length})</button>
-            <button onClick={()=>{setQueries(allNewQueries.companyMattersQueries)}}>Company matters queries ({allNewQueries.companyMattersQueries.length})</button>
-            <button onClick={()=>{setQueries(allNewQueries.newCompanyEstablishmentQueries)}}>New company establish queries ({allNewQueries.newCompanyEstablishmentQueries.length})</button>
-            <button onClick={()=>{setQueries(allNewQueries.selfEmployedQueries)}}>Self employed queries ({allNewQueries.selfEmployedQueries.length})</button>
+    <div id="all-queries-div">
+        <div id="all-queries-buttons">
+            <button className={buttonGeneralQueries} onClick={()=>{setQueries(allNewQueries.generalQueries)}}>General queries ({allNewQueries.generalQueries.length})</button>
+            <button className="button is-primary" onClick={()=>{setQueries(allNewQueries.companyMattersQueries)}}>Company matters queries ({allNewQueries.companyMattersQueries.length})</button>
+            <button className="button is-primary" onClick={()=>{setQueries(allNewQueries.newCompanyEstablishmentQueries)}}>New company establish queries ({allNewQueries.newCompanyEstablishmentQueries.length})</button>
+            <button className="button is-primary" onClick={()=>{setQueries(allNewQueries.selfEmployedQueries)}}>Self employed queries ({allNewQueries.selfEmployedQueries.length})</button>
         </div>
         <div>
             {queries.map((querie)=>(
-                <div style={{"border": "solid"}}>
-                    <button onClick={()=>{history.push(`/query/${querie._id}`)}}>view</button>
-                    <p><strong>{querie.name}</strong> | {querie.date}</p>
+                <div>
+                    <a className="subtitle is-4" style={{"color":"black"}} role="button" onClick={()=>{history.push(`/query/${querie._id}`)}}><strong className="title is-4">{querie.name}</strong> |{querie.date}</a>
                 </div>
             ))}
         </div>

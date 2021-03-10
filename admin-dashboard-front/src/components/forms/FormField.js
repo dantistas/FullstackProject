@@ -6,9 +6,11 @@ import { ErrorMessage, Field, Form } from 'formik';
 export const TextField = ({  field, label, placeholder}) => {
 
     return (
-        <div>
-            <label>{label}</label>
-            <Field className="input" placeholder={placeholder} {...field}/>
+        <div id="form-field-div">
+            <label id="form-label">{label}</label>
+            <div id="form-input">
+                <Field className="input" placeholder={placeholder} {...field}/>
+            </div>
             <div style={{ color:'red'}}>
                 <ErrorMessage name={field.name} />
             </div>
@@ -51,9 +53,9 @@ export const FileUpload = (props) => {
 
 export const SelectField = ({validate, name, label, options}) =>{
     return (
-        <div>
-            {label}
-            <div className="select">
+        <div id="form-field-div" >
+            <label id="form-label">{label}</label>
+            <div id="form-input" className="select">
                 <Field as="select" name={name} style={{"width":"260px"}} validate={validate}>
                     <option value="" disabled selected>Please select an option</option>
                     {options.map(option => (

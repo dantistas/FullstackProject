@@ -48,10 +48,10 @@ return (
         <div className="navbar-menu" id="navbar-links">
             <div className="navbar-end">
                 <div className="navbar-item">
-                    <Link as="button" to="/new-queries">New Queries</Link>
+                    <Link as="button" to="/new-queries" onClick={()=>{document.querySelector("#navbar-links").classList.toggle('is-active')}}>New Queries</Link>
                 </div>
                 <div className="navbar-item">
-                    <Link to="/clients">Clients</Link>
+                    <Link to="/clients" onClick={()=>{document.querySelector("#navbar-links").classList.toggle('is-active')}}>Clients</Link>
                 </div>
             </div>
         </div>

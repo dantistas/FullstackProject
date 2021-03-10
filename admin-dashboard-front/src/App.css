@@ -54,11 +54,13 @@
 }
 
 #nav{
-  position: fixed;
+  position: sticky;
   width: 100%;
   opacity: 0.9;
   background-color:#363636;
 }
+/* jeigu sugalvopsiu keist nav tada reikes uzdeti id i navbar componenta */
+
 #navbar-links{
   opacity: 0.85;
 }
@@ -70,4 +72,117 @@
   background: whitesmoke;
   width: 203px;
   border-radius: 5px;
+}
+
+
+#client-component-button{
+    align-items: center;
+    display: flex;
+    justify-content: flex-start;
+    width: 230px;
+    box-sizing: inherit;
+}
+
+#form-component-div{
+  background-color: black;
+  opacity:0.85;
+  border-radius: 5px;
+  width: 550px;
+  padding-bottom: 15px;
+  padding-bottom: 15px;
+}
+#form-component-padding{
+  padding-bottom: 10px;
+}
+#form-component-title{
+  display:flex;
+  height : 50px
+}
+
+#form-component-title h1 {
+  margin:auto;
+  vertical-align:middle;
+}
+
+#expand-button{
+  position: relative;
+  top: 13px;
+  right: 25px;
+  color:#ffc37b
+}
+
+#comment-div{
+  width: 450px;
+  display: flex
+}
+
+#comment-div a {
+  position: relative;
+  top: 0px;
+  right: -15px;
+  color:#ffc37b
+}
+
+
+#form-field-div{
+  display:flex;
+}
+#form-field-div label{
+  margin:auto;
+  position:relative;
+  left: -10px;
+}
+
+#form-input{
+  position: relative;
+  right: 20px;
+  width: 250px;
+}
+
+#comments-section{
+  background-color: black;
+  opacity:0.85;
+  border-radius: 5px;
+}
+
+#comment-div{
+  display:flex;
+  background-color: grey;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#client-info{
+  position:absolute;
+  display:flex;
+  top:-40px;
+  right:0px;
+
+}
+
+#client-info-buttons{
+  height: 249px;
+  width: 50px;
+  z-index: 2;
+  padding-left: 10px;
+}
+
+#submit-button{
+  height: 249px;
+  width: 50px;
+  position: fixed;
+  right: 110px;
+  bottom: -175px;
+  z-index: 2;
+}
+
+#all-queries-div{
+  height: 1000px;
+}
+
+#all-queries-buttons{
+  padding: 10px;
+  display: flex;
+  grid-gap:15px;
+  padding-left: 110px;
 }

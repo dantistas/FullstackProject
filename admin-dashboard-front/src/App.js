@@ -3,6 +3,7 @@ import {Switch, Route, Link, useHistory ,useLocation } from "react-router-dom"
 import './App.css';
 import 'bulma/css/bulma.css'
 import NavigationBar from './components/NavigationBar'
+import Notification from './components/Notification'
 import NewQueries from "./components/NewQueries"
 import Querie from './components/Querie'
 import Clients from './components/AllClients'
@@ -39,23 +40,29 @@ const  App = () => {
             <button className="button is-success" onClick={()=>{history.push('/add-new-client')}}>+ Add new client</button> */}
           </NavigationBar>
         </div>
-        <Switch>
-          <Route path="/new-queries" exact>
-              <NewQueries allNewQueries={allNewQueries}/>
-          </Route>
-          <Route path="/clients" exact>
-              <Clients clients={clients}/>
-          </Route>
-          <Route path="/query/:id" exact>
-              <Querie clients={clients} allNewQueries={allNewQueries}/>
-          </Route>
-          <Route path="/client/:id" exact>
-              <Client clients={clients}/>
-          </Route>
-          <Route path="/add-new-client" exact>
-              <ClientToDatabaseForm type="Add new client"/>
-          </Route>
-        </Switch>
+        <div className="hero-body">
+          <Notification/>
+          <div className="container">
+            <Switch>
+              <Route path="/new-queries" exact>
+                  <NewQueries allNewQueries={allNewQueries}/>
+              </Route>
+              <Route path="/clients" exact>
+                  <Clients clients={clients}/>
+              </Route>
+              <Route path="/query/:id" exact>
+                  <Querie clients={clients} allNewQueries={allNewQueries}/>
+              </Route>
+              <Route path="/client/:id" exact>
+                  <Client clients={clients}/>
+              </Route>
+              <Route path="/add-new-client" exact>
+                  <h1 className="title">Add new client</h1>
+                  <ClientToDatabaseForm type="Add new client"/>
+              </Route>
+            </Switch>
+          </div>
+        </div>
       </div>
     </div>
   );

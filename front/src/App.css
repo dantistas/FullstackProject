@@ -159,3 +159,7 @@
   position: fixed;
   right: 75px;
 }
+#notification{
+  display: fixed;
+  top:-500px
+}

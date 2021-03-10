@@ -30,7 +30,7 @@ const Querie = ({allNewQueries, clients}) => {
         }})})
    },[])
 
-   console.log(querie._id)
+   
 
    const saveQuerieToDatabase = (values) => {
     setLoading("loading")
@@ -58,7 +58,7 @@ const Querie = ({allNewQueries, clients}) => {
     }
 
 return (
-    <div>
+    <div className="columns">
         <div className="column is-centered" >
                         { loading === "loading" ? 
                                 <div className="loader-wrapper" style={{"height":"100%", "width":"250px", "display":"flex","justifyContent":"center","alignItems":"center"}}>
@@ -80,19 +80,24 @@ return (
                                 null
                         }
             </div>
-        <div style={{"border": "solid"}}>
+        <div className="columns" style={{"border": "solid"}}>
             <p><strong>{querie.name}</strong> | {querie.date} | <strong>{querie.type}</strong> <button onClick={()=>{clientDatabaseServices.deleteQuerie(querie.type, querie._id).then((res)=>{console.log(res)})}}>delete</button></p>
-            <button onClick={()=>{console.log(querie)}}>steitas</button>
+            <div id="to-dropbox-folder">
+                <a className="button" as="button" target="_blank" href={`https://www.dropbox.com/home/Clients/${id}`} id="client-component-button">
+                    <img alt="dropbox" src="https://cfl.dropboxstatic.com/static/images/logo_catalog/dropbox_logo_glyph_m1.svg" style={{"maxHeight":"34px", "paddingLeft": "10px"}}></img>
+                    <img alt="dropbox" src="https://cfl.dropboxstatic.com/static/images/logo_catalog/wordmark--dropbox_m1.svg" style={{"maxHeight":"34px", "paddingLeft": "10px"}}></img>
+                </a>
+            </div>
             <div>
-                <div>
+                <div  style={{"backgroundColor":"black", "width":"600px", "opacity":"0.9"}}>
                     {Object.keys(querie).map((key)=>{  // sumepina visa query
                             if(Array.isArray(querie[key])){
                                 return (
-                                    <div>
+                                    <div className="columns">
                                         <h1>Shareholders</h1>
                                         {querie[key].map((element)=>{
                                             return(
-                                                <div>
+                                                <div className="column">
                                                     {Object.keys(element).map((keyInArray)=>{
                                                         return(
                                                             <div>
@@ -107,14 +112,14 @@ return (
                                 )
                             }else if(key === "file"){
                                 return (
-                                    <div>
+                                    <div className="column">
                                         <p><strong>{key}</strong> : <a href={`https://www.dropbox.com/home/ToBeConfirmed/${id}`} target="_blank">{querie[key]}</a></p>
                                     </div>
                                 )
                             }
                             else {
                                 return(
-                                    <div>
+                                    <div> 
                                         <p><strong>{key.split(/(?=[A-Z])/).join(" ")}</strong> : {querie[key]}</p>
                                     </div>
                                 )
@@ -122,8 +127,10 @@ return (
                         })
                     }
                 </div>
-                {querie.length !== 0 ? <ClientToDatabaseForm clients={clients} type={type} querie={querie} saveQuerieToDatabase={saveQuerieToDatabase}/> : <p>Querie not found </p>}
-            </div>
+                <div className="column">
+                    {querie.length !== 0 ? <ClientToDatabaseForm clients={clients} type={type} querie={querie} saveQuerieToDatabase={saveQuerieToDatabase}/> : <p>Querie not found </p>}
+                </div>
+                 </div>
         </div>
     </div>
 )
