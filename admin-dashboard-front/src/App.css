@@ -186,3 +186,25 @@
   grid-gap:15px;
   padding-left: 110px;
 }
+
+#querie-div{
+  background-color: black;
+  padding: 10px;
+  border-radius: 5px;
+  opacity:0.9;
+  width:550px
+}
+
+#querie-div p{
+  padding-left: 10px;
+  border-radius: 5px;
+}
+
+#shareholders{
+  padding:10px;
+}
+
+#shareholders p{
+  display:flex;
+  color:black
+}
