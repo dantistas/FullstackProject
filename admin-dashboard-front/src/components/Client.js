@@ -5,7 +5,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import ClientToDatabaseForm from './forms/clientToDatabase'
 import clientsDatabaseServices from '../services/clientsDatabaseServises'
 
-const Client = ({clients}) => {
+const Client = ({clients, dispatch, initializeClients, deleteClientWithID, setNotification }) => {
     const [client, setClient] = useState(null)
     const type = "Overwrite"
     let history = useHistory()
@@ -19,21 +19,24 @@ const Client = ({clients}) => {
         setClient(clientToState)
     },[id])
 
-    const overwrite = (values) => {
+    const overwrite = async (values) => {
         const ok = window.confirm("Are you sure you want to overwrite?" )
         if(ok){
-            clientsDatabaseServices.updatedClient(client._id,values)
+            dispatch(setNotification('loading'))
+            await clientsDatabaseServices.updatedClient(client._id,values).then((res)=>{
+                dispatch(setNotification(res.notification))
+                dispatch(initializeClients())
+            })
             history.push('/clients')
-            //ideti returna is serviso i notificasionus
         }
     }
 
     const deleteClient = (clientID) => {
         const ok = window.confirm(`Are you sure you want to delete ${client.requiredInformation.name}?`)
         if(ok){
-            clientsDatabaseServices.deleteClient(clientID)
+            dispatch(setNotification('loading'))
+            dispatch(deleteClientWithID(clientID))
             history.push('/clients')
-            //ideti returna is serviso i notificasionus
         }
     }
 
@@ -61,14 +64,6 @@ return (
                 </div>
             : <p>client not found</p>}
         </div>
-        
-        {/* <div id="to-dropbox-folder">
-            <a className="button" as="button" target="_blank" href={`https://www.dropbox.com/home/Clients/${id}`} id="client-component-button">
-                <img alt="dropbox" src="https://cfl.dropboxstatic.com/static/images/logo_catalog/dropbox_logo_glyph_m1.svg" style={{"maxHeight":"34px", "paddingLeft": "10px"}}></img>
-                <img alt="dropbox" src="https://cfl.dropboxstatic.com/static/images/logo_catalog/wordmark--dropbox_m1.svg" style={{"maxHeight":"34px", "paddingLeft": "10px"}}></img>
-            </a>
-            <a id="client-component-button" className="button">swx</a>
-        </div> */}
        {client ? <ClientToDatabaseForm overwrite={overwrite} type={type} client={client}/> : <p>client not found</p> }
         
     </div>
@@ -79,12 +74,3 @@ return (
 
 
 export default Client
-
-
-
-// 1)perkelti visus kodus i .env, <<------- done
-// 2) padaryti searcha ir patikrinti ar nesidubliouje klientu acc
-// 3)pradeti vystyti front enda
-// 4) sujungineti servisus su atitinkamais sudais
-// 5) ideti commentarus <<--- beveik done
-// 6) ideti upload mygtuka pagal id

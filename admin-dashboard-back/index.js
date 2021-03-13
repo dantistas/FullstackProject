@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 require('dotenv').config()
 const newQueriesRouter = require('./controlers/newQueriesRouter');
 const databaseRouter = require('./controlers/databaseRouter');
-const getThumbnail = require('./controlers/getThumbnail');
+const userRouter = require('./controlers/usersRouter');
+const loginRouter = require('./controlers/loginRouter')
 
 
 const MONGODB_URI = process.env.MONGODB_URI
@@ -24,7 +25,8 @@ app.use(express.json());
 
 app.use('/api/new-queries', newQueriesRouter)
 app.use('/api/database', databaseRouter)
-app.use('/api/get-thumbnail', getThumbnail)
+app.use('/create-user', userRouter)
+app.use('/api/login', loginRouter)
 
 
 const port = process.env.PORT || 3001 ;

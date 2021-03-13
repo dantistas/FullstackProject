@@ -172,7 +172,9 @@ swxRouter.post('/', async (req, res)  => {
     }
 
   
-  
+   dbx.filesUpload({
+     
+   })
 
 
     const toCompany = messageToCompany(values, files)

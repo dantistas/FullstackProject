@@ -3,7 +3,7 @@ import {Switch, Route, Link, useHistory ,useLocation } from "react-router-dom"
 import logo from '../icons/mastisLogo.png'
 
 
-const NavigationBar = ({clients}) => {
+const NavigationBar = ({clients, dispatch, setUser, user}) => {
     const [searchResults, setSearchResults] = useState([])
     let history = useHistory()
 
@@ -27,6 +27,13 @@ const NavigationBar = ({clients}) => {
     }
 
 
+    const logOut = () => {
+        window.localStorage.clear()
+        dispatch(setUser(null))
+        history.push('/login')
+        window.location.reload()    
+      }
+
 return (
     <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
@@ -37,8 +44,13 @@ return (
                 <input id="client-search-input" className="input" placeholder="search client..." onChange={searchClient}></input>
             </div>
             <div className="navbar-item">
-                <button className="button is-success" onClick={()=>{history.push('/add-new-client')}}>+</button>
+                <button className="button is-success" disabled={!user} onClick={()=>{history.push('/add-new-client')}}>+</button>
             </div>
+            {user ?
+                <div className="navbar-item">
+                    <button onClick={logOut} className="button is-danger">Log out</button>
+                </div>
+                : null}
             <a role="button" onClick={()=>{document.querySelector("#navbar-links").classList.toggle('is-active')}} className="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
                   <span aria-hidden="true"></span>
                   <span aria-hidden="true"></span>

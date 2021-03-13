@@ -1,4 +1,9 @@
 import React,{useEffect, useState} from 'react'
+import {useSelector, useDispatch} from 'react-redux'
+
+import { createClient} from '../../reducers/clientsReducer'
+import {setNotification} from '../../reducers/notificationsReducer' // situs permesti i atskira componenta o tam komponent ir bus add-new-client
+
 import { useHistory } from "react-router-dom";
 import { Formik, Field, Form } from 'formik';
 import {TextField, TextArea, FileUpload, SelectField} from './FormField'
@@ -16,9 +21,6 @@ import clientDatabaseServices from '../../services/clientsDatabaseServises'
 
 const ClientToDatabaseForm = ({type, querie, client, clients, overwrite, saveQuerieToDatabase}) => {
 
-    const [loading, setLoading] = useState("");
-    const [serverResponse, setServerResponse] = useState("")
-
     const [comments, setComments] = useState([])
     const [comment, setComment] = useState("")
     //hide  show
@@ -35,6 +37,9 @@ const ClientToDatabaseForm = ({type, querie, client, clients, overwrite, saveQue
     const showWhenVisible = (component) => { return {display: component ? 'block' : 'none'} }
     // iki cia 
     let history = useHistory()
+    const dispatch = useDispatch()
+    const notification = useSelector(state => state.notifications)
+    
     
     useEffect(()=>{
         if(type === "Overwrite"){
@@ -209,6 +214,7 @@ const ClientToDatabaseForm = ({type, querie, client, clients, overwrite, saveQue
     },[client])
 
 
+
     const validateNameField = (value) => {
         let errorMessage;
         if(!value){
@@ -227,19 +233,20 @@ const ClientToDatabaseForm = ({type, querie, client, clients, overwrite, saveQue
     
 
 
-    const handleSubmit = (values) => {
+    const handleSubmit = async (values) => {
         if(type === "Overwrite" ) {
             overwrite(values)
         }else if (type === "Save to the database"){
             saveQuerieToDatabase(values)
         }else if (type === "Add new client"){
-            clientDatabaseServices.createClient(values)
+            dispatch(setNotification("loading"))
+           await dispatch(createClient(values))
             history.push('/clients')
         }
     }
 
 return(
-        <div style={{"paddingTop":"50px"}}>
+        <div style={{"paddingTop":"80px"}}>
             <Formik 
                     enableReinitialize={true}
                     initialValues={
@@ -578,18 +585,7 @@ return(
                                                         }
                                                     </div>
                                                 </div>
-                                                <div style={{"paddingTop":"10px" , "width":"260px"}}>
-                                                        <button type="button" onClick={()=>{console.log(comments)}}>comments</button>
-                                                        <button type="button" onClick={()=>{console.log(comment)}}>comment</button>
-                                                        <button type="button" onClick={()=>{console.log(values)}}>values</button>
-                                                    <button className="button is-success" disabled={values ? !values.requiredInformation.name : !dirty}  type="submit" onClick={()=>{values.date = new Date().toString()}}>{type}</button>
-                                                </div>
                                                 <div id="submit-button">
-                                                    {/* <button role="button" type="submit" disabled={values ? !values.requiredInformation.name : !dirty} onClick={()=>{console.log("SWX")}}>
-                                                        <Fab>
-                                                            <SaveIcon style={{"color":"hsl(141, 53%, 53%)"}} fontSize="large"/>
-                                                        </Fab>
-                                                    </button> */}
                                                     <button className="button is-success" disabled={values ? !values.requiredInformation.name : !dirty}  type="submit" onClick={()=>{values.date = new Date().toString()}}>{type}</button>
                                                 </div>
                                     </Form>

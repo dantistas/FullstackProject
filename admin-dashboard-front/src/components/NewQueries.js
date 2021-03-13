@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from "react-router-dom";
+import {useSelector, useDispatch} from 'react-redux'
 
 const NewQueries = ({allNewQueries}) => {
     const [queries, setQueries] = useState([])
     const [querieType, setQuerieType] = useState("")
     let history = useHistory()
-
 
     const buttonGeneralQueries = querieType === "generalQueries"  ?  "button is-success is-inverted" : "button is-success"
     const buttonCompanyMattersQueries = querieType === "companyMattersQueries"  ?  "button is-success is-inverted" : "button is-success"

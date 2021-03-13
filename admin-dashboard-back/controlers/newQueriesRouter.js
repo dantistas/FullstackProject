@@ -25,20 +25,17 @@ newQueriesRouter.get('/', async (req, res)=>{
 })
 
 newQueriesRouter.delete('/:type/:id', async (req, res) => {
-    const response = (deletedCount) => {
-        let message = {
-            database: '',
-            dropbox: '',
-        }
+
+    const response =  (deletedCount) => {
+        let message 
         if(deletedCount > 0 ){
-            message.database = ` id: ${req.params.id} was deleted succesfully, ${deletedCount} item(s) was deleted`,
             dbx.filesDeleteV2({
                 path: `/ToBeConfirmed/${req.params.id}`
               }).then((result) =>{
-                message.dropbox = result.status
-              }).catch((err)=>{console.log(err)})
+                message = {success: ` id: ${req.params.id} was deleted succesfully, ${deletedCount} item(s) was deleted dropbox: ${result.status}` }
+              })
         }else {
-            message.database = `${req.params.id} failed to delete this entry`
+            message = {error: `${req.params.id} failed to delete this entry` }
         }
         res.send(message)
     }

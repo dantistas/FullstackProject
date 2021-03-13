@@ -33,9 +33,9 @@ const moveFilesFromToBeConfirmedToClientsFolder = async (toBeConfirmedId, client
                 path: `/ToBeConfirmed/${toBeConfirmedId}`
             })
 
-            return `${filesWereMoved.length} files were moved to /Clients/${clientId} and folder ${eraseFolder.result.metadata.path_display} was deleted.`
+            return {success: `Client ${clientId} was sucessfully created,  ${filesWereMoved.length} files were moved to /Clients/${clientId} and folder ${eraseFolder.result.metadata.path_display} was deleted.`}
         }else{
-            return `error: ${filesWereMoved.length} files were moved out of ${files.length} try to do it manualy from /ToBeConfirmed/${toBeConfirmedId} to /Clients/${clientId}`
+            return {error: `error: ${filesWereMoved.length} files were moved out of ${files.length} try to do it manualy from /ToBeConfirmed/${toBeConfirmedId} to /Clients/${clientId}` }
         }
     }
 
@@ -52,10 +52,10 @@ databaseRouter.get('/', async (req,res)=>{
 
 databaseRouter.post('/', async (req, res)=>{
     const toBeConfirmedId = req.body.id
-    let answer = {
+    let message = {
         client: "",
-        dropbox: ""
-    } 
+        notification:""
+    }
 
     const clientToDB = new client({
         requiredInformation: req.body.requiredInformation,
@@ -70,34 +70,33 @@ databaseRouter.post('/', async (req, res)=>{
         comments: req.body.comments
     })
     const savedClient = await clientToDB.save()
+    message.client = savedClient
 
 
      // // // cia logika dropbokso
 
-    if(toBeConfirmedId ){
-      answer.dropbox = await moveFilesFromToBeConfirmedToClientsFolder(toBeConfirmedId, savedClient._id)
-      answer.client = savedClient
+    if(toBeConfirmedId ){  
+        message.notification = await moveFilesFromToBeConfirmedToClientsFolder(toBeConfirmedId, savedClient._id)
     }else{
       await dbx.filesCreateFolderV2({
           path: `/Clients/${savedClient._id}`
       }).then((res)=>{
-        answer.dropbox = `Folder for client was created ${res.result.metadata.path_display}`
+          message.notification = {success: `${savedClient._id}, Client ${savedClient.requiredInformation.name} was created. Dropbox folder for client was created ${res.result.metadata.path_display} .`}
       }).catch((err)=>{
+          message.notification = {error: `Something went wrong ${err}`}
           console.log(err)
       })
     }
 
-    res.send(answer)
-
-    // // // cia logika dropbokso
-
-
-    // res.send({successful: `${savedClient.requiredInformation.name} ${savedClient._id} was succesfully saved to database.`})
-
+    res.send(message)
 
 })
 
 databaseRouter.post('/:id', async (req, res)=>{
+    let message = {
+        client: "",
+        notification:""
+    }
     
     const request = {
         requiredInformation: req.body.requiredInformation,
@@ -118,33 +117,55 @@ databaseRouter.post('/:id', async (req, res)=>{
         },
         request
     )
-    res.send({successful: `${updatedClient.requiredInformation.name} ${updatedClient._id} was succesfully updated.`})
+    
+    message.notification = {success: `${updatedClient.requiredInformation.name} ${updatedClient._id} was succesfully updated.`}
+    message.client = updatedClient
+
+    res.send(message)
 })
 
 databaseRouter.delete('/:id', async (req,res) => {
-    const response = (deletedCount) => {
-        let message = {
-            database: '',
-            dropbox: '',
-        }
-        if(deletedCount > 0 ){
-            message.database = ` id: ${req.params.id} was deleted succesfully, ${deletedCount} item(s) was deleted`,
-            dbx.filesDeleteV2({
-                path: `/clients/${req.params.id}`
-              }).then((result) =>{
-                message.dropbox = result.status
-              }).catch((err)=>{console.log(err)})
-        }else {
-            message.database = `${req.params.id} failed to delete this entry`
-        }
-        res.send(message)
+    let message = {
+        notification: ''
     }
 
-    await client.deleteOne({"_id": objectId(req.params.id)}).then((result)=>{
-         response(result.deletedCount)
-    }).catch((err)=>{
-        console.log({error: `Error: ${err}`})
-    })
+    const deletedClient = await client.deleteOne({"_id": objectId(req.params.id)})
+
+    if(deletedClient.deletedCount > 0){
+        await dbx.filesDeleteV2({
+            path: `/clients/${req.params.id}`
+        }).then((result)=>{
+            console.log(result)
+            message.notification = {success: ` id: ${req.params.id} was deleted succesfully, ${deletedClient.deletedCount} item(s) was deleted dropbox: ${result.status}` }
+        }).catch((err)=>{
+            console.log({error:err})
+            message.notification = {error: `${req.params.id} failed to delete this entry` }
+        })
+    }else {
+        message.notification = {error: `${req.params.id} failed to delete this entry` }
+    }
+
+    res.send(message)
+
+    // const response = (deletedCount) => {
+
+    //     if(deletedCount > 0 ){
+    //        await dbx.filesDeleteV2({
+    //             path: `/clients/${req.params.id}`
+    //           }).then((result) =>{
+    //             message.notification = {success: ` id: ${req.params.id} was deleted succesfully, ${deletedCount} item(s) was deleted dropbox: ${result.data}` }
+    //           }).catch((err)=>{console.log(err)})
+    //     }else {
+    //         message.notification = {error: `${req.params.id} failed to delete this entry` }
+    //     }
+    //     res.send(message)
+    // }
+
+    // await client.deleteOne({"_id": objectId(req.params.id)}).then((result)=>{
+    //      response(result.deletedCount)
+    // }).catch((err)=>{
+    //     console.log({error: `Error: ${err}`})
+    // })
 })
 
 module.exports = databaseRouter

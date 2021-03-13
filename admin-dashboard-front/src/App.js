@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import {Switch, Route, Link, useHistory ,useLocation } from "react-router-dom"
+import {useSelector, useDispatch} from 'react-redux'
+
+import {initializeAllNewQueries} from './reducers/queriesReducer'
+import {initializeClients, createClient, deleteClientWithID} from './reducers/clientsReducer'
+import {setNotification} from './reducers/notificationsReducer'
+import {setUser} from './reducers/loginReducer'
+
 import './App.css';
 import 'bulma/css/bulma.css'
 import NavigationBar from './components/NavigationBar'
@@ -9,43 +16,54 @@ import Querie from './components/Querie'
 import Clients from './components/AllClients'
 import Client from './components/Client'
 import ClientToDatabaseForm from './components/forms/clientToDatabase'
-import clientsDatabaseServises from './services/clientsDatabaseServises';
+import Login from './components/Login'
 import bg from './icons/bg.jpg'
 
 const  App = () => {
-  const [allNewQueries , setAllNewQueries] = useState([])
-  const [clients, setClients] = useState([])
+  const allNewQueries = useSelector(state => state.allQueries )
+  const clients = useSelector(state => state.clients )
+  const user = useSelector(state=>state.user)
+
+  const dispatch = useDispatch()
 
   let history = useHistory()
+
+  const loggedUserJson = window.localStorage.getItem('loggedUser')
+  console.log(loggedUserJson)
     
   useEffect(()=>{
-      clientsDatabaseServises.getAllNewQueries().then((res)=>{     //<<<----- paskui pakeisti i api/new-queries tik! 
-        setAllNewQueries(res)                                          // padaryt if else statementus jeigu nera tokeno tada i login page jei yra tokenas wiskas ok 
-         })
-         clientsDatabaseServises.getAllClients().then((res)=>{
-            setClients(res)
-         })
-    },[])
-
+      if(user){
+        dispatch(initializeAllNewQueries())    //<<<----- paskui pakeisti i api/new-queries tik! 
+        dispatch(initializeClients())                                          // padaryt if else statementus jeigu nera tokeno tada i login page jei yra tokenas wiskas ok 
+      }else if(loggedUserJson){
+        const loggedUser = JSON.parse(loggedUserJson)
+        dispatch(setUser(loggedUser))
+      } else {
+        history.push('/login')
+      }
+      },[user])
 
   return (
     <div className="App">
       <div className="hero is-fullheight is-dark has-background">
         <img alt="Background" className="hero-background is-transparent" src={bg} />
         <div className="hero-head">
-          <NavigationBar clients={clients}>
-            {/* <Link as="button" to="/new-queries">New Queries</Link>
-            <Link to="/clients">Clients</Link>
-            <input className="input" placeholder="search..."></input>
-            <button className="button is-success" onClick={()=>{history.push('/add-new-client')}}>+ Add new client</button> */}
-          </NavigationBar>
+          <NavigationBar clients={clients} dispatch={dispatch} setUser={setUser} user={user}/>
         </div>
         <div className="hero-body">
-          <Notification/>
+          <Notification dispatch={dispatch}/>
           <div className="container">
             <Switch>
+              <Route path="/" exact>
+                {user ? 
+                  <h1 className="title">Laba diena {user.name}</h1>
+                :null} 
+              </Route>
               <Route path="/new-queries" exact>
                   <NewQueries allNewQueries={allNewQueries}/>
+              </Route>
+              <Route path="/login" exact>
+                <Login dispatch={dispatch} setUser={setUser} setNotification={setNotification} user={user}/>
               </Route>
               <Route path="/clients" exact>
                   <Clients clients={clients}/>
@@ -54,7 +72,7 @@ const  App = () => {
                   <Querie clients={clients} allNewQueries={allNewQueries}/>
               </Route>
               <Route path="/client/:id" exact>
-                  <Client clients={clients}/>
+                  <Client clients={clients} dispatch={dispatch} initializeClients={initializeClients} deleteClientWithID={deleteClientWithID} setNotification={setNotification}/>
               </Route>
               <Route path="/add-new-client" exact>
                   <h1 className="title">Add new client</h1>

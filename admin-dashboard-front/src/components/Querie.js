@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
+import {useSelector, useDispatch} from 'react-redux'
 import { useParams, useHistory } from "react-router-dom";
 import { Fab } from '@material-ui/core';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+
 import axios from 'axios'
 
 
@@ -11,17 +13,21 @@ import clientDatabaseServices from '../services/clientsDatabaseServises'
 
 import ClientToDatabaseForm from './forms/clientToDatabase'
 
+import {initializeAllNewQueries} from '../reducers/queriesReducer'
+import {setNotification} from '../reducers/notificationsReducer'
+
 
 
 
 const Querie = ({allNewQueries, clients}) => {
-    const [visible, setVisible] = useState(false)
     const [querie, setQuerie] = useState(null)
-    const [thumbnail, setThumbnail] = useState([])
-    const [loading, setLoading] = useState("");
-    const [serverResponse, setServerResponse] = useState("")
+
+    const dispatch = useDispatch()
+
     const type = "Save to the database"
+
     let history = useHistory()
+    
 
     let omitedQuerie 
 
@@ -39,11 +45,7 @@ const Querie = ({allNewQueries, clients}) => {
     omitedQuerie = rest
     }
 
-    console.log(querie)
-
-   const saveQuerieToDatabase = (values) => {
-    setLoading("loading")
-    
+   const saveQuerieToDatabase = async (values) => { 
     const existOrnot = clients.filter(client=> client.requiredInformation.name === values.requiredInformation.name || ( client.mainContact.name && client.mainContact.lastName && values.mainContact.lastName && client.mainContact.name === values.mainContact.name && client.mainContact.lastName === values.mainContact.lastName) )
         if(existOrnot.length > 0){
             const ok = window.confirm( existOrnot.length + ` client(s) with the same name and surname already exist. Do you still want to save it?`)
@@ -58,12 +60,18 @@ const Querie = ({allNewQueries, clients}) => {
             // clientDatabaseServices.deleteQuerie(querie.type, querie._id).then((res)=>{console.log(res)})
             // history.push("/new-queries")
         }
-}
+    }
 
-    const showWhenVisible = { display: visible ? 'block' : 'none' }
-
-    const toggleVisibility = () => {
-      setVisible(!visible)
+    const deleteQuerie = async (type, id) => {
+        const ok = window.confirm("Are you sure you want to delete this query?")
+        if(ok){
+                dispatch(setNotification("loading"))
+            await  clientDatabaseServices.deleteQuerie(type, id).then((res)=>{
+                dispatch(setNotification(res)) // sitas eis i notification reducery
+                dispatch(initializeAllNewQueries())
+                history.push("/new-queries")
+            })
+        }
     }
 
 return (
@@ -81,7 +89,7 @@ return (
                         </div>
                         <div style={{"padding": "10px"}}></div>
                         <div id="client-info-buttons">
-                            <a role="button" onClick={()=>{console.log("SWX")}}>
+                            <a role="button" onClick={()=>{deleteQuerie(querie.type, querie._id)}}>
                                 <Fab>
                                     <DeleteForeverIcon style={{"color": "#ff000080"}} fontSize="large"/>
                                 </Fab>
@@ -100,7 +108,7 @@ return (
                                                     <div >
                                                         {Object.keys(element).map((keyInArray)=>{
                                                             return(
-                                                                <div style={{"backgroundColor":"grey"}}>
+                                                                <div>
                                                                     <p><strong>{keyInArray.split(/(?=[A-Z])/).join(" ")}</strong> : {element[keyInArray]}</p>
                                                                 </div>
                                                             )
@@ -112,14 +120,14 @@ return (
                                     )
                                 }else if(key === "file"){
                                     return (
-                                        <div className="columns">
+                                        <div className="column">
                                             <p><strong>{key}</strong> : <a href={`https://www.dropbox.com/home/ToBeConfirmed/${id}`} target="_blank">{querie[key]}</a></p>
                                         </div>
                                     )
                                 }
                                 else {
                                     return(
-                                        <div className="columns"> 
+                                        <div id="querie-info" className="column"> 
                                             <p><strong>{key.split(/(?=[A-Z])/).join(" ")}</strong> : {querie[key]}</p>
                                         </div>
                                     )
