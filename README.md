@@ -18,6 +18,7 @@ On the company's internal website, you must log in as an administrator. In the d
 
 
 For this project, I used React as the front end, and express for the back end, MongoDB for database, and DropBox API to manage files.
+In total spent 177Hours
 
 
 
