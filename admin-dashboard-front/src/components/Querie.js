@@ -4,9 +4,6 @@ import { useParams, useHistory } from "react-router-dom";
 import { Fab } from '@material-ui/core';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
-import axios from 'axios'
-
-
 
 import clientDatabaseServices from '../services/clientsDatabaseServises'
 
@@ -15,6 +12,7 @@ import ClientToDatabaseForm from './forms/clientToDatabase'
 
 import {initializeAllNewQueries} from '../reducers/queriesReducer'
 import {setNotification} from '../reducers/notificationsReducer'
+import {createClient}  from '../reducers/clientsReducer'
 
 
 
@@ -50,15 +48,22 @@ const Querie = ({allNewQueries, clients}) => {
         if(existOrnot.length > 0){
             const ok = window.confirm( existOrnot.length + ` client(s) with the same name and surname already exist. Do you still want to save it?`)
             if(ok){
-                clientDatabaseServices.createClient({...values, id: querie._id}).then((res)=>{console.log(res)})
-                // clientDatabaseServices.deleteQuerie(querie.type, querie._id).then((res)=>{console.log(res)})
-                // history.push("/new-queries")
-                // kai bus reduksas tures cia buti steito atnaujinimas.
+                dispatch(setNotification("loading"))
+                dispatch(createClient({...values, id: querie._id}))
+                await  clientDatabaseServices.deleteQuerie(querie.type, querie._id).then((res)=>{
+                  dispatch(setNotification(res))
+                  dispatch(initializeAllNewQueries())
+              })
+                history.push("/new-queries")
             }   
         }else {
-            clientDatabaseServices.createClient({...values, id: querie._id}).then((res)=>{console.log(res)})
-            // clientDatabaseServices.deleteQuerie(querie.type, querie._id).then((res)=>{console.log(res)})
-            // history.push("/new-queries")
+            dispatch(setNotification("loading"))
+            dispatch(createClient({...values, id: querie._id}))
+            clientDatabaseServices.deleteQuerie(querie.type, querie._id).then((res)=>{
+                dispatch(setNotification(res))
+                dispatch(initializeAllNewQueries())  
+            })
+            history.push("/new-queries")
         }
     }
 

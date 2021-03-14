@@ -23,12 +23,14 @@ const NewQueries = ({allNewQueries}) => {
 
 return (
     <div id="all-queries-div">
-        <div id="all-queries-buttons">
-            <button className={buttonGeneralQueries} onClick={()=>{setQueries(allNewQueries.generalQueries); pressButton('generalQueries')}}>General queries ({allNewQueries.generalQueries.length})</button>
-            <button className={buttonCompanyMattersQueries} onClick={()=>{setQueries(allNewQueries.companyMattersQueries); pressButton('companyMattersQueries')}}>Company matters queries ({allNewQueries.companyMattersQueries.length})</button>
-            <button className={buttonNewCompanyEstablishmentQueries} onClick={()=>{setQueries(allNewQueries.newCompanyEstablishmentQueries); pressButton('newCompanyEstablishmentQueries')}}>New company establish queries ({allNewQueries.newCompanyEstablishmentQueries.length}) </button>
-            <button className={buttonSelfEmployedQueries} onClick={()=>{setQueries(allNewQueries.selfEmployedQueries);pressButton('selfEmployedQueries')}}>Self employed queries ({allNewQueries.selfEmployedQueries.length})</button>
-        </div>
+        {allNewQueries.length !== 0 ? 
+            <div id="all-queries-buttons">
+                <button className={buttonGeneralQueries} onClick={()=>{setQueries(allNewQueries.generalQueries); pressButton('generalQueries')}}>General queries ({allNewQueries.generalQueries.length})</button>
+                <button className={buttonCompanyMattersQueries} onClick={()=>{setQueries(allNewQueries.companyMattersQueries); pressButton('companyMattersQueries')}}>Company matters queries ({allNewQueries.companyMattersQueries.length})</button>
+                <button className={buttonNewCompanyEstablishmentQueries} onClick={()=>{setQueries(allNewQueries.newCompanyEstablishmentQueries); pressButton('newCompanyEstablishmentQueries')}}>New company establish queries ({allNewQueries.newCompanyEstablishmentQueries.length}) </button>
+                <button className={buttonSelfEmployedQueries} onClick={()=>{setQueries(allNewQueries.selfEmployedQueries);pressButton('selfEmployedQueries')}}>Self employed queries ({allNewQueries.selfEmployedQueries.length})</button>
+            </div>
+        :<p>no queries to show</p>}
         <div>
             {queries.map((querie)=>(
                 <div>

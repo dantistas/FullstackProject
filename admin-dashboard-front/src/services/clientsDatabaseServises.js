@@ -1,6 +1,6 @@
 import axios from 'axios'
-const databaseUrl = 'http://localhost:3001/api/database' // pakeisti i pats zn ka 
-const newQueriesUrl = 'http://localhost:3001/api/new-queries'
+const databaseUrl = '/api/database' // pakeisti http://localhost:3001/api/database
+const newQueriesUrl = '/api/new-queries'    // http://localhost:3001/api/new-queries
 
 
 

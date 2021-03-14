@@ -9,6 +9,7 @@ const servicesDB = require('./data/services.json');
 // const fs = require('fs')
 const mongoose = require('mongoose');
 const swxRouter = require('./controlers/swx');
+const checkStatusRouter = require('./controlers/checkStatus')
 // require('dotenv').config()   <-- reike nereike ???
  
 
@@ -37,6 +38,7 @@ const port = process.env.PORT || 3001 ;
 
 app.use('/swx', swxRouter )
 
+app.use('/api/check-status', checkStatusRouter )
 
 app.get('/api/services', (req,res)=>{
   res.json(servicesDB)  //<<---- servicesDB

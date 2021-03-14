@@ -157,40 +157,34 @@ swxRouter.post('/', async (req, res)  => {
     }
 
     const savedQuery = await query.save()
-    // res.json({successful:`Thank you for your enquiry. Your message has been sent successfully. ---->>${savedQuery}`})
-  
-    if(req.files && req.files.file.length > 0){
-      for(let i = 0; i< req.files.file.length; i++){
-        dbx.filesUpload({path: `/ToBeConfirmed/${savedQuery._id}/${req.files.file[i]}` , contents: req.files.file[i].data }).then(res=>console.log(res))  // <<<---- sitas veike jau normalei jei ka https://github.com/andreafabrizi/Dropbox-Uploader/issues/514
-        files.push(req.files.file[i])                            // sito greiciausiai, kad nereikes, nes viskas eis i dropboxa   
-        files[i].mv(`${__dirname}/uploads/${files[i].name}`)  // sito greiciausiai, kad nereikes, nes viskas eis i dropboxa
-      }
-    } else if (req.files){
-      dbx.filesUpload({path: `/ToBeConfirmed/${savedQuery._id}/${req.files.file.name}` , contents: req.files.file.data }).then(res=>console.log(res))  // <<<---- sitas veike jau normalei jei ka https://github.com/andreafabrizi/Dropbox-Uploader/issues/514
-      files.push(req.files.file)                              // sito greiciausiai, kad nereikes, nes viskas eis i dropboxa
-      files[0].mv(`${__dirname}/uploads/${files[0].name}`)   // sito greiciausiai, kad nereikes, nes viskas eis i dropboxa
+
+  if (req.files && req.files.file.length > 0) {
+    for (let i = 0; i < req.files.file.length; i++) {
+      await dbx.filesUpload({ path: `/ToBeConfirmed/${savedQuery._id}/${req.files.file[i].name}`, contents: req.files.file[i].data }).then(res => console.log(res))  // <<<---- sitas veike jau normalei jei ka https://github.com/andreafabrizi/Dropbox-Uploader/issues/514
+      // files.push(req.files.file[i])                            // sito greiciausiai, kad nereikes, nes viskas eis i dropboxa   
+      // files[i].mv(`${__dirname}/uploads/${files[i].name}`)  // sito greiciausiai, kad nereikes, nes viskas eis i dropboxa
     }
+  } else if (req.files) {
+    await dbx.filesUpload({ path: `/ToBeConfirmed/${savedQuery._id}/${req.files.file.name}`, contents: req.files.file.data }).then(res => console.log(res))  // <<<---- sitas veike jau normalei jei ka https://github.com/andreafabrizi/Dropbox-Uploader/issues/514
+    // files.push(req.files.file)                              // sito greiciausiai, kad nereikes, nes viskas eis i dropboxa
+    // files[0].mv(`${__dirname}/uploads/${files[0].name}`)   // sito greiciausiai, kad nereikes, nes viskas eis i dropboxa
+  }
 
+    // const toCompany = messageToCompany(values, files)
+    // const toClient = messageToClient(req.body) //sitas bus klientuj.
   
-   dbx.filesUpload({
-     
-   })
-
-
-    const toCompany = messageToCompany(values, files)
-    const toClient = messageToClient(req.body) //sitas bus klientuj.
+    // await transporter.sendMail(toCompany,(err)=>{
+    //   if(err){
+    //     console.log(err)
+    //     res.json({error:"Something went wrong, please try again later or call us."})      // kazka sugalvoti su siuo erroru, kad nesiustu useriui sita galima padaryti kad man tiesei i emaila atsisutu asmensikai
+    //     deleteFiles(files)
+    //   }else{
+    //     res.json({successful:`Thank you for your enquiry. Your message has been sent successfully.`})
+    //     deleteFiles(files)
+    //   }
+    // });
   
-    await transporter.sendMail(toCompany,(err)=>{
-      if(err){
-        console.log(err)
-        res.json({error:"Something went wrong, please try again later or call us."})      // kazka sugalvoti su siuo erroru, kad nesiustu useriui sita galima padaryti kad man tiesei i emaila atsisutu asmensikai
-      }else{
-        res.json({successful:`Thank you for your enquiry. Your message has been sent successfully.`})
-        deleteFiles(files)
-      }
-    });
-  
-    // res.json({successful:`Thank you for your enquiry. Your message has been sent successfully.`})
+    res.json({ successful: `Thank you for your enquiry. Your message has been sent successfully.` })
   });
 
 

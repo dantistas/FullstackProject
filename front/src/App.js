@@ -3,6 +3,9 @@ import Service from './components/Service'
 import Home from './components/Home'
 import Contact from './components/Contact'
 import FloatingButtonContent from './components/FloatingButtonContent'
+
+import ApplicationStatus from './components/applicationStatus'
+
 import { Fab } from '@material-ui/core';
 import ChatOutlinedIcon from '@material-ui/icons/ChatOutlined';
 import CallIcon from '@material-ui/icons/Call';
@@ -96,6 +99,7 @@ const App = () => {
                     </div>
                   </div>
                   <a className="navbar-item" target="_blank" href='https://www.employedandselfemployed.co.uk/tax-calculator'>{buttonsLanguage("Calculator","Skaičiuotuvas")}</a>
+                  <Link role="button" className="navbar-item" to="/aplication-status" >{buttonsLanguage("Check status", "Perziureti statusa")}</Link>
                 </div>
                 <div class="navbar-end">
                   <Link role="button" dissabled class="navbar-item" to="/contact" onClick={()=>{document.querySelector("#navbar-links").classList.toggle('is-active')}} >{buttonsLanguage("Contact us","Susisiekite su mumis")}</Link>
@@ -121,6 +125,9 @@ const App = () => {
               </Route>
               <Route path="/" exact>
                 <Home Link={Link} title={title} language={language}/>
+              </Route>
+              <Route path="/aplication-status" exact>
+                <ApplicationStatus/>
               </Route>
               <Route path="/">
                   <h1 className="title">{language=== "en" ? "404 Page not found" : language === "lt" ? "404 puslapis nerastas" : null}</h1>
